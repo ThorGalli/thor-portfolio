@@ -1,53 +1,87 @@
-'use client'
-import { useGameContext } from '@/contexts/useGameContext'
+import NavbarLayout from '@/layouts/navbar'
+import Image from 'next/image'
 
 export default function Home() {
-  const {
-    items,
-    baseIncome,
-    totalCoins,
-    clickCoin,
-    buyItem,
-    getAdjustedItemPrice,
-  } = useGameContext()
-
+  const startedWorking = new Date('2021-03-01')
+  const now = new Date()
+  const timeWorked = now.getTime() - startedWorking.getTime()
+  const totalMonthsWorked = timeWorked / (1000 * 3600 * 24 * 30)
+  const yearsWorked = Math.floor(totalMonthsWorked / 12)
+  const monthsWorked = Math.floor(totalMonthsWorked % 12)
   return (
-    <main className="flex min-h-screen flex-col items-center gap-5 p-24">
-      <div className="flex flex-row items-center gap-5">
-        <div className="flex flex-col items-center justify-start gap-5">
-          <button
-            onClick={() => clickCoin()}
-            className="rounded-md border-2 border-red-500 bg-slate-500 px-8 py-4 active:bg-slate-700"
-          >
-            Click
-          </button>
-          <div>BaseIncome: {baseIncome}</div>
-          <div>Coins: {totalCoins}</div>
-        </div>
-        <div>
-          {items.map((item) => {
-            const adjustedPrice = getAdjustedItemPrice(item)
-            return (
-              <div
-                key={item.name}
-                className="flex flex-row items-center justify-end gap-5"
-              >
-                <div>
-                  {item.name} x{item.amount}
-                </div>
-                <button
-                  onClick={() => buyItem(item)}
-                  // tailwind classes for a button to use a colorscheme around gray.500, ajust hover, active, and disabled colors
-                  className="rounded-md border-2 border-gray-500 bg-gray-500 px-8 py-4 hover:bg-gray-400 active:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-900 disabled:text-gray-500"
-                  disabled={totalCoins < adjustedPrice}
-                >
-                  Buy <br /> {adjustedPrice} coins
-                </button>
+    <NavbarLayout>
+      <main className="mt-6">
+        <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-2 lg:flex-row lg:items-start">
+          <div id="self-introduction" className="flex flex-col gap-4">
+            <section
+              id="greeting"
+              className="flex flex-col-reverse items-center gap-4 lg:flex-row"
+            >
+              <div className="flex flex-col gap-4 text-2xl">
+                <p>
+                  Hello there, my name is{' '}
+                  <span className="text-yellow-400">Thor Galli</span>!
+                </p>
+                <p>
+                  I&apos;m a Full Stack Developer with{' '}
+                  <span className="text-yellow-400">
+                    {yearsWorked} years{' '}
+                    {monthsWorked > 0 && `and ${monthsWorked} months`}
+                  </span>{' '}
+                  of professional experience in Web Development.
+                </p>
               </div>
-            )
-          })}
+              <Image
+                className="mb-2 max-h-[200px] max-w-[200px] rounded-full shadow-[0_0_10px_2px] shadow-yellow-800"
+                src="/assets/images/profile-pic.jpg"
+                alt="profile-picture"
+                width={200}
+                height={200}
+                draggable={false}
+                style={{ marginBottom: '0.5rem' }}
+              />
+            </section>
+            <section id="about-me" className="flex flex-col gap-4">
+              <p>
+                I&apos;m most experienced in{' '}
+                <span className="text-blue-400">TypeScript</span>,{' '}
+                <span className="text-green-400">Node.js</span> and{' '}
+                <span className="text-cyan-400">React</span>, with strong
+                foundations in the basics:{' '}
+                <span className="text-yellow-400">
+                  HTML, CSS, JavaScript, SQL, Git and Linux.
+                </span>
+              </p>
+              <p>
+                My goals are to hone my skills and keep pushing to become an
+                exceptional Software Developer.
+                <br />
+                I&apos;m{' '}
+                <span className="text-yellow-400">
+                  fluent in English and Portuguese
+                </span>
+                . I&apos;ve worked in both big and small teams using the Agile
+                development methodology, Scrum, CI/CD and Git flow.
+              </p>
+              <p>
+                Engineering background: as a child, I was curious and interested
+                in how things worked (to be honest, I still am), this led me to
+                study and graduate in Civil Engineering, where I acquired
+                advanced knowledge of physics, calculus, algebra, geometry,
+                statistics, administration and economy. This combination of
+                knowledge and skills has proven to be very useful in my career
+                as they&apos;ve helped me quickly understand and adapt to new
+                projects.
+              </p>
+              <p>
+                Due to my affinity to computers and gaming, I&apos;ve studied
+                computer science and programming as a hobby for more than 15
+                years, which for the most part was self-taught.
+              </p>
+            </section>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </NavbarLayout>
   )
 }

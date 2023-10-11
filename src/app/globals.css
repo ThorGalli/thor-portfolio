@@ -16,6 +16,12 @@
   }
 }
 
+@layer base {
+  html {
+    @apply font-mono
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
