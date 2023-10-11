@@ -20,7 +20,7 @@ export default function MainCoin() {
   return (
     <div className="mt-5 flex transform flex-col items-center justify-start gap-5">
       <div>Passive Income: {short(passiveIncome, 2)} coins/s</div>
-      <div>AutoClicker Income: {short(autoClickerIncome, 2)} coins/s</div>
+      <div>Hover Income: {short(autoClickerIncome, 2)} coins/s</div>
       <div>Clicks Income: {short(clicksIncome, 2)} coins/s</div>
       <div
         id="coin"
