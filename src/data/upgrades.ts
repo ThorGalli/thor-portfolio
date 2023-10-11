@@ -15,10 +15,10 @@ export const shopUgrades = {
     name: 'Hover Clicker',
     description: 'Generates coins while hovering the button',
     price: 50,
-    multiplier: 2,
+    multiplier: 1,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 5,
+    priceMultiplier: 2,
   },
   clickMultiplier: {
     id: 'clickMultiplier',
@@ -28,6 +28,6 @@ export const shopUgrades = {
     multiplier: 2,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 10,
+    priceMultiplier: 5,
   },
 }
