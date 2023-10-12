@@ -43,7 +43,7 @@ export default function BuyableBar({
       <div
         onClick={() => buy(buyable)}
         className={
-          'flex w-64 select-none flex-col rounded-[6px] border-gray-300 p-1' +
+          'flex w-56 select-none flex-col rounded-[6px] border-gray-300 p-1' +
           ' ' +
           disabledWrapperProps
         }
