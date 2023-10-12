@@ -273,29 +273,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setLastSaveTime(currentRunTime)
   }, [items, upgrades, coins])
 
-  const loadGame = useCallback(() => {
-    setLoading(true)
-    const cookies = parseCookies(null)
-    const saveData = cookies['thor-cookie-saveData']
-    if (!saveData) {
-      setLoading(false)
-      return
-    }
-    const parsedData = JSON.parse(saveData)
-    const { items, upgrades, coins, saveTime } = parsedData
-    const timeOffline = new Date().getTime() - saveTime
-    setResetGame({
-      shouldReset: true,
-      items,
-      upgrades,
-      coins,
-      timeOffline,
-    })
-    setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }, [])
-
   const deleteGameCookie = useCallback(() => {
     setLoading(true)
     setCookie(null, 'thor-cookie-saveData', '', {
@@ -318,9 +295,39 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     }, 500)
   }, [])
 
-  // loadData
   useEffect(() => {
     loadGame()
+  }, [])
+
+  const loadGame = useCallback(() => {
+    setLoading(true)
+    try {
+      const cookies = parseCookies(null)
+      const saveData = cookies['thor-cookie-saveData']
+      if (!saveData) {
+        setLoading(false)
+        return
+      }
+      const parsedData = JSON.parse(saveData)
+      const { items, upgrades, coins, saveTime } = parsedData
+      if (!items || !upgrades || !coins || !saveTime) {
+        setLoading(false)
+        return
+      }
+      const timeOffline = new Date().getTime() - saveTime
+      setResetGame({
+        shouldReset: true,
+        items,
+        upgrades,
+        coins,
+        timeOffline,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
   }, [])
 
   const displayIncome = Math.round(resourceIncome * 100) / 100
