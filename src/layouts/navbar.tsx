@@ -8,6 +8,7 @@ export default function NavbarLayout({
   const navList = [
     <NavButton key="home" route="/" label="Home" />,
     <NavButton key="clicker" route="/clicker" label="Clicker" />,
+    <NavButton key="options" route="/options" label="Options" />,
   ]
 
   return (

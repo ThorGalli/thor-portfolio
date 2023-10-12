@@ -25,6 +25,8 @@ type GameContextProps = {
   clicksIncome: number
   clickCoin: () => void
   saveGame: () => void
+  loadGame: () => void
+  deleteGameCookie: () => void
 }
 
 type Coins = {
@@ -47,14 +49,25 @@ export const GameContext = createContext<GameContextProps>({
   clicksIncome: 0,
   clickCoin: () => null,
   saveGame: () => null,
+  loadGame: () => null,
+  deleteGameCookie: () => null,
 })
 
-const gameFPS = 30
-
+const copy = (obj: any) => JSON.parse(JSON.stringify(obj))
+const cleanGame = {
+  items: copy(shopItems),
+  upgrades: copy(shopUgrades),
+  coins: {
+    fromClicks: 0,
+    fromAuto: 0,
+    fromIncome: 0,
+    spent: 0,
+  },
+}
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const [items, setItems] = useState<ShopItems>(shopItems)
-  const [upgrades, setUpgrades] = useState<ShopUpgrades>(shopUgrades)
+  const [items, setItems] = useState<ShopItems>(copy(shopItems))
+  const [upgrades, setUpgrades] = useState<ShopUpgrades>(copy(shopUgrades))
   const [clicksIncome, setClicksIncome] = useState(0)
   const [frameSwitch, setFrameSwitch] = useState(false)
   const [lastClickTime, setLastClickTime] = useState(performance.now())
@@ -62,6 +75,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [lastClickUpdate, setLastClickUpdate] = useState(performance.now())
   const [lastSaveTime, setLastSaveTime] = useState(performance.now())
   const [last5Clicks, setLast5Clicks] = useState<number[]>([0, 0, 0, 0, 0])
+  const [resetGame, setResetGame] = useState({
+    shouldReset: false,
+    ...cleanGame,
+  })
   const [coins, updateCoins] = useReducer(
     (prev: Coins, next: Partial<Coins>) => {
       return { ...prev, ...next }
@@ -141,6 +158,16 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function update() {
+    if (resetGame.shouldReset) {
+      setItems(copy(resetGame.items))
+      setUpgrades(copy(resetGame.upgrades))
+      updateCoins(copy(resetGame.coins))
+      setResetGame({ ...resetGame, shouldReset: false })
+      setTimeout(() => {
+        setFrameSwitch(!frameSwitch)
+      }, 100)
+      return
+    }
     const currentTime = performance.now()
     updateIncome(currentTime)
     checkForSave(currentTime)
@@ -189,14 +216,11 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }, [coins])
 
   useEffect(() => {
-    const timeOutID = setTimeout(() => {
-      requestAnimationFrame(update)
-    }, 1000 / gameFPS)
-    return () => {
-      clearTimeout(timeOutID)
-    }
+    if (loading) return
+    requestAnimationFrame(update)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [frameSwitch])
+  }, [frameSwitch, loading])
 
   function checkForSave(currentTime: number) {
     if (currentTime - lastSaveTime > 1000 * 60 * 5) {
@@ -220,7 +244,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setLastSaveTime(performance.now())
   }, [items, upgrades, coins])
 
-  function loadGame() {
+  const loadGame = useCallback(() => {
+    setLoading(true)
     const cookies = parseCookies(null)
     const saveData = cookies['thor-cookie-saveData']
     if (!saveData) {
@@ -233,11 +258,40 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       upgrades: savedUpgrades,
       coins: savedCoins,
     } = parsedData
-    setItems(savedItems)
-    setUpgrades(savedUpgrades)
-    updateCoins(savedCoins)
-    setLoading(false)
-  }
+
+    setResetGame({
+      shouldReset: true,
+      items: savedItems,
+      upgrades: savedUpgrades,
+      coins: savedCoins,
+    })
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }, [])
+
+  const deleteGameCookie = useCallback(() => {
+    setLoading(true)
+    setCookie(null, 'thor-cookie-saveData', '', {
+      maxAge: 0,
+      path: '/',
+      sameSite: 'Strict',
+    })
+
+    setItems(copy(shopItems))
+    setUpgrades(copy(shopUgrades))
+
+    setResetGame({
+      shouldReset: true,
+      ...cleanGame,
+    })
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+
+    console.log('deleted cookie')
+  }, [])
 
   // loadData
   useEffect(() => {
@@ -271,6 +325,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       totalCoins,
       clickCoin,
       saveGame,
+      loadGame,
+      deleteGameCookie,
     }),
     [
       loading,
@@ -285,6 +341,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       totalCoins,
       clickCoin,
       saveGame,
+      loadGame,
+      deleteGameCookie,
     ],
   )
 
