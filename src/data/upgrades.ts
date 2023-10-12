@@ -13,10 +13,10 @@ export const shopUgrades = {
     id: 'clickMultiplier',
     name: 'Click Multiplier',
     description: 'Multiplies the value of the clicks (works with hover!)',
-    price: 100,
+    price: 120,
     multiplier: 2,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 5,
+    priceMultiplier: 4,
   },
 }
