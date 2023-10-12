@@ -7,9 +7,11 @@ import { Item, Upgrade } from '@/types'
 export default function BuyableBar({
   buyable,
   counterSide = 'left',
+  visible,
 }: {
   buyable: Item | Upgrade
   counterSide?: 'left' | 'right'
+  visible?: boolean
 }) {
   const {
     getAdjustedPrice: getAdjustedItemPrice,
@@ -26,6 +28,9 @@ export default function BuyableBar({
   const counterJustify =
     counterSide === 'left' ? 'justify-end' : 'justify-start'
 
+  if (!visible) {
+    return null
+  }
   return (
     <div className={'flex items-center justify-end  gap-2 ' + counterPlacement}>
       <div
