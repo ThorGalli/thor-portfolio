@@ -1,6 +1,7 @@
 import { Buyable } from '@/data/buyable'
 import { Item, ShopItems, shopItems } from '@/data/items'
-import { ShopUpgrades, Upgrade, shopUgrades } from '@/data/upgrades'
+import { ShopUpgrades, shopUgrades } from '@/data/upgrades'
+import { parseCookies, setCookie } from 'nookies'
 import React, {
   createContext,
   useCallback,
@@ -12,6 +13,8 @@ import React, {
 } from 'react'
 
 type GameContextProps = {
+  loading: boolean
+  lastSaveTime: number
   items: ShopItems
   upgrades: ShopUpgrades
   buy: (buyable: Buyable) => void
@@ -21,6 +24,7 @@ type GameContextProps = {
   autoIncome: number
   clicksIncome: number
   clickCoin: () => void
+  saveGame: () => void
 }
 
 type Coins = {
@@ -31,6 +35,8 @@ type Coins = {
 }
 
 export const GameContext = createContext<GameContextProps>({
+  loading: true,
+  lastSaveTime: 0,
   items: {},
   upgrades: {},
   buy: () => null,
@@ -40,11 +46,13 @@ export const GameContext = createContext<GameContextProps>({
   autoIncome: 0,
   clicksIncome: 0,
   clickCoin: () => null,
+  saveGame: () => null,
 })
 
 const gameFPS = 30
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
+  const [loading, setLoading] = useState(true)
   const [items, setItems] = useState<ShopItems>(shopItems)
   const [upgrades, setUpgrades] = useState<ShopUpgrades>(shopUgrades)
   const [clicksIncome, setClicksIncome] = useState(0)
@@ -52,6 +60,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [lastClickTime, setLastClickTime] = useState(performance.now())
   const [lastFrameTime, setLastFrameTime] = useState(performance.now())
   const [lastClickUpdate, setLastClickUpdate] = useState(performance.now())
+  const [lastSaveTime, setLastSaveTime] = useState(performance.now())
   const [last5Clicks, setLast5Clicks] = useState<number[]>([0, 0, 0, 0, 0])
   const [coins, updateCoins] = useReducer(
     (prev: Coins, next: Partial<Coins>) => {
@@ -116,9 +125,9 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     }, 0)
   }, [items])
 
-  function updateIncome() {
-    const currentTime = performance.now()
+  function updateIncome(currentTime: number) {
     const clicksCoins = estimateClicksIncome(currentTime)
+
     setClicksIncome(clicksCoins)
     setLastFrameTime(currentTime)
 
@@ -129,7 +138,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       fromIncome: coins.fromIncome + incomeCoins,
       fromAuto: coins.fromAuto + autoCoins,
     })
+  }
 
+  function update() {
+    const currentTime = performance.now()
+    updateIncome(currentTime)
+    checkForSave(currentTime)
     setFrameSwitch(!frameSwitch)
   }
 
@@ -176,13 +190,59 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const timeOutID = setTimeout(() => {
-      requestAnimationFrame(updateIncome)
+      requestAnimationFrame(update)
     }, 1000 / gameFPS)
     return () => {
       clearTimeout(timeOutID)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frameSwitch])
+
+  function checkForSave(currentTime: number) {
+    if (currentTime - lastSaveTime > 1000 * 60 * 5) {
+      setLastSaveTime(currentTime)
+      saveGame()
+    }
+  }
+
+  const saveGame = useCallback(() => {
+    const saveData = {
+      items,
+      upgrades,
+      coins,
+      saveTime: performance.now(),
+    }
+    setCookie(null, 'thor-cookie-saveData', JSON.stringify(saveData), {
+      maxAge: 12 * 30 * 24 * 60 * 60,
+      path: '/',
+      sameSite: 'Strict',
+    })
+    setLastSaveTime(performance.now())
+  }, [items, upgrades, coins])
+
+  function loadGame() {
+    const cookies = parseCookies(null)
+    const saveData = cookies['thor-cookie-saveData']
+    if (!saveData) {
+      setLoading(false)
+      return
+    }
+    const parsedData = JSON.parse(saveData)
+    const {
+      items: savedItems,
+      upgrades: savedUpgrades,
+      coins: savedCoins,
+    } = parsedData
+    setItems(savedItems)
+    setUpgrades(savedUpgrades)
+    updateCoins(savedCoins)
+    setLoading(false)
+  }
+
+  // loadData
+  useEffect(() => {
+    loadGame()
+  }, [])
 
   const displayIncome = Math.round(passiveIncome * 100) / 100
 
@@ -199,6 +259,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   const contextValues = useMemo(
     () => ({
+      loading,
+      lastSaveTime,
       items,
       upgrades,
       passiveIncome: displayIncome,
@@ -208,8 +270,11 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       getAdjustedPrice,
       totalCoins,
       clickCoin,
+      saveGame,
     }),
     [
+      loading,
+      lastSaveTime,
       items,
       upgrades,
       displayIncome,
@@ -219,6 +284,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       getAdjustedPrice,
       totalCoins,
       clickCoin,
+      saveGame,
     ],
   )
 
