@@ -19,4 +19,14 @@ export const shopUgrades = {
     maxAmount: 10,
     priceMultiplier: 4,
   },
+  volunteerClicking: {
+    id: 'volunteerClicking',
+    name: 'Volunteer Clicking',
+    description: 'Volunteers click for you',
+    price: 180,
+    multiplier: 0.001,
+    amount: 0,
+    maxAmount: 10,
+    priceMultiplier: 5,
+  },
 }

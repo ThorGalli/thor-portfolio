@@ -109,4 +109,13 @@ export const shopItems: ShopItems = {
     amount: 0,
     priceMultiplier: 1.15,
   },
+  interBank: {
+    id: 'interBank',
+    name: 'International Bank',
+    price: 200_000_000_000_000,
+    description: 'Lorem Ipsum',
+    income: 500_000_000,
+    amount: 0,
+    priceMultiplier: 1.15,
+  },
 }
