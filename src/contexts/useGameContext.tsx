@@ -95,12 +95,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   )
 
   const coinsPerClick: number = useMemo(() => {
-    const coinValue =
-      BASE_COIN_VALUE *
-      Math.pow(
-        gameState.upgrades.clickMultiplier.multiplier,
-        gameState.upgrades.clickMultiplier.amount,
-      )
+    const clickMultiplier = Math.pow(
+      gameState.upgrades.clickMultiplier.multiplier,
+      gameState.upgrades.clickMultiplier.amount,
+    )
+
+    const coinValue = BASE_COIN_VALUE * clickMultiplier
     return coinValue
   }, [gameState.upgrades])
 
@@ -165,17 +165,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     const elapsedTime =
       currentTime - loopControl.lastFrameTime + gameState.offlineTime
     let resourceCoins = calculateResourceIncome(elapsedTime, resourceIncome)
-    let autoCoins = calculateAutoCoins(
-      elapsedTime,
-      gameState.upgrades,
-      coinsPerClick,
-    )
+    let autoCoins = calculateAutoCoins(elapsedTime, autoIncome)
     if (gameState.offlineTime > 0) {
       const { offlineResourceCoins, offlineAutoCoins } = calculateOfflineIncome(
         gameState.offlineTime,
         resourceIncome,
-        gameState.upgrades,
-        coinsPerClick,
+        autoIncome,
       )
       resourceCoins += offlineResourceCoins
       autoCoins += offlineAutoCoins
@@ -263,32 +258,45 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     loadGameData()
   }, [])
 
-  const displayIncome = Math.round(resourceIncome * 100) / 100
-
   const autoIncome = useMemo(() => {
-    return (
-      Math.round(
-        coinsPerClick *
-          gameState.upgrades.autoClicker.amount *
-          gameState.upgrades.autoClicker.multiplier *
-          100,
-      ) / 100
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coinsPerClick, gameState.upgrades.autoClicker.amount])
+    // Auto Clicker base income
+    const autoClickerCoins =
+      gameState.upgrades.autoClicker.amount *
+      gameState.upgrades.autoClicker.multiplier *
+      coinsPerClick
 
-  const clicksIncome = useMemo(() => {
+    // Volunteer Clicker income multiplier
+    const volunteerMultiplier =
+      1 +
+      gameState.items.volunteer.amount * // 100
+        gameState.upgrades.volunteerClicking.multiplier * // 0.001
+        gameState.upgrades.volunteerClicking.amount // 1
+
+    console.log('volunteerMultiplier', volunteerMultiplier)
+    return autoClickerCoins * volunteerMultiplier
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coinsPerClick, gameState.upgrades, gameState.items])
+
+  const displayClicksIncome = useMemo(() => {
     return loopControl.estimatedClicksIncome
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loopControl.estimatedClicksIncome])
 
+  const displayResourceIncome = useMemo(() => {
+    return Math.round(resourceIncome * 100) / 100
+  }, [resourceIncome])
+
+  const displayAutoIncome = useMemo(() => {
+    return Math.round(autoIncome * 100) / 100
+  }, [autoIncome])
+
   const contextValues = useMemo(
     () => ({
-      clicksIncome,
+      clicksIncome: displayClicksIncome,
       items: gameState.items,
       upgrades: gameState.upgrades,
-      resourceIncome: displayIncome,
-      autoIncome,
+      resourceIncome: displayResourceIncome,
+      autoIncome: displayAutoIncome,
       totalCoins,
       buy,
       getAdjustedPrice,
@@ -299,11 +307,11 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       deleteGameData,
     }),
     [
-      clicksIncome,
+      displayClicksIncome,
       gameState.items,
       gameState.upgrades,
-      displayIncome,
-      autoIncome,
+      displayResourceIncome,
+      displayAutoIncome,
       totalCoins,
       buy,
       getAdjustedPrice,

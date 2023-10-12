@@ -1,4 +1,4 @@
-import { Buyable, LoopControl, ShopUpgrades } from '@/types'
+import { Buyable, LoopControl, ShopItems, ShopUpgrades } from '@/types'
 
 export default function useMathUtils() {
   function short(num: number, decimals = 1) {
@@ -6,7 +6,7 @@ export default function useMathUtils() {
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
     const numShort = (num / Math.pow(1000, unit)).toFixed(decimals)
-    return `${numShort}${units[unit]}`
+    return `${numShort} ${units[unit]}`
   }
 
   function getAdjustedPrice(buyable: Buyable) {
@@ -18,18 +18,13 @@ export default function useMathUtils() {
   function calculateOfflineIncome(
     offlineTime: number,
     resourceIncome: number,
-    upgrades: ShopUpgrades,
-    coinsPerClick: number,
+    autoIncome: number,
   ) {
     const offlineResourceCoins = calculateResourceIncome(
       offlineTime,
       resourceIncome,
     )
-    const offlineAutoCoins = calculateAutoCoins(
-      offlineTime,
-      upgrades,
-      coinsPerClick,
-    )
+    const offlineAutoCoins = calculateAutoCoins(offlineTime, autoIncome)
     return { offlineResourceCoins, offlineAutoCoins }
   }
 
@@ -40,16 +35,8 @@ export default function useMathUtils() {
     return (resourceIncome * elapsedTime) / 1000
   }
 
-  function calculateAutoCoins(
-    elapsedTime: number,
-    upgrades: ShopUpgrades,
-    coinsPerClick: number,
-  ) {
-    const coinsToAdd =
-      upgrades.autoClicker.amount *
-      upgrades.autoClicker.multiplier *
-      coinsPerClick
-    return (elapsedTime * coinsToAdd) / 1000 || 0
+  function calculateAutoCoins(elapsedTime: number, autoIncome: number) {
+    return (elapsedTime * autoIncome) / 1000 || 0
   }
 
   function estimateClicksIncome(
