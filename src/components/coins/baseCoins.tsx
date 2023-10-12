@@ -9,20 +9,24 @@ export default function BaseCoin({
 }) {
   return (
     <div className="relative flex transform justify-center">
-      <svg width={size} height={size} viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="30" fill={color} />
-        <circle
-          cx="32"
-          cy="32"
-          r="30"
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="4"
-        />
-      </svg>
+      <div
+        className={`h-20 w-20 rounded-full`}
+        style={{
+          backgroundColor: color,
+          background: `linear-gradient(45deg, ${color} 0%, ${color} 50%, white 100%)`,
+          width: size,
+          height: size,
+          borderWidth: size / 15,
+          borderColor: strokeColor,
+        }}
+      />
       <p
         className="absolute select-none self-center"
-        style={{ color: strokeColor, fontSize: size * 0.7 }}
+        style={{
+          color: strokeColor,
+          fontSize: size * 0.7,
+          lineHeight: 0,
+        }}
       >
         $
       </p>
