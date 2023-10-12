@@ -6,7 +6,7 @@ export default function SaveGameButton() {
   const { loading, saveGame, lastSaveTime } = useGameContext()
   const timeSinceLastSave = (performance.now() - lastSaveTime) / 1000
 
-  const saveInterval = 1
+  const saveInterval = 10
   const canSaveAgain = timeSinceLastSave > saveInterval
 
   const width =
