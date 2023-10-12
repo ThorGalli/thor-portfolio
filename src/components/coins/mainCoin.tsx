@@ -5,12 +5,12 @@ import BaseCoin from './baseCoins'
 import SaveGameButton from '../settings/saveGameButton'
 
 export default function MainCoin() {
-  const { resourceIncome, autoIncome, totalCoins, clicksIncome, clickCoin } =
+  const { resourceIncome, autoIncome, totalCoins, clicksIncome, onClickCoin } =
     useGameContext()
   const { short } = useMathUtils()
 
   function handleClick() {
-    clickCoin()
+    onClickCoin()
   }
 
   const totalIncome = resourceIncome + autoIncome + clicksIncome
