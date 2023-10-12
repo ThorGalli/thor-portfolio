@@ -13,5 +13,5 @@ export default function UpgradeList() {
     ))
   }, [upgrades])
 
-  return <BuyableList list={upgradeBars} />
+  return <BuyableList title="Upgrades" list={upgradeBars} />
 }

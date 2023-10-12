@@ -13,5 +13,5 @@ export default function ItemList() {
     ))
   }, [items])
 
-  return <BuyableList list={itemBars} />
+  return <BuyableList title={'Resources'} list={itemBars} />
 }

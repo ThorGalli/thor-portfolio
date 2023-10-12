@@ -31,10 +31,7 @@ export default function ClickerGame() {
         </button>
       </div>
       <div className="flex justify-around gap-5 lg:flex-row">
-        <div className="hidden flex-col gap-2 lg:flex">
-          <p className="h-fit rounded-[14px] border-8 border-slate-800 bg-slate-950 px-2 py-4 text-center text-yellow-200">
-            Upgrades
-          </p>
+        <div className="hidden lg:flex">
           <UpgradeList />
         </div>
         {loading ? (
@@ -44,10 +41,7 @@ export default function ClickerGame() {
         ) : (
           <MainCoin />
         )}
-        <div className="hidden flex-col gap-2 lg:flex">
-          <p className="h-fit rounded-[14px] border-8 border-slate-800 bg-slate-950 px-2 py-4 text-center text-yellow-200">
-            Resources
-          </p>
+        <div className="hidden lg:flex">
           <ItemList />
         </div>
       </div>
@@ -57,7 +51,6 @@ export default function ClickerGame() {
           isOpen={upgradeDrawerOpen}
           setIsOpen={setUpgradeDrawerOpen}
           side="left"
-          title="Upgrades"
         >
           <UpgradeList />
         </Drawer>
@@ -68,7 +61,6 @@ export default function ClickerGame() {
           isOpen={itemDrawerOpen}
           setIsOpen={setItemDrawerOpen}
           side="right"
-          title="Resources"
         >
           <ItemList />
         </Drawer>

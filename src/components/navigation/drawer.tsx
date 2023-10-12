@@ -31,19 +31,14 @@ export default function Drawer({
         }`}
       >
         <div className="relative flex h-full max-w-lg flex-col gap-2 overflow-y-scroll bg-slate-900">
-          {title && (
-            <header className="flex h-fit items-center justify-between rounded-md border-2 border-yellow-800 px-2 py-4 text-yellow-200 lg:hidden">
-              {title}
-              <button
-                onClick={() => {
-                  setIsOpen(false)
-                }}
-                className="text-4xl font-bold text-orange-700"
-              >
-                X
-              </button>
-            </header>
-          )}
+          <button
+            onClick={() => {
+              setIsOpen(false)
+            }}
+            className="absolute right-4 top-3 text-5xl font-bold text-orange-700"
+          >
+            X
+          </button>
           {children}
         </div>
       </div>
