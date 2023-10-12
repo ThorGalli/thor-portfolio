@@ -18,12 +18,12 @@
 
 @layer base {
   html {
-    @apply font-mono
+    @apply font-mono;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: white;
   background: linear-gradient(
       to bottom,
       transparent,
