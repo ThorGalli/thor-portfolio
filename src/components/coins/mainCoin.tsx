@@ -13,7 +13,8 @@ export default function MainCoin() {
     onClickCoin()
   }
 
-  const totalIncome = resourceIncome + autoIncome + clicksIncome
+  const totalIncome =
+    Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
   return (
     <div className="flex transform flex-col items-center justify-start gap-2">
       <SaveGameButton />
