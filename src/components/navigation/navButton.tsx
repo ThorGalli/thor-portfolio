@@ -24,7 +24,7 @@ export default function NavButton({
   return (
     <div
       className={
-        'flex h-full cursor-pointer flex-col items-center justify-center border-y-4  bg-slate-800  px-2 text-lg hover:bg-slate-700 ' +
+        'flex h-full flex-1 cursor-pointer flex-col items-center justify-center border-y-4  bg-slate-800  px-2 text-lg hover:bg-slate-700 ' +
         buttonClasses
       }
       onClick={() => router.push(route)}
