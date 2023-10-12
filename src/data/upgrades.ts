@@ -1,14 +1,3 @@
-import { Buyable } from './buyable'
-
-export type Upgrade = {
-  multiplier: number
-  maxAmount: number
-} & Buyable
-
-export type ShopUpgrades = {
-  [key: string]: Upgrade
-}
-
 export const shopUgrades = {
   autoClicker: {
     id: 'autoClicker',

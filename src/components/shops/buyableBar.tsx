@@ -2,13 +2,13 @@ import { useGameContext } from '@/contexts/useGameContext'
 import useMathUtils from '@/utils/useMathUtils'
 import React from 'react'
 import BaseCoin from '../coins/baseCoins'
-import { Buyable } from '@/data/buyable'
+import { Item, Upgrade } from '@/types'
 
 export default function BuyableBar({
   buyable,
   counterSide = 'left',
 }: {
-  buyable: Buyable
+  buyable: Item | Upgrade
   counterSide?: 'left' | 'right'
 }) {
   const {

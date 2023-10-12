@@ -1,12 +1,4 @@
-import { Buyable } from './buyable'
-
-export type Item = {
-  income: number
-} & Buyable
-
-export type ShopItems = {
-  [key: string]: Item
-}
+import { ShopItems } from '@/types'
 
 export const shopItems: ShopItems = {
   volunteer: {
