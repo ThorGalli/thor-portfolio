@@ -20,7 +20,7 @@ type GameContextProps = {
   buy: (buyable: Buyable) => void
   getAdjustedPrice: (buyable: Buyable) => number
   totalCoins: number
-  passiveIncome: number
+  resourceIncome: number
   autoIncome: number
   clicksIncome: number
   clickCoin: () => void
@@ -32,7 +32,7 @@ type GameContextProps = {
 type Coins = {
   fromClicks: number
   fromAuto: number
-  fromIncome: number
+  fromResources: number
   spent: number
 }
 
@@ -44,7 +44,7 @@ export const GameContext = createContext<GameContextProps>({
   buy: () => null,
   getAdjustedPrice: () => 0,
   totalCoins: 0,
-  passiveIncome: 0,
+  resourceIncome: 0,
   autoIncome: 0,
   clicksIncome: 0,
   clickCoin: () => null,
@@ -60,7 +60,7 @@ const cleanGame = {
   coins: {
     fromClicks: 0,
     fromAuto: 0,
-    fromIncome: 0,
+    fromResources: 0,
     spent: 0,
   },
 }
@@ -75,8 +75,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [lastClickUpdate, setLastClickUpdate] = useState(performance.now())
   const [lastSaveTime, setLastSaveTime] = useState(performance.now())
   const [last5Clicks, setLast5Clicks] = useState<number[]>([0, 0, 0, 0, 0])
+  const [offlineTime, setOfflineTime] = useState(0)
   const [resetGame, setResetGame] = useState({
     shouldReset: false,
+    timeOffline: 0,
     ...cleanGame,
   })
   const [coins, updateCoins] = useReducer(
@@ -86,7 +88,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     {
       fromClicks: 0,
       fromAuto: 0,
-      fromIncome: 0,
+      fromResources: 0,
       spent: 0,
     },
   )
@@ -100,7 +102,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }, [upgrades])
 
   const totalCoins = Math.round(
-    coins.fromClicks + coins.fromIncome + coins.fromAuto - coins.spent,
+    coins.fromClicks + coins.fromResources + coins.fromAuto - coins.spent,
   )
 
   const getAdjustedPrice = useCallback(
@@ -136,7 +138,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     [items, coins],
   )
 
-  const passiveIncome = useMemo(() => {
+  const resourceIncome = useMemo(() => {
     return Object.values(items).reduce((total, item: Item) => {
       return total + item.income * item.amount
     }, 0)
@@ -144,28 +146,47 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   function updateIncome(currentTime: number) {
     const clicksCoins = estimateClicksIncome(currentTime)
-
-    setClicksIncome(clicksCoins)
-    setLastFrameTime(currentTime)
-
-    const elapsedTime = currentTime - lastFrameTime
-    const incomeCoins = calculateIncomeCoins(elapsedTime)
-    const autoCoins = calculateAutoCoins(elapsedTime)
+    const elapsedTime = currentTime - lastFrameTime + offlineTime
+    let resourceCoins = calculateResourceIncome(elapsedTime)
+    let autoCoins = calculateAutoCoins(elapsedTime)
+    if (offlineTime > 0) {
+      const { offlineResourceCoins, offlineAutoCoins } =
+        calculateOfflineIncome(offlineTime)
+      resourceCoins += offlineResourceCoins
+      autoCoins += offlineAutoCoins
+      setOfflineTime(0)
+    }
     updateCoins({
-      fromIncome: coins.fromIncome + incomeCoins,
+      fromResources: coins.fromResources + resourceCoins,
       fromAuto: coins.fromAuto + autoCoins,
     })
+    setClicksIncome(clicksCoins)
+    setLastFrameTime(currentTime)
+  }
+
+  function updateDataFromLoad() {
+    setItems(copy(resetGame.items))
+    setUpgrades(copy(resetGame.upgrades))
+    setOfflineTime(resetGame.timeOffline)
+
+    const { fromClicks, fromResources, fromAuto, spent } = copy(resetGame.coins)
+
+    updateCoins({
+      fromClicks,
+      fromResources,
+      fromAuto,
+      spent,
+    })
+
+    setResetGame({ ...resetGame, shouldReset: false })
+    setTimeout(() => {
+      setFrameSwitch(!frameSwitch)
+    }, 100)
   }
 
   function update() {
     if (resetGame.shouldReset) {
-      setItems(copy(resetGame.items))
-      setUpgrades(copy(resetGame.upgrades))
-      updateCoins(copy(resetGame.coins))
-      setResetGame({ ...resetGame, shouldReset: false })
-      setTimeout(() => {
-        setFrameSwitch(!frameSwitch)
-      }, 100)
+      updateDataFromLoad()
       return
     }
     const currentTime = performance.now()
@@ -174,8 +195,14 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setFrameSwitch(!frameSwitch)
   }
 
-  function calculateIncomeCoins(elapsedTime: number) {
-    return (passiveIncome * elapsedTime) / 1000
+  function calculateOfflineIncome(offlineTime: number) {
+    const offlineResourceCoins = calculateResourceIncome(offlineTime)
+    const offlineAutoCoins = calculateAutoCoins(offlineTime)
+    return { offlineResourceCoins, offlineAutoCoins }
+  }
+
+  function calculateResourceIncome(elapsedTime: number) {
+    return (resourceIncome * elapsedTime) / 1000
   }
 
   function calculateAutoCoins(elapsedTime: number) {
@@ -230,18 +257,20 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const saveGame = useCallback(() => {
+    const currentDateTimeInMS = new Date().getTime()
+    const currentRunTime = performance.now()
     const saveData = {
       items,
       upgrades,
       coins,
-      saveTime: performance.now(),
+      saveTime: currentDateTimeInMS,
     }
     setCookie(null, 'thor-cookie-saveData', JSON.stringify(saveData), {
       maxAge: 12 * 30 * 24 * 60 * 60,
       path: '/',
       sameSite: 'Strict',
     })
-    setLastSaveTime(performance.now())
+    setLastSaveTime(currentRunTime)
   }, [items, upgrades, coins])
 
   const loadGame = useCallback(() => {
@@ -253,17 +282,14 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       return
     }
     const parsedData = JSON.parse(saveData)
-    const {
-      items: savedItems,
-      upgrades: savedUpgrades,
-      coins: savedCoins,
-    } = parsedData
-
+    const { items, upgrades, coins, saveTime } = parsedData
+    const timeOffline = new Date().getTime() - saveTime
     setResetGame({
       shouldReset: true,
-      items: savedItems,
-      upgrades: savedUpgrades,
-      coins: savedCoins,
+      items,
+      upgrades,
+      coins,
+      timeOffline,
     })
     setTimeout(() => {
       setLoading(false)
@@ -283,14 +309,13 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
     setResetGame({
       shouldReset: true,
+      timeOffline: 0,
       ...cleanGame,
     })
 
     setTimeout(() => {
       setLoading(false)
     }, 500)
-
-    console.log('deleted cookie')
   }, [])
 
   // loadData
@@ -298,7 +323,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     loadGame()
   }, [])
 
-  const displayIncome = Math.round(passiveIncome * 100) / 100
+  const displayIncome = Math.round(resourceIncome * 100) / 100
 
   const autoIncome = useMemo(() => {
     return (
@@ -317,7 +342,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       lastSaveTime,
       items,
       upgrades,
-      passiveIncome: displayIncome,
+      resourceIncome: displayIncome,
       autoIncome,
       clicksIncome,
       buy,

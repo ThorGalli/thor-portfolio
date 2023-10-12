@@ -5,7 +5,7 @@ import BaseCoin from './baseCoins'
 import SaveGameButton from '../settings/saveGameButton'
 
 export default function MainCoin() {
-  const { passiveIncome, autoIncome, totalCoins, clicksIncome, clickCoin } =
+  const { resourceIncome, autoIncome, totalCoins, clicksIncome, clickCoin } =
     useGameContext()
   const { short } = useMathUtils()
 
@@ -13,7 +13,7 @@ export default function MainCoin() {
     clickCoin()
   }
 
-  const totalIncome = passiveIncome + autoIncome + clicksIncome
+  const totalIncome = resourceIncome + autoIncome + clicksIncome
   return (
     <div className="flex transform flex-col items-center justify-start gap-2">
       <SaveGameButton />
@@ -21,7 +21,7 @@ export default function MainCoin() {
         <p className="text-yellow-200">Income</p>
       </div>
       <div className="flex w-full justify-between">
-        <p>Resources:&nbsp;</p> <p>{short(passiveIncome, 2)} coins/s</p>
+        <p>Resources:&nbsp;</p> <p>{short(resourceIncome, 2)} coins/s</p>
       </div>
       <div className="flex w-full justify-between">
         <p>Auto Clicker:&nbsp;</p>
