@@ -9,8 +9,6 @@ import { useGameContext } from '@/contexts/useGameContext'
 export default function ClickerGame() {
   const [upgradeDrawerOpen, setUpgradeDrawerOpen] = useState(false)
   const [itemDrawerOpen, setItemDrawerOpen] = useState(false)
-  const drawerButtonClass =
-    'h-fit rounded-[14px] border-4 border-yellow-800 px-2 py-4 text-yellow-200 bg-yellow-700'
 
   const { loading } = useGameContext()
 
@@ -18,13 +16,13 @@ export default function ClickerGame() {
     <div className="flex flex-col gap-2">
       <div className="flex justify-between lg:hidden">
         <button
-          className={drawerButtonClass}
+          className="btn-yellow rounded-[14px] border-4 px-2 py-4"
           onClick={() => setUpgradeDrawerOpen(!upgradeDrawerOpen)}
         >
           Upgrades
         </button>
         <button
-          className={drawerButtonClass}
+          className="btn-yellow rounded-[14px] border-4 px-2 py-4"
           onClick={() => setItemDrawerOpen(!itemDrawerOpen)}
         >
           Resources

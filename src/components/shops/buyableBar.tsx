@@ -20,9 +20,6 @@ export default function BuyableBar({
   const adjustedPrice = getAdjustedItemPrice(buyable)
 
   const isDisabled = totalCoins < adjustedPrice
-  const disabledWrapperProps = isDisabled
-    ? 'bg-slate-950 text-slate-500 hover:bg-slate-900'
-    : 'cursor-pointer bg-yellow-900 hover:bg-yellow-700 active:bg-yellow-950 '
 
   const counterPlacement =
     counterSide === 'left' ? 'flex-column' : 'flex-row-reverse'
@@ -40,13 +37,10 @@ export default function BuyableBar({
       >
         {buyable.amount}
       </div>
-      <div
+      <button
         onClick={() => buy(buyable)}
-        className={
-          'flex w-56 select-none flex-col rounded-[6px] border-gray-300 p-1' +
-          ' ' +
-          disabledWrapperProps
-        }
+        className={'btn-yellow btn w-56 flex-col rounded-[6px] p-1 text-left'}
+        disabled={isDisabled}
       >
         <div className="text-lg">{buyable.name}</div>
         <div
@@ -58,7 +52,7 @@ export default function BuyableBar({
           {short(adjustedPrice)}
           <BaseCoin size={20} />
         </div>
-      </div>
+      </button>
     </div>
   )
 }
