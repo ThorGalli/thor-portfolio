@@ -205,9 +205,17 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     const { fromClicks, fromResources, fromAuto, spent } = copy(
       cacheGameData.coins,
     )
+    const newItems = getInitialGame().items
+    const newUpgrades = getInitialGame().upgrades
+    Object.entries(cacheGameData.items).forEach(([key, value]) => {
+      newItems[key].amount = value.amount
+    })
+    Object.entries(cacheGameData.upgrades).forEach(([key, value]) => {
+      newUpgrades[key].amount = value.amount
+    })
     setGameState({
-      items: copy(cacheGameData.items),
-      upgrades: copy(cacheGameData.upgrades),
+      items: newItems,
+      upgrades: newUpgrades,
       offlineTime: cacheGameData.offlineTime,
       coins: {
         fromClicks,
