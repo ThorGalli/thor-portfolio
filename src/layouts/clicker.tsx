@@ -9,17 +9,25 @@ export default function ClickerGame() {
   const [upgradeDrawerOpen, setUpgradeDrawerOpen] = useState(false)
   const [itemDrawerOpen, setItemDrawerOpen] = useState(false)
   const drawerButtonClass =
-    'h-fit rounded-md border-2 border-yellow-800 px-2 py-4 text-yellow-200 lg:hidden'
+    'h-fit rounded-md border-2 border-yellow-800 px-2 py-4 text-yellow-200'
 
   return (
-    <div>
-      <div className="flex justify-around gap-5 lg:flex-row">
+    <div className="flex flex-col">
+      <div className="flex justify-between lg:hidden">
         <button
           className={drawerButtonClass}
           onClick={() => setUpgradeDrawerOpen(!upgradeDrawerOpen)}
         >
           Upgrades
         </button>
+        <button
+          className={drawerButtonClass}
+          onClick={() => setItemDrawerOpen(!itemDrawerOpen)}
+        >
+          Resources
+        </button>
+      </div>
+      <div className="flex justify-around gap-5 lg:flex-row">
         <div className="hidden flex-col gap-2 lg:flex">
           <p className="h-fit rounded-md border-2 border-yellow-800 px-2 py-4 text-yellow-200">
             Upgrades
@@ -33,12 +41,6 @@ export default function ClickerGame() {
           </p>
           <ItemList />
         </div>
-        <button
-          className={drawerButtonClass}
-          onClick={() => setItemDrawerOpen(!itemDrawerOpen)}
-        >
-          Resources
-        </button>
       </div>
 
       <div className="lg:hidden">

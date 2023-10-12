@@ -18,16 +18,14 @@ type GameContextProps = {
   getAdjustedPrice: (buyable: Buyable) => number
   totalCoins: number
   passiveIncome: number
-  hoverIncome: number
+  autoIncome: number
   clicksIncome: number
   clickCoin: () => void
-  setMouseOrTouchOnCoin: React.Dispatch<React.SetStateAction<boolean>>
-  mouseOrTouchOnCoin: boolean
 }
 
 type Coins = {
   fromClicks: number
-  fromHover: number
+  fromAuto: number
   fromIncome: number
   spent: number
 }
@@ -39,11 +37,9 @@ export const GameContext = createContext<GameContextProps>({
   getAdjustedPrice: () => 0,
   totalCoins: 0,
   passiveIncome: 0,
-  hoverIncome: 0,
+  autoIncome: 0,
   clicksIncome: 0,
   clickCoin: () => null,
-  setMouseOrTouchOnCoin: () => null,
-  mouseOrTouchOnCoin: false,
 })
 
 const gameFPS = 30
@@ -52,7 +48,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<ShopItems>(shopItems)
   const [upgrades, setUpgrades] = useState<ShopUpgrades>(shopUgrades)
   const [clicksIncome, setClicksIncome] = useState(0)
-  const [mouseOrTouchOnCoin, setMouseOrTouchOnCoin] = useState(false)
   const [frameSwitch, setFrameSwitch] = useState(false)
   const [lastClickTime, setLastClickTime] = useState(performance.now())
   const [lastFrameTime, setLastFrameTime] = useState(performance.now())
@@ -64,7 +59,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     },
     {
       fromClicks: 0,
-      fromHover: 0,
+      fromAuto: 0,
       fromIncome: 0,
       spent: 0,
     },
@@ -79,7 +74,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   }, [upgrades])
 
   const totalCoins = Math.round(
-    coins.fromClicks + coins.fromIncome + coins.fromHover - coins.spent,
+    coins.fromClicks + coins.fromIncome + coins.fromAuto - coins.spent,
   )
 
   const getAdjustedPrice = useCallback(
@@ -129,10 +124,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
     const elapsedTime = currentTime - lastFrameTime
     const incomeCoins = calculateIncomeCoins(elapsedTime)
-    const hoverCoins = calculateHoverCoins(elapsedTime)
+    const autoCoins = calculateAutoCoins(elapsedTime)
     updateCoins({
       fromIncome: coins.fromIncome + incomeCoins,
-      fromHover: coins.fromHover + hoverCoins,
+      fromAuto: coins.fromAuto + autoCoins,
     })
 
     setFrameSwitch(!frameSwitch)
@@ -142,12 +137,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     return (passiveIncome * elapsedTime) / 1000
   }
 
-  function calculateHoverCoins(elapsedTime: number) {
+  function calculateAutoCoins(elapsedTime: number) {
     const coinsToAdd =
-      upgrades.hoverClicker.amount *
-      upgrades.hoverClicker.multiplier *
+      upgrades.autoClicker.amount *
+      upgrades.autoClicker.multiplier *
       coinsPerClick
-    return mouseOrTouchOnCoin ? (elapsedTime * coinsToAdd) / 1000 : 0
+    return (elapsedTime * coinsToAdd) / 1000 || 0
   }
 
   function estimateClicksIncome(currentTime: number) {
@@ -191,43 +186,39 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
   const displayIncome = Math.round(passiveIncome * 100) / 100
 
-  const hoverIncome = useMemo(() => {
-    return mouseOrTouchOnCoin
-      ? Math.round(
-          coinsPerClick *
-            upgrades.hoverClicker.amount *
-            upgrades.hoverClicker.multiplier *
-            100,
-        ) / 100
-      : 0
-  }, [coinsPerClick, mouseOrTouchOnCoin, upgrades.hoverClicker.amount])
+  const autoIncome = useMemo(() => {
+    return (
+      Math.round(
+        coinsPerClick *
+          upgrades.autoClicker.amount *
+          upgrades.autoClicker.multiplier *
+          100,
+      ) / 100
+    )
+  }, [coinsPerClick, upgrades.autoClicker.amount])
 
   const contextValues = useMemo(
     () => ({
       items,
       upgrades,
       passiveIncome: displayIncome,
-      hoverIncome,
+      autoIncome,
       clicksIncome,
       buy,
       getAdjustedPrice,
       totalCoins,
       clickCoin,
-      mouseOrTouchOnCoin,
-      setMouseOrTouchOnCoin,
     }),
     [
       items,
       upgrades,
       displayIncome,
-      hoverIncome,
+      autoIncome,
       clicksIncome,
       buy,
       getAdjustedPrice,
       totalCoins,
       clickCoin,
-      mouseOrTouchOnCoin,
-      setMouseOrTouchOnCoin,
     ],
   )
 
