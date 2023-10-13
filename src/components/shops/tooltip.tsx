@@ -1,8 +1,8 @@
 'use client'
 import { useGameContext } from '@/contexts/useGameContext'
 import { getUpgradeInfo } from '@/data/upgrades'
+import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { Item, Upgrade } from '@/types'
-import useMathUtils from '@/utils/useMathUtils'
 
 export default function Tooltip({
   side,
@@ -11,7 +11,7 @@ export default function Tooltip({
   side: 'left' | 'right'
   buyable: Item | Upgrade
 }) {
-  const { short } = useMathUtils()
+  const { short } = useClickerCalculations()
   const { items } = useGameContext()
 
   const toolTipPlacement =

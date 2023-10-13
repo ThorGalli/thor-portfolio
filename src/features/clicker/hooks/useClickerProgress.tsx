@@ -4,7 +4,7 @@ import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
 
-export default function useGameData() {
+export default function useClickerProgress() {
   const [cacheGameData, setCacheGameData] = useState<GameState>({
     shouldReset: false,
     ...getInitialGame(),

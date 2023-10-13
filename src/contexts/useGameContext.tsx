@@ -1,4 +1,6 @@
 import { getInitialGame, getInitialControl, copy } from '@/data/initialValues'
+import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
+import useClickerProgress from '@/features/clicker/hooks/useClickerProgress'
 import {
   GameContextProps,
   Coins,
@@ -9,8 +11,7 @@ import {
   ShopItems,
   ShopUpgrades,
 } from '@/types'
-import useMathUtils from '@/utils/useMathUtils'
-import useGameData from '@/utils/useGameData'
+
 import React, {
   createContext,
   useCallback,
@@ -49,7 +50,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     calculateResourceIncome,
     calculateAutoCoins,
     estimateClicksIncome,
-  } = useMathUtils()
+  } = useClickerCalculations()
 
   const {
     loading,
@@ -59,7 +60,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     setCacheGameData,
     cacheGameData,
     lastSaveTime,
-  } = useGameData()
+  } = useClickerProgress()
 
   // Loop Control state variables
   const [loopControl, setLoopControl] = useReducer(

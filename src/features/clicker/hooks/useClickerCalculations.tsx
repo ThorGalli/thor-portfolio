@@ -1,6 +1,6 @@
-import { Buyable, LoopControl, ShopItems, ShopUpgrades } from '@/types'
+import { Buyable, LoopControl } from '@/types'
 
-export default function useMathUtils() {
+export default function useClickerCalculations() {
   function short(num: number, decimals = 1) {
     if (num < 1000) return num
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
