@@ -1,6 +1,6 @@
 export default function BaseCoin({
-  color = '#FFD700',
-  strokeColor = '#ca8a04',
+  color = '#EAB308',
+  strokeColor = '#CA8A04',
   size = 128,
 }: {
   color?: string
@@ -8,7 +8,7 @@ export default function BaseCoin({
   size?: number
 }) {
   return (
-    <div className="relative flex transform justify-center">
+    <div className="relative flex transform justify-center rounded-full bg-yellow-700">
       <div
         className={`h-20 w-20 rounded-full`}
         style={{
@@ -26,6 +26,7 @@ export default function BaseCoin({
           color: strokeColor,
           fontSize: size * 0.7,
           lineHeight: 0,
+          textShadow: `0 1px 8px white`,
         }}
       >
         $
