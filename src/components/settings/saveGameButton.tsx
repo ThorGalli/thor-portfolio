@@ -1,9 +1,9 @@
 'use client'
 
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 
 export default function SaveGameButton() {
-  const { onSave, loading, lastSaveTime } = useGameContext()
+  const { onSave, loading, lastSaveTime } = useClickerContext()
   const timeSinceLastSave = (performance.now() - lastSaveTime) / 1000
 
   const saveInterval = 10

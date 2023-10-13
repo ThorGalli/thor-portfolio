@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import { GameProvider } from '@/contexts/useGameContext'
+import { ClickerProvider } from '@/contexts/useClickerContext'
 
 export function ProvidersWrapper({ children }: { children: React.ReactNode }) {
-  return <GameProvider>{children}</GameProvider>
+  return <ClickerProvider>{children}</ClickerProvider>
 }

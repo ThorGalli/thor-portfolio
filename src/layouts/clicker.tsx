@@ -4,13 +4,13 @@ import MainCoin from '@/components/coins/mainCoin'
 import ItemList from '@/components/shops/itemList'
 import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 
 export default function ClickerGame() {
   const [upgradeDrawerOpen, setUpgradeDrawerOpen] = useState(false)
   const [itemDrawerOpen, setItemDrawerOpen] = useState(false)
 
-  const { loading } = useGameContext()
+  const { loading } = useClickerContext()
 
   return (
     <div className="flex flex-col gap-2">

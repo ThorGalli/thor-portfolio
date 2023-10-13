@@ -1,12 +1,12 @@
 'use client'
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import BaseCoin from './baseCoins'
 import SaveGameButton from '../settings/saveGameButton'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 
 export default function MainCoin() {
   const { resourceIncome, autoIncome, totalCoins, clicksIncome, onClickCoin } =
-    useGameContext()
+    useClickerContext()
   const { short } = useClickerCalculations()
 
   function handleClick() {

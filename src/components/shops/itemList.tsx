@@ -1,11 +1,11 @@
 'use client'
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import { useMemo } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
 
 export default function ItemList() {
-  const { items } = useGameContext()
+  const { items } = useClickerContext()
 
   const itemList = useMemo(() => {
     return Object.values(items).map((item) => item)

@@ -1,11 +1,11 @@
 'use client'
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import { useMemo } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
 
 export default function UpgradeList() {
-  const { upgrades } = useGameContext()
+  const { upgrades } = useClickerContext()
 
   const upgradeList = useMemo(() => {
     return Object.values(upgrades).map((upgrade) => upgrade)

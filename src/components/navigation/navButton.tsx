@@ -1,5 +1,5 @@
 'use client'
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { useRouter, usePathname } from 'next/navigation'
 export default function NavButton({
@@ -12,7 +12,7 @@ export default function NavButton({
   const router = useRouter()
   const path = usePathname()
 
-  const { totalCoins } = useGameContext()
+  const { totalCoins } = useClickerContext()
   const { short } = useClickerCalculations()
   const isClicker = route === '/clicker'
   const isCurrent = path === route

@@ -1,11 +1,11 @@
 import { getInitialGame } from '@/features/clicker/data/initialValues'
-import { GameState } from '@/types'
+import { ClickerState } from '@/types'
 import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
 
 export default function useClickerProgress() {
-  const [cacheGameData, setCacheGameData] = useState<GameState>({
+  const [cacheGameData, setCacheGameData] = useState<ClickerState>({
     shouldReset: false,
     ...getInitialGame(),
   })
@@ -58,7 +58,7 @@ export default function useClickerProgress() {
     }, 500)
   }
 
-  function saveGameData(gameState: GameState) {
+  function saveGameData(gameState: ClickerState) {
     const currentDateTimeInMS = new Date().getTime()
     const currentRunTime = performance.now()
     const compactItems = Object.fromEntries(

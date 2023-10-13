@@ -34,7 +34,7 @@ export type Coins = {
   spent: number
 }
 
-export type GameContextProps = {
+export type ClickerContextProps = {
   items: ShopItems
   upgrades: ShopUpgrades
   buy: (buyable: Item | Upgrade) => void
@@ -59,7 +59,7 @@ export type LoopControl = {
   last5Clicks: number[]
 }
 
-export type GameState = {
+export type ClickerState = {
   items: ShopItems
   upgrades: ShopUpgrades
   coins: Coins

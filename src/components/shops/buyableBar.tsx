@@ -1,4 +1,4 @@
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import React, { useState } from 'react'
 import BaseCoin from '../coins/baseCoins'
 import { Item, Upgrade } from '@/types'
@@ -18,7 +18,7 @@ export default function BuyableBar({
     getAdjustedPrice: getAdjustedItemPrice,
     totalCoins,
     buy,
-  } = useGameContext()
+  } = useClickerContext()
   const { short } = useClickerCalculations()
   const adjustedPrice = getAdjustedItemPrice(buyable)
   const [isHovered, setHovered] = useState(false)

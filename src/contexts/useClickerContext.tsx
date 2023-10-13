@@ -1,12 +1,16 @@
-import { getInitialGame, getInitialControl, copy } from '@/features/clicker/data/initialValues'
+import {
+  getInitialGame,
+  getInitialControl,
+  copy,
+} from '@/features/clicker/data/initialValues'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import useClickerProgress from '@/features/clicker/hooks/useClickerProgress'
 import {
-  GameContextProps,
+  ClickerContextProps,
   Coins,
   Item,
   LoopControl,
-  GameState,
+  ClickerState,
   Upgrade,
   ShopItems,
   ShopUpgrades,
@@ -22,7 +26,7 @@ import React, {
   useState,
 } from 'react'
 
-export const GameContext = createContext<GameContextProps>({
+export const ClickerContext = createContext<ClickerContextProps>({
   items: {},
   upgrades: {},
   buy: () => null,
@@ -42,7 +46,11 @@ const BASE_COIN_VALUE = 1
 const GAME_FPS = 30
 const FRAME_TIME = 1000 / GAME_FPS
 
-export const GameProvider = ({ children }: { children: React.ReactNode }) => {
+export const ClickerProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
   // Custom utility hooks
   const {
     getAdjustedPrice,
@@ -76,7 +84,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   // Game state variables
   const [gameState, setGameState] = useReducer(
     (
-      prev: GameState,
+      prev: ClickerState,
       next: {
         items?: ShopItems
         upgrades?: ShopUpgrades
@@ -259,6 +267,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     loadGameData()
   }, [])
 
+  // Variables for Display
+  //
+  //
+  // ====================================================================
   const autoIncome = useMemo(() => {
     // Auto Clicker base income
     const autoClickerCoins =
@@ -289,6 +301,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const displayAutoIncome = useMemo(() => {
     return Math.round(autoIncome * 100) / 100
   }, [autoIncome])
+  // ====================================================================
 
   const contextValues = useMemo(
     () => ({
@@ -324,12 +337,12 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   )
 
   return (
-    <GameContext.Provider value={contextValues}>
+    <ClickerContext.Provider value={contextValues}>
       {children}
-    </GameContext.Provider>
+    </ClickerContext.Provider>
   )
 }
 
-export function useGameContext() {
-  return useContext(GameContext)
+export function useClickerContext() {
+  return useContext(ClickerContext)
 }

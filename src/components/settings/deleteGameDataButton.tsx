@@ -1,11 +1,11 @@
 'use client'
 
-import { useGameContext } from '@/contexts/useGameContext'
+import { useClickerContext } from '@/contexts/useClickerContext'
 import { useState } from 'react'
 
 export default function DeleteGameDataButton() {
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const { deleteGameData, loading } = useGameContext()
+  const { deleteGameData, loading } = useClickerContext()
   const handleDelete = () => {
     deleteGameData()
     setShowConfirmation(false)
