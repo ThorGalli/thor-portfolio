@@ -2,12 +2,19 @@ import NavbarLayout from '@/layouts/navbar'
 import Image from 'next/image'
 
 export default function Home() {
-  const startedWorking = new Date('2021-03-01')
+  const startedWorking = new Date('2022-06-01')
   const now = new Date()
   const timeWorked = now.getTime() - startedWorking.getTime()
   const totalMonthsWorked = timeWorked / (1000 * 3600 * 24 * 30)
   const yearsWorked = Math.floor(totalMonthsWorked / 12)
   const monthsWorked = Math.floor(totalMonthsWorked % 12)
+
+  const month = monthsWorked === 1 ? 'month' : 'months'
+  const year = yearsWorked === 1 ? 'year' : 'years'
+  const time =
+    `${yearsWorked} ${year} ` +
+    (monthsWorked > 0 ? `and ${monthsWorked} ${month}` : '')
+
   return (
     <NavbarLayout>
       <main className="mt-6">
@@ -24,11 +31,11 @@ export default function Home() {
                 </p>
                 <p>
                   I&apos;m a Full Stack Developer with{' '}
-                  <span className="text-yellow-400">
-                    {yearsWorked} years{' '}
-                    {monthsWorked > 0 && `and ${monthsWorked} months`}
-                  </span>{' '}
-                  of professional experience in Web Development.
+                  <span className="text-yellow-400">{time}</span> of
+                  professional experience in Web Development.
+                </p>
+                <p className="text-sm text-slate-400">
+                  ({time} employed + 1 year of freelancing)
                 </p>
               </div>
               <Image
@@ -41,7 +48,7 @@ export default function Home() {
                 style={{ marginBottom: '0.5rem' }}
               />
             </section>
-            <section id="about-me" className="flex flex-col gap-4">
+            <section id="about-me" className="flex flex-col gap-4 ">
               <p>
                 I&apos;m most experienced in{' '}
                 <span className="text-blue-400">TypeScript</span>,{' '}
