@@ -43,19 +43,21 @@ export default function BuyableBar({
       onTouchEnd={() => setHovered(false)}
     >
       {isHovered && <Tooltip side={infoSide} buyable={buyable} />}
+
       <button
         onClick={() => buy(buyable)}
         className={
-          'btn-yellow btn relative w-56 items-center justify-end rounded-[6px] p-1 text-right'
+          'btn-yellow w-full items-center justify-between overflow-hidden rounded-[6px] p-1 text-right'
         }
         disabled={isDisabled}
       >
         <div
-          className={'absolute left-0 p-2 text-4xl text-white text-opacity-40'}
+          id="counter"
+          className={'flex-grow  text-4xl text-white text-opacity-40'}
         >
           {buyable.amount || ''}
         </div>
-        <div>
+        <div id="nameAndPriceWrapper" className="flex w-52 flex-col">
           <p className="text-lg">{buyable.name}</p>
           <div
             className={

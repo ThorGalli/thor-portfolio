@@ -13,7 +13,8 @@ export default function ClickerGame() {
   const { loading } = useClickerContext()
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="relative flex flex-col gap-2">
+      {/* Mobile Buttons */}
       <div className="flex justify-between lg:hidden">
         <button
           className="btn-yellow rounded-[14px] border-4 px-2 py-4"
@@ -28,9 +29,11 @@ export default function ClickerGame() {
           Resources
         </button>
       </div>
+      {/*  */}
 
-      <div className="flex justify-around gap-5 lg:flex-row lg:justify-between">
-        <div className="hidden lg:flex">
+      {/* Main Layout */}
+      <div className="flex justify-around">
+        <div className="absolute left-0 hidden lg:flex">
           <UpgradeList />
         </div>
         {loading ? (
@@ -40,11 +43,13 @@ export default function ClickerGame() {
         ) : (
           <MainCoin />
         )}
-        <div className="hidden lg:flex">
+        <div className="absolute right-0 hidden lg:flex">
           <ItemList />
         </div>
       </div>
+      {/*  */}
 
+      {/* Mobile Layout */}
       <div className="lg:hidden">
         <Drawer
           isOpen={upgradeDrawerOpen}
@@ -64,6 +69,7 @@ export default function ClickerGame() {
           <ItemList />
         </Drawer>
       </div>
+      {/*  */}
     </div>
   )
 }
