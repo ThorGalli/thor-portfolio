@@ -35,15 +35,13 @@ export default function BuyableBar({
   return (
     <div
       className={
-        'relative flex items-center justify-end gap-2 ' + counterPlacement
+        'relative flex flex-col items-center gap-2 ' + counterPlacement
       }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onTouchStart={() => setHovered(true)}
       onTouchEnd={() => setHovered(false)}
     >
-      {isHovered && <Tooltip side={infoSide} buyable={buyable} />}
-
       <button
         onClick={() => buy(buyable)}
         className={
@@ -70,6 +68,7 @@ export default function BuyableBar({
           </div>
         </div>
       </button>
+      {isHovered && <Tooltip side={infoSide} buyable={buyable} />}
     </div>
   )
 }
