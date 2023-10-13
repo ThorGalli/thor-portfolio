@@ -1,5 +1,5 @@
-import { shopItems } from './data/items'
-import { shopUgrades } from './data/upgrades'
+import { shopItems } from './features/clicker/data/items'
+import { shopUgrades } from './features/clicker/data/upgrades'
 
 export type Buyable = {
   id: string

@@ -1,4 +1,4 @@
-import { getInitialGame } from '@/data/initialValues'
+import { getInitialGame } from '@/features/clicker/data/initialValues'
 import { GameState } from '@/types'
 import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'

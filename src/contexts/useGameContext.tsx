@@ -1,4 +1,4 @@
-import { getInitialGame, getInitialControl, copy } from '@/data/initialValues'
+import { getInitialGame, getInitialControl, copy } from '@/features/clicker/data/initialValues'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import useClickerProgress from '@/features/clicker/hooks/useClickerProgress'
 import {

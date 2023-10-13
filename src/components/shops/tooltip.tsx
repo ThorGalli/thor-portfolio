@@ -1,6 +1,6 @@
 'use client'
 import { useGameContext } from '@/contexts/useGameContext'
-import { getUpgradeInfo } from '@/data/upgrades'
+import { getUpgradeInfo } from '@/features/clicker/data/upgrades'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { Item, Upgrade } from '@/types'
 
