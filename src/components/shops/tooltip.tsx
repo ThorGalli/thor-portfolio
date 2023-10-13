@@ -30,7 +30,6 @@ export default function Tooltip({
       <p className="whitespace-nowrap font-bold text-yellow-200">
         {buyable.name}
       </p>
-      {/* <p className="text-slate-300">{buyable.description}</p> */}
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Income/s:</p>
@@ -46,8 +45,8 @@ export default function Tooltip({
         </div>
       )}
       {isUpgrade && (
-        <div className="text-slate-50">
-          <p className="text-slate-300">{buyable.description}</p>
+        <div className="flex flex-col leading-none text-slate-50">
+          <p className=" py-2 text-slate-300">{buyable.description}</p>
           {getUpgradeInfo(buyable, items).map((info) => (
             <div
               key={buyable.id}

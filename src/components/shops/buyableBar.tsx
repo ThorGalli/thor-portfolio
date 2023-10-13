@@ -31,7 +31,6 @@ export default function BuyableBar({
 
   const counterPlacement =
     infoSide === 'left' ? 'flex-column' : 'flex-row-reverse'
-  const counterJustify = infoSide === 'left' ? 'justify-end' : 'justify-start'
 
   return (
     <div
@@ -43,30 +42,30 @@ export default function BuyableBar({
       onTouchStart={() => setHovered(true)}
       onTouchEnd={() => setHovered(false)}
     >
-      <div
-        className={
-          (buyable?.amount > 0 ? 'flex' : 'hidden') +
-          ' min-w-[60px] text-4xl text-slate-500 ' +
-          counterJustify
-        }
-      >
-        {buyable.amount}
-      </div>
       {isHovered && <Tooltip side={infoSide} buyable={buyable} />}
       <button
         onClick={() => buy(buyable)}
-        className={'btn-yellow btn  w-56 flex-col rounded-[6px] p-1 text-left'}
+        className={
+          'btn-yellow btn relative w-56 items-center justify-end rounded-[6px] p-1 text-right'
+        }
         disabled={isDisabled}
       >
-        <div className="text-lg">{buyable.name}</div>
         <div
-          className={
-            'flex items-center gap-1 text-sm font-bold ' +
-            (isDisabled ? 'text-red-700' : 'text-green-500')
-          }
+          className={'absolute left-0 p-2 text-4xl text-white text-opacity-40'}
         >
-          {short(adjustedPrice)}
-          <BaseCoin size={20} />
+          {buyable.amount || ''}
+        </div>
+        <div>
+          <p className="text-lg">{buyable.name}</p>
+          <div
+            className={
+              'flex items-center justify-end gap-1 text-sm font-bold ' +
+              (isDisabled ? 'text-red-700' : 'text-green-500')
+            }
+          >
+            <p>{short(adjustedPrice)}</p>
+            <BaseCoin size={20} />
+          </div>
         </div>
       </button>
     </div>
