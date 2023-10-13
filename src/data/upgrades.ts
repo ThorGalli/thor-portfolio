@@ -1,3 +1,5 @@
+import { ShopItems, Upgrade } from '@/types'
+
 export const shopUgrades = {
   autoClicker: {
     id: 'autoClicker',
@@ -30,4 +32,53 @@ export const shopUgrades = {
     maxAmount: 10,
     priceMultiplier: 5,
   },
+}
+
+export function getUpgradeInfo(buyable: Upgrade, items: ShopItems) {
+  switch (buyable.id) {
+    case 'autoClicker':
+      return [
+        {
+          prefix: 'Current clicks/s:',
+          value: `${buyable.amount * buyable.multiplier}`,
+        },
+      ]
+    case 'clickMultiplier':
+      return [
+        {
+          prefix: 'Current multiplier:',
+          value: `x${Math.pow(buyable.multiplier, buyable.amount)}`,
+        },
+      ]
+    case 'volunteerClicking':
+      return [
+        {
+          prefix: 'Buff per Volunteer:',
+          value:
+            Math.round(buyable.amount * buyable.multiplier * 10000) / 100 + '%',
+        },
+        {
+          prefix: 'Volunteers Amount:',
+          value: items.volunteer.amount,
+        },
+        {
+          prefix: 'Current increase:',
+          value: `+${
+            Math.round(
+              buyable.amount *
+                buyable.multiplier *
+                items.volunteer.amount *
+                10000,
+            ) / 100
+          }%`,
+        },
+      ]
+    default:
+      return [
+        {
+          prefix: 'Current multiplier:',
+          value: `${buyable.amount * buyable.multiplier}`,
+        },
+      ]
+  }
 }

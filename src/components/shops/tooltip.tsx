@@ -1,5 +1,6 @@
 'use client'
 import { useGameContext } from '@/contexts/useGameContext'
+import { getUpgradeInfo } from '@/data/upgrades'
 import { Item, Upgrade } from '@/types'
 import useMathUtils from '@/utils/useMathUtils'
 
@@ -18,38 +19,6 @@ export default function Tooltip({
 
   const isItem = 'income' in buyable
   const isUpgrade = 'multiplier' in buyable
-
-  function getUpgradeTotalDescription(buyable: Upgrade) {
-    switch (buyable.id) {
-      case 'autoClicker':
-        return {
-          prefix: 'Current clicks/s:',
-          value: `${buyable.amount * buyable.multiplier}`,
-        }
-      case 'clickMultiplier':
-        return {
-          prefix: 'Current multiplier:',
-          value: `x${Math.pow(buyable.multiplier, buyable.amount)}`,
-        }
-      case 'volunteerClicking':
-        return {
-          prefix: 'Current increase:',
-          value: `+${
-            Math.round(
-              buyable.amount *
-                buyable.multiplier *
-                items.volunteer.amount *
-                10000,
-            ) / 100
-          }%`,
-        }
-      default:
-        return {
-          prefix: 'Current multiplier:',
-          value: `${buyable.amount * buyable.multiplier}`,
-        }
-    }
-  }
 
   return (
     <div
@@ -79,12 +48,15 @@ export default function Tooltip({
       {isUpgrade && (
         <div className="text-slate-50">
           <p className="text-slate-300">{buyable.description}</p>
-          <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
-            <p className="">{getUpgradeTotalDescription(buyable).prefix}</p>
-            <p className="text-yellow-500">
-              {getUpgradeTotalDescription(buyable).value}
-            </p>
-          </div>
+          {getUpgradeInfo(buyable, items).map((info) => (
+            <div
+              key={buyable.id}
+              className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200"
+            >
+              <p className="">{info.prefix}</p>
+              <p className="text-yellow-500">{info.value}</p>
+            </div>
+          ))}
         </div>
       )}
     </div>
