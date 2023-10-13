@@ -19,7 +19,7 @@ export default function UpgradeList() {
           key={upgrade.id}
           buyable={upgrade}
           visible={isVisible}
-          counterSide="right"
+          infoSide="right"
         />
       )
     })

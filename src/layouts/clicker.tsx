@@ -28,7 +28,8 @@ export default function ClickerGame() {
           Resources
         </button>
       </div>
-      <div className="flex justify-around gap-5 lg:flex-row">
+
+      <div className="flex justify-around gap-5 lg:flex-row lg:justify-between">
         <div className="hidden lg:flex">
           <UpgradeList />
         </div>
