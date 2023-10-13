@@ -1,7 +1,7 @@
 import { getInitialGame } from '@/data/initialValues'
 import { GameState } from '@/types'
 import { parseCookies, setCookie } from 'nookies'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { setTimeout } from 'timers'
 
 export default function useGameData() {
@@ -38,7 +38,6 @@ export default function useGameData() {
       console.log(error)
     }
     setTimeout(() => {
-      console.log('loading false')
       setLoading(false)
     }, 500)
   }
@@ -62,23 +61,38 @@ export default function useGameData() {
   function saveGameData(gameState: GameState) {
     const currentDateTimeInMS = new Date().getTime()
     const currentRunTime = performance.now()
+    const compactItems = Object.fromEntries(
+      Object.entries(gameState.items).map(([key, value]) => [
+        key,
+        { id: value.id, amount: value.amount },
+      ]),
+    )
+    const compactUpgrades = Object.fromEntries(
+      Object.entries(gameState.upgrades).map(([key, value]) => [
+        key,
+        { id: value.id, amount: value.amount },
+      ]),
+    )
+
     const saveData = {
-      items: gameState.items,
-      upgrades: gameState.upgrades,
+      items: compactItems,
+      upgrades: compactUpgrades,
       coins: gameState.coins,
       saveTime: currentDateTimeInMS,
     }
-    setCookie(null, 'thor-cookie-saveData', JSON.stringify(saveData), {
-      maxAge: 12 * 30 * 24 * 60 * 60,
-      path: '/',
-      sameSite: 'Strict',
-    })
+
+    try {
+      setCookie(null, 'thor-cookie-saveData', JSON.stringify(saveData), {
+        maxAge: 2147483647,
+        path: '/',
+        sameSite: 'Strict',
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
     setLastSaveTime(currentRunTime)
   }
-
-  useEffect(() => {
-    console.log('loading', loading)
-  }, [loading])
 
   return {
     saveGameData,

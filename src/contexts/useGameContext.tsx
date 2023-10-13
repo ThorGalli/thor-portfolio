@@ -272,7 +272,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         gameState.upgrades.volunteerClicking.multiplier * // 0.001
         gameState.upgrades.volunteerClicking.amount // 1
 
-    console.log('volunteerMultiplier', volunteerMultiplier)
     return autoClickerCoins * volunteerMultiplier
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coinsPerClick, gameState.upgrades, gameState.items])
