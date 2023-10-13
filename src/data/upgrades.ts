@@ -2,8 +2,7 @@ export const shopUgrades = {
   autoClicker: {
     id: 'autoClicker',
     name: 'Auto Clicker',
-    description:
-      'Auto clicks for you! Adds 1 click/s per upgrade.{br}Current clicks/s:',
+    description: 'Auto clicks for you! Adds 1 click/s per upgrade.',
     price: 50,
     multiplier: 1,
     amount: 0,
@@ -13,8 +12,7 @@ export const shopUgrades = {
   clickMultiplier: {
     id: 'clickMultiplier',
     name: 'Click Multiplier',
-    description:
-      'Multiplies click value by 2, including Auto Clicker clicks!{br}Current multiplier:',
+    description: 'Multiplies click value by 2, including Auto Clicker clicks!',
     price: 120,
     multiplier: 2,
     amount: 0,
@@ -25,7 +23,7 @@ export const shopUgrades = {
     id: 'volunteerClicking',
     name: 'Volunteer Clicking',
     description:
-      'Volunteers will Auto Click too! Increases Auto Clicker income by 0.1% per Volunteer per upgrade.{br}Current % increase:',
+      'Volunteers will Auto Click too! Increases Auto Clicker income by 0.1% per Volunteer per upgrade.',
     price: 180,
     multiplier: 0.001,
     amount: 0,
