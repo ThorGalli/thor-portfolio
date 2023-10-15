@@ -25,7 +25,9 @@ export default function useMineSweeperCalculations() {
     const secondsPerBomb = 2
     const bonuses = [
       { bombsRequired: 4, seconds: 0.05 },
+      { bombsRequired: 14, seconds: 0.05 },
       { bombsRequired: 28, seconds: 0.05 },
+      { bombsRequired: 140, seconds: 0.05 },
       { bombsRequired: 280, seconds: 0.05 },
     ]
     const extraSeconds = bonuses.reduce((acc, bonus) => {
