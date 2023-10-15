@@ -133,7 +133,7 @@ export default function MineSweeper() {
           </button>
         )}
         {hasStarted && (
-          <header className="sweeper-header sticky left-4 top-14 flex w-[calc(100vw-2rem)] items-center justify-evenly rounded-[14px] border-8 border-slate-700 bg-slate-950 p-1 text-yellow-200 lg:w-full">
+          <header className="sweeper-header">
             <p>
               ✅ {totalRevealedCells}/{totalSafeCells}
             </p>
@@ -151,7 +151,7 @@ export default function MineSweeper() {
           </header>
         )}
         {hasStarted && (
-          <div className="mx-auto flex w-fit flex-col items-center justify-around rounded-[14px] border-8 border-slate-700 bg-slate-700">
+          <div className="mx-auto flex w-fit max-w-full flex-col items-center justify-around overflow-x-scroll rounded-[14px] border-8 border-slate-700 bg-slate-700">
             <div
               id="mineField"
               className={cursorClass + ' overflow-hidden rounded-[6px]'}

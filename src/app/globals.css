@@ -76,5 +76,5 @@ body {
 }
 
 .sweeper-header {
-  @apply sticky left-4 top-14 flex h-fit w-[calc(100vw-2rem)] items-center rounded-[14px] border-8 border-slate-700 bg-slate-950 p-1 text-yellow-200 lg:w-full;
+  @apply sticky left-4 top-14 flex h-fit w-[calc(100vw-2rem)] items-center justify-evenly rounded-[14px] border-8 border-slate-700 bg-slate-950 p-1 text-yellow-200 lg:w-full !important;
 }
