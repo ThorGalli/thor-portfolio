@@ -1,6 +1,3 @@
-import { shopItems } from './features/clicker/data/items'
-import { shopUgrades } from './features/clicker/data/upgrades'
-
 export type Buyable = {
   id: string
   name: string
@@ -31,6 +28,7 @@ export type Coins = {
   fromClicks: number
   fromAuto: number
   fromResources: number
+  fromSweeper: number
   spent: number
 }
 
@@ -45,6 +43,7 @@ export type ClickerContextProps = {
   clicksIncome: number
   onClickCoin: () => void
   onSave: () => void
+  onWinMineSweeper: (prize: number) => void
   loading: boolean
   deleteGameData: () => void
   lastSaveTime: number

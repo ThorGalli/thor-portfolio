@@ -1,4 +1,4 @@
-import { LoopControl, ClickerState } from '@/types'
+import { LoopControl, ClickerState } from '@/features/clicker/clickerTypes'
 import { shopItems } from './items'
 import { shopUgrades } from './upgrades'
 
@@ -12,7 +12,7 @@ export function getInitialControl(): LoopControl {
     last5Clicks: [0, 0, 0, 0, 0],
   }
 }
-export function getInitialGame(): ClickerState {
+export function getInitialClicker(): ClickerState {
   return {
     items: copy(shopItems),
     upgrades: copy(shopUgrades),
@@ -20,6 +20,7 @@ export function getInitialGame(): ClickerState {
       fromClicks: 0,
       fromAuto: 0,
       fromResources: 0,
+      fromSweeper: 0,
       spent: 0,
     },
     offlineTime: 0,

@@ -1,18 +1,16 @@
-import { Buyable, LoopControl } from '@/types'
+import { Buyable, LoopControl } from '@/features/clicker/clickerTypes'
 
 export default function useClickerCalculations() {
   function short(num: number, decimals = 1) {
     if (num < 1000) return num
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
-    const numShort = (num / Math.pow(1000, unit)).toFixed(decimals)
+    const numShort = (num / 1000 ** unit).toFixed(decimals)
     return `${numShort} ${units[unit]}`
   }
 
   function getAdjustedPrice(buyable: Buyable) {
-    return Math.round(
-      buyable.price * Math.pow(buyable.priceMultiplier, buyable.amount),
-    )
+    return Math.round(buyable.price * buyable.priceMultiplier ** buyable.amount)
   }
 
   function calculateOfflineIncome(

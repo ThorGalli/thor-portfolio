@@ -1,5 +1,5 @@
 import {
-  getInitialGame,
+  getInitialClicker,
   getInitialControl,
   copy,
 } from '@/features/clicker/data/initialValues'
@@ -14,7 +14,7 @@ import {
   Upgrade,
   ShopItems,
   ShopUpgrades,
-} from '@/types'
+} from '@/features/clicker/clickerTypes'
 
 import React, {
   createContext,
@@ -25,22 +25,6 @@ import React, {
   useReducer,
   useState,
 } from 'react'
-
-export const ClickerContext = createContext<ClickerContextProps>({
-  items: {},
-  upgrades: {},
-  buy: () => null,
-  getAdjustedPrice: () => 0,
-  totalCoins: 0,
-  resourceIncome: 0,
-  autoIncome: 0,
-  clicksIncome: 0,
-  onClickCoin: () => null,
-  onSave: () => null,
-  loading: true,
-  lastSaveTime: 0,
-  deleteGameData: () => null,
-})
 
 const BASE_COIN_VALUE = 1
 const GAME_FPS = 30
@@ -100,14 +84,13 @@ export const ClickerProvider = ({
         coins: { ...prevcoins, ...coins },
       }
     },
-    getInitialGame(),
+    getInitialClicker(),
   )
 
   const coinsPerClick: number = useMemo(() => {
-    const clickMultiplier = Math.pow(
-      gameState.upgrades.clickMultiplier.multiplier,
-      gameState.upgrades.clickMultiplier.amount,
-    )
+    const clickMultiplier =
+      gameState.upgrades.clickMultiplier.multiplier **
+      gameState.upgrades.clickMultiplier.amount
 
     const coinValue = BASE_COIN_VALUE * clickMultiplier
     return coinValue
@@ -116,6 +99,7 @@ export const ClickerProvider = ({
   const totalCoins = Math.round(
     gameState.coins.fromClicks +
       gameState.coins.fromResources +
+      gameState.coins.fromSweeper +
       gameState.coins.fromAuto -
       gameState.coins.spent,
   )
@@ -206,11 +190,11 @@ export const ClickerProvider = ({
   }
 
   function updateDataFromLoad() {
-    const { fromClicks, fromResources, fromAuto, spent } = copy(
+    const { fromClicks, fromResources, fromAuto, fromSweeper, spent } = copy(
       cacheGameData.coins,
     )
-    const newItems = getInitialGame().items
-    const newUpgrades = getInitialGame().upgrades
+    const newItems = getInitialClicker().items
+    const newUpgrades = getInitialClicker().upgrades
     Object.entries(cacheGameData.items).forEach(([key, value]) => {
       newItems[key].amount = value.amount
     })
@@ -222,10 +206,11 @@ export const ClickerProvider = ({
       upgrades: newUpgrades,
       offlineTime: cacheGameData.offlineTime,
       coins: {
-        fromClicks,
-        fromResources,
-        fromAuto,
-        spent,
+        fromClicks: fromClicks || 0,
+        fromResources: fromResources || 0,
+        fromAuto: fromAuto || 0,
+        fromSweeper: fromSweeper || 0,
+        spent: spent || 0,
       },
     })
     setCacheGameData({ ...cacheGameData, shouldReset: false })
@@ -255,6 +240,15 @@ export const ClickerProvider = ({
       saveGameData(gameState)
     }
   }
+
+  const onWinMineSweeper = useCallback(
+    (prize: number) => {
+      setGameState({
+        coins: { fromSweeper: gameState.coins.fromSweeper + prize },
+      })
+    },
+    [gameState.coins],
+  )
 
   useEffect(() => {
     if (loading) return
@@ -315,6 +309,7 @@ export const ClickerProvider = ({
       getAdjustedPrice,
       onClickCoin,
       onSave,
+      onWinMineSweeper,
       loading,
       lastSaveTime,
       deleteGameData,
@@ -330,6 +325,7 @@ export const ClickerProvider = ({
       getAdjustedPrice,
       onClickCoin,
       onSave,
+      onWinMineSweeper,
       loading,
       lastSaveTime,
       deleteGameData,
@@ -342,6 +338,23 @@ export const ClickerProvider = ({
     </ClickerContext.Provider>
   )
 }
+
+const ClickerContext = createContext<ClickerContextProps>({
+  items: {},
+  upgrades: {},
+  buy: () => null,
+  getAdjustedPrice: () => 0,
+  totalCoins: 0,
+  resourceIncome: 0,
+  autoIncome: 0,
+  clicksIncome: 0,
+  onClickCoin: () => null,
+  onSave: () => null,
+  onWinMineSweeper: () => null,
+  loading: true,
+  lastSaveTime: 0,
+  deleteGameData: () => null,
+})
 
 export function useClickerContext() {
   return useContext(ClickerContext)

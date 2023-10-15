@@ -1,14 +1,15 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import MainCoin from '@/components/coins/mainCoin'
 import ItemList from '@/components/shops/itemList'
 import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/contexts/useClickerContext'
+import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
 
 export default function ClickerGame() {
-  const [upgradeDrawerOpen, setUpgradeDrawerOpen] = useState(false)
-  const [itemDrawerOpen, setItemDrawerOpen] = useState(false)
+  const itemDrawer = useUrlDisclosure('itemDrawer')
+  const upgradeDrawer = useUrlDisclosure('upgradeDrawer')
 
   const { loading } = useClickerContext()
 
@@ -18,13 +19,13 @@ export default function ClickerGame() {
       <div className="flex justify-between lg:hidden">
         <button
           className="btn-yellow rounded-[14px] border-4 px-2 py-4"
-          onClick={() => setUpgradeDrawerOpen(!upgradeDrawerOpen)}
+          onClick={() => upgradeDrawer.onOpen()}
         >
           Upgrades
         </button>
         <button
           className="btn-yellow rounded-[14px] border-4 px-2 py-4"
-          onClick={() => setItemDrawerOpen(!itemDrawerOpen)}
+          onClick={() => itemDrawer.onOpen()}
         >
           Resources
         </button>
@@ -52,8 +53,8 @@ export default function ClickerGame() {
       {/* Mobile Layout */}
       <div className="lg:hidden">
         <Drawer
-          isOpen={upgradeDrawerOpen}
-          setIsOpen={setUpgradeDrawerOpen}
+          isOpen={upgradeDrawer.isOpen}
+          onClose={upgradeDrawer.onClose}
           side="left"
         >
           <UpgradeList />
@@ -62,8 +63,8 @@ export default function ClickerGame() {
 
       <div className="lg:hidden">
         <Drawer
-          isOpen={itemDrawerOpen}
-          setIsOpen={setItemDrawerOpen}
+          isOpen={itemDrawer.isOpen}
+          onClose={itemDrawer.onClose}
           side="right"
         >
           <ItemList />

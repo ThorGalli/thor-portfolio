@@ -1,7 +1,7 @@
 import { useClickerContext } from '@/contexts/useClickerContext'
 import React, { useState } from 'react'
 import BaseCoin from '../coins/baseCoins'
-import { Item, Upgrade } from '@/types'
+import { Item, Upgrade } from '@/features/clicker/clickerTypes'
 import Tooltip from './tooltip'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 

@@ -1,4 +1,4 @@
-import { ShopItems, Upgrade } from '@/types'
+import { ShopItems, Upgrade } from '@/features/clicker/clickerTypes'
 
 export const shopUgrades = {
   autoClicker: {
@@ -47,7 +47,7 @@ export function getUpgradeInfo(buyable: Upgrade, items: ShopItems) {
       return [
         {
           prefix: 'Current multiplier:',
-          value: `x${Math.pow(buyable.multiplier, buyable.amount)}`,
+          value: `x${buyable.multiplier ** buyable.amount}`,
         },
       ]
     case 'volunteerClicking':

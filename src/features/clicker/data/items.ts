@@ -1,4 +1,4 @@
-import { ShopItems } from '@/types'
+import { ShopItems } from '@/features/clicker/clickerTypes'
 
 export const shopItems: ShopItems = {
   volunteer: {

@@ -1,5 +1,5 @@
-import { getInitialGame } from '@/features/clicker/data/initialValues'
-import { ClickerState } from '@/types'
+import { getInitialClicker } from '@/features/clicker/data/initialValues'
+import { ClickerState } from '@/features/clicker/clickerTypes'
 import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
@@ -7,7 +7,7 @@ import { setTimeout } from 'timers'
 export default function useClickerProgress() {
   const [cacheGameData, setCacheGameData] = useState<ClickerState>({
     shouldReset: false,
-    ...getInitialGame(),
+    ...getInitialClicker(),
   })
   const [loading, setLoading] = useState(true)
   const [lastSaveTime, setLastSaveTime] = useState(performance.now())
@@ -51,7 +51,7 @@ export default function useClickerProgress() {
     })
     setCacheGameData({
       shouldReset: true,
-      ...getInitialGame(),
+      ...getInitialClicker(),
     })
     setTimeout(() => {
       setLoading(false)
