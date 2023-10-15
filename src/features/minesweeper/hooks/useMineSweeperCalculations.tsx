@@ -26,7 +26,7 @@ export default function useMineSweeperCalculations() {
     const secondsPerBomb = 2
     const bonuses = bluePrintList.map((blueprint) => ({
       bombsRequired: blueprint.bombAmount,
-      seconds: blueprint.size / 200,
+      seconds: blueprint.size / 50,
     }))
 
     const extraSeconds = bonuses.reduce((acc, bonus) => {
