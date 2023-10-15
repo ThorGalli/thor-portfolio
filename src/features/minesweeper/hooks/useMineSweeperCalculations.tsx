@@ -26,7 +26,7 @@ export default function useMineSweeperCalculations() {
     const secondsPerBomb = 2
     const bonuses = bluePrintList.map((blueprint) => ({
       bombsRequired: blueprint.bombAmount,
-      seconds: 0.05,
+      seconds: blueprint.size / 200,
     }))
 
     const extraSeconds = bonuses.reduce((acc, bonus) => {
@@ -40,10 +40,15 @@ export default function useMineSweeperCalculations() {
 
   function placeBombs(stage: Stage, bombAmount: number) {
     const bombedMap: Stage = [...stage]
-    for (let i = 0; i < bombAmount; i++) {
-      const x = Math.floor(Math.random() * bombedMap.length)
-      const y = Math.floor(Math.random() * bombedMap.length)
-      bombedMap[x][y].isBomb = true
+    let bombsPlaced = 0
+    while (bombsPlaced < bombAmount) {
+      const randomX = Math.floor(Math.random() * bombedMap.length)
+      const randomY = Math.floor(Math.random() * bombedMap.length)
+      const cell = bombedMap[randomX][randomY]
+      if (!cell.isBomb) {
+        cell.isBomb = true
+        bombsPlaced++
+      }
     }
     return bombedMap
   }
