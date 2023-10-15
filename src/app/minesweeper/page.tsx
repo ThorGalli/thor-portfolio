@@ -1,11 +1,10 @@
+import MineSweeper from '@/features/minesweeper/mineSweeper'
 import NavbarLayout from '@/layouts/navbar'
 
-export default function MineSweeper() {
+export default function ClickerPage() {
   return (
     <NavbarLayout>
-      <div>
-        <h1>MineSweeper</h1>
-      </div>
+      <MineSweeper />
     </NavbarLayout>
   )
 }
