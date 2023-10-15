@@ -94,61 +94,67 @@ export default function MineSweeper() {
   }, [totalRevealedCells])
 
   return (
-    <div className="mx-[-0.5rem] pt-[3.5rem] lg:mt-[-0.5rem] lg:pt-2">
+    <div className="relative mx-[-0.5rem] pt-[3.5rem] lg:mt-14 lg:pt-2">
       <div className="flex flex-col items-center justify-around gap-4 bg-slate-900 ">
-        <div id="greetText" className="flex flex-col items-center gap-2 p-2">
-          <p className="text-yellow-200">
-            Win a match of Mine Sweeper and earn coins!
-          </p>
-          <p className="text-yellow-200">
-            <span className="text-orange-400">Higher difficulties</span> earn
-            you more coins and the amount is also based on your{' '}
-            <span className="text-orange-400">Income</span>
-          </p>
+        {!hasStarted && (
+          <div id="greetText" className="flex flex-col items-center gap-2 p-2">
+            <button
+              className="white-hover mx-auto flex w-fit flex-col text-4xl text-yellow-200 active:opacity-70"
+              onClick={promptRestartGame}
+            >
+              <p>Mine Sweeper</p>
+              <p>😉</p>
+            </button>
+            <p className="text-yellow-200">
+              Win a match of Mine Sweeper and earn coins!
+            </p>
+            <p className="text-yellow-200">
+              <span className="text-orange-400">Higher difficulties</span> earn
+              you more coins and the amount is also based on your{' '}
+              <span className="text-orange-400">Income</span>
+            </p>
+          </div>
+        )}
+        <div
+          id="difficulty-selector"
+          className="flex w-full flex-col items-center px-2"
+        >
           <p className="text-slate-200">Choose a difficulty:</p>
           <BluePrintBar
-            className="btn-slate bar"
+            className="btn-slate bar max-w-lg"
             index={selectedStage}
             blueprint={bluePrintList[selectedStage]}
             onClick={stageSelectDrawer.onOpen}
           />
-
-          {gameStatus === GameStatus.WON && (
-            <div className="flex flex-col items-center">
-              <p className="text-2xl text-yellow-200">
-                Congratulations! You earned {prizeDisplay} coins!
-              </p>
-            </div>
-          )}
         </div>
-        <div id="gameWrapper" className="flex flex-col gap-2 border-slate-700">
-          {!hasStarted && (
+
+        {hasStarted && (
+          <header className="sweeper-header">
+            <p>
+              ✅ {totalRevealedCells}/{totalSafeCells}
+            </p>
             <button
-              className="white-hover mx-auto w-fit text-4xl active:opacity-70"
+              className="white-hover w-fit text-4xl active:opacity-70"
               onClick={promptRestartGame}
             >
-              😉
+              {gameStatus === GameStatus.PLAYING && '🙂'}
+              {gameStatus === GameStatus.LOST && '💀'}
+              {gameStatus === GameStatus.WON && '😎'}
             </button>
-          )}
-          {hasStarted && (
-            <header className="sweeper-header">
-              <p>
-                ✅ {totalRevealedCells}/{totalSafeCells}
-              </p>
-              <button
-                className="white-hover w-fit text-4xl active:opacity-70"
-                onClick={promptRestartGame}
-              >
-                {gameStatus === GameStatus.PLAYING && '🙂'}
-                {gameStatus === GameStatus.LOST && '💀'}
-                {gameStatus === GameStatus.WON && '😎'}
-              </button>
-              <p>
-                {totalFlaggedCells}/{totalBombs} 🚩
-              </p>
-            </header>
-          )}
-        </div>
+            <p>
+              {totalFlaggedCells}/{totalBombs} 🚩
+            </p>
+          </header>
+        )}
+
+        {gameStatus === GameStatus.WON && (
+          <div className="flex flex-col items-center">
+            <p className="text-2xl text-yellow-200">
+              Congratulations! You earned {prizeDisplay} coins!
+            </p>
+          </div>
+        )}
+
         <ConfirmationDialog
           isOpen={restartDialog.isOpen}
           onCancel={restartDialog.onClose}
@@ -180,13 +186,10 @@ export default function MineSweeper() {
         </Drawer>
       </div>
       {hasStarted && (
-        <div className="mx-auto mb-8 mt-2 flex max-w-fit overflow-x-auto rounded-[14px] border-slate-700 bg-slate-700 p-2">
+        <div className="mx-auto mb-8 mt-4 flex max-w-fit overflow-x-auto rounded-[14px] border-slate-700 bg-slate-700 p-2">
           <div
             id="mineField"
-            className={
-              cursorClass +
-              ' rounded-[6px] border-2 border-slate-900'
-            }
+            className={cursorClass + ' rounded-[6px] border-2 border-slate-900'}
           >
             {cellComponents}
           </div>
