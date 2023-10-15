@@ -59,8 +59,7 @@ export default function BuyableBar({
           <p className="text-lg">{buyable.name}</p>
           <div
             className={
-              'flex items-center justify-end gap-1 text-sm font-bold ' +
-              (isDisabled ? 'text-red-700' : 'text-green-500')
+              'price-tag ' + (isDisabled ? 'text-red-700' : 'text-green-500')
             }
           >
             <p>{short(adjustedPrice)}</p>

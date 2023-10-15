@@ -36,7 +36,41 @@ body {
   @apply flex h-fit cursor-pointer select-none disabled:cursor-default disabled:border-black disabled:bg-slate-950 disabled:text-slate-500 disabled:hover:bg-slate-900 disabled:hover:border-black;   
 }
 
+.btn-slate {
+  @apply btn;
+  @apply border-slate-950 bg-slate-800 text-slate-200 hover:bg-slate-600 hover:border-slate-900 active:bg-slate-950;
+}
+
 .btn-yellow {
   @apply btn;
   @apply border-yellow-950 bg-yellow-900 text-yellow-200 hover:bg-yellow-700 hover:border-yellow-900 active:bg-yellow-950;
+}
+
+.btn-orange {
+  @apply btn;
+  @apply border-orange-950 bg-orange-900 text-orange-200 hover:bg-orange-700 hover:border-orange-900 active:bg-orange-950;
+}
+
+.white-hover:hover {
+  text-shadow: 0 0 10px white;
+}
+
+.bar {
+  @apply w-full items-center justify-between overflow-hidden rounded-[6px] p-1 text-right
+}
+
+.price-tag {
+  @apply flex items-center justify-end gap-1 text-sm font-bold
+}
+
+.list-wrapper {
+  @apply flex flex-col gap-2
+}
+
+.list-header {
+  @apply h-fit rounded-[14px] border-8 border-slate-800 bg-slate-950 px-2 py-4 text-center text-yellow-200
+}
+
+.list {
+  @apply flex flex-col gap-2 rounded-[14px] bg-slate-800 p-2
 }
