@@ -180,12 +180,12 @@ export default function MineSweeper() {
         </Drawer>
       </div>
       {hasStarted && (
-        <div className="mx-auto mb-8 mt-2 flex max-w-fit rounded-[14px] border-slate-700 bg-slate-700 p-2">
+        <div className="mx-auto mb-8 mt-2 flex max-w-fit overflow-x-auto rounded-[14px] border-slate-700 bg-slate-700 p-2">
           <div
             id="mineField"
             className={
               cursorClass +
-              ' overflow-auto rounded-[6px] border-2 border-slate-900'
+              ' rounded-[6px] border-2 border-slate-900'
             }
           >
             {cellComponents}
