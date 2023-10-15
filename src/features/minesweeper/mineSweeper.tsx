@@ -94,103 +94,104 @@ export default function MineSweeper() {
   }, [totalRevealedCells])
 
   return (
-    <div className="mx-[-0.5rem] mt-[-0.5rem] flex w-fit min-w-full flex-col items-center justify-around gap-4 bg-slate-900 pt-2">
-      <div id="greetText" className="flex flex-col items-center gap-2 p-2">
-        <p className="text-yellow-200">
-          Win a match of Mine Sweeper and earn coins!
-        </p>
-        <p className="text-yellow-200">
-          <span className="text-orange-400">Higher difficulties</span> earn you
-          more coins and the amount is also based on your{' '}
-          <span className="text-orange-400">Income</span>
-        </p>
-        <p className="text-slate-200">Choose a difficulty:</p>
-        <BluePrintBar
-          className="btn-slate bar"
-          index={selectedStage}
-          blueprint={bluePrintList[selectedStage]}
-          onClick={stageSelectDrawer.onOpen}
-        />
+    <div className="mx-[-0.5rem] mt-[-0.5rem] pt-2">
+      <div className="flex flex-col items-center justify-around gap-4 bg-slate-900 ">
+        <div id="greetText" className="flex flex-col items-center gap-2 p-2">
+          <p className="text-yellow-200">
+            Win a match of Mine Sweeper and earn coins!
+          </p>
+          <p className="text-yellow-200">
+            <span className="text-orange-400">Higher difficulties</span> earn
+            you more coins and the amount is also based on your{' '}
+            <span className="text-orange-400">Income</span>
+          </p>
+          <p className="text-slate-200">Choose a difficulty:</p>
+          <BluePrintBar
+            className="btn-slate bar"
+            index={selectedStage}
+            blueprint={bluePrintList[selectedStage]}
+            onClick={stageSelectDrawer.onOpen}
+          />
 
-        {gameStatus === GameStatus.WON && (
-          <div className="flex flex-col items-center">
-            <p className="text-2xl text-yellow-200">
-              Congratulations! You earned {prizeDisplay} coins!
-            </p>
-          </div>
-        )}
-      </div>
-      <div
-        id="gameWrapper"
-        className="flex w-fit flex-col gap-2 border-slate-700"
-      >
-        {!hasStarted && (
-          <button
-            className="white-hover mx-auto w-fit text-4xl active:opacity-70"
-            onClick={promptRestartGame}
-          >
-            😉
-          </button>
-        )}
-        {hasStarted && (
-          <header className="sweeper-header sticky left-4 top-14 flex w-[calc(100vw-2rem)] items-center justify-evenly rounded-[14px] border-8 border-slate-700 bg-slate-950 p-1 text-yellow-200 lg:w-full">
-            <p>
-              ✅ {totalRevealedCells}/{totalSafeCells}
-            </p>
+          {gameStatus === GameStatus.WON && (
+            <div className="flex flex-col items-center">
+              <p className="text-2xl text-yellow-200">
+                Congratulations! You earned {prizeDisplay} coins!
+              </p>
+            </div>
+          )}
+        </div>
+        <div id="gameWrapper" className="flex flex-col gap-2 border-slate-700">
+          {!hasStarted && (
             <button
-              className="white-hover w-fit text-4xl active:opacity-70"
+              className="white-hover mx-auto w-fit text-4xl active:opacity-70"
               onClick={promptRestartGame}
             >
-              {gameStatus === GameStatus.PLAYING && '🙂'}
-              {gameStatus === GameStatus.LOST && '💀'}
-              {gameStatus === GameStatus.WON && '😎'}
+              😉
             </button>
-            <p>
-              {totalFlaggedCells}/{totalBombs} 🚩
-            </p>
-          </header>
-        )}
-        {hasStarted && (
-          <div className="mx-auto flex w-fit flex-col items-center justify-around rounded-[14px] border-8 border-slate-700 bg-slate-700">
-            <div
-              id="mineField"
-              className={cursorClass + ' overflow-hidden rounded-[6px]'}
-            >
-              {cellComponents}
+          )}
+          {hasStarted && (
+            <header className="sweeper-header">
+              <p>
+                ✅ {totalRevealedCells}/{totalSafeCells}
+              </p>
+              <button
+                className="white-hover w-fit text-4xl active:opacity-70"
+                onClick={promptRestartGame}
+              >
+                {gameStatus === GameStatus.PLAYING && '🙂'}
+                {gameStatus === GameStatus.LOST && '💀'}
+                {gameStatus === GameStatus.WON && '😎'}
+              </button>
+              <p>
+                {totalFlaggedCells}/{totalBombs} 🚩
+              </p>
+            </header>
+          )}
+        </div>
+        <ConfirmationDialog
+          isOpen={restartDialog.isOpen}
+          onCancel={restartDialog.onClose}
+          onConfirm={handleStartGame}
+          confirmQuestion="Are you sure you want abandon your progress and restart?"
+          confirmAnswer="Restart"
+        />
+        <Drawer
+          isOpen={stageSelectDrawer.isOpen}
+          onClose={stageSelectDrawer.onClose}
+          side="right"
+        >
+          <div className="list-wrapper">
+            <header className="list-header">Stage Selector</header>
+            <div className="list">
+              {bluePrintList.map((blueprint, index) => {
+                return (
+                  <BluePrintBar
+                    className="btn-yellow bar"
+                    index={index}
+                    blueprint={blueprint}
+                    key={blueprint.name}
+                    onSelect={handleSelectBlueprint}
+                  />
+                )
+              })}
             </div>
-            <p className="text-yellow-200">Prize: {prizeDisplay}</p>
           </div>
-        )}
+        </Drawer>
       </div>
-      <ConfirmationDialog
-        isOpen={restartDialog.isOpen}
-        onCancel={restartDialog.onClose}
-        onConfirm={handleStartGame}
-        confirmQuestion="Are you sure you want abandon your progress and restart?"
-        confirmAnswer="Restart"
-      />
-      <Drawer
-        isOpen={stageSelectDrawer.isOpen}
-        onClose={stageSelectDrawer.onClose}
-        side="right"
-      >
-        <div className="list-wrapper">
-          <header className="list-header">Stage Selector</header>
-          <div className="list">
-            {bluePrintList.map((blueprint, index) => {
-              return (
-                <BluePrintBar
-                  className="btn-yellow bar"
-                  index={index}
-                  blueprint={blueprint}
-                  key={blueprint.name}
-                  onSelect={handleSelectBlueprint}
-                />
-              )
-            })}
+      {hasStarted && (
+        <div className="mx-auto mb-8 mt-2 flex max-w-fit overflow-x-scroll rounded-[14px] border-slate-700 bg-slate-700 p-2">
+          <div
+            id="mineField"
+            className={
+              cursorClass +
+              ' overflow-clip rounded-[6px] border-2 border-slate-900'
+            }
+          >
+            {cellComponents}
           </div>
         </div>
-      </Drawer>
+      )}
     </div>
   )
 }

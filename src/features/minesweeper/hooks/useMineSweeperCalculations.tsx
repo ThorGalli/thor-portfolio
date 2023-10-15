@@ -1,3 +1,4 @@
+import { bluePrintList } from '../data/initialValues'
 import { StageBlueprint, Stage, Cell } from '../types'
 
 export default function useMineSweeperCalculations() {
@@ -23,13 +24,11 @@ export default function useMineSweeperCalculations() {
   function calculatePrizeSeconds(totalBombs: number) {
     const globalMultiplier = 1
     const secondsPerBomb = 2
-    const bonuses = [
-      { bombsRequired: 4, seconds: 0.05 },
-      { bombsRequired: 14, seconds: 0.05 },
-      { bombsRequired: 28, seconds: 0.05 },
-      { bombsRequired: 140, seconds: 0.05 },
-      { bombsRequired: 280, seconds: 0.05 },
-    ]
+    const bonuses = bluePrintList.map((blueprint) => ({
+      bombsRequired: blueprint.bombAmount,
+      seconds: blueprint.size / 50,
+    }))
+
     const extraSeconds = bonuses.reduce((acc, bonus) => {
       const bonusCount = Math.floor(totalBombs / bonus.bombsRequired)
       return acc + bonusCount * bonus.seconds
@@ -41,10 +40,15 @@ export default function useMineSweeperCalculations() {
 
   function placeBombs(stage: Stage, bombAmount: number) {
     const bombedMap: Stage = [...stage]
-    for (let i = 0; i < bombAmount; i++) {
-      const x = Math.floor(Math.random() * bombedMap.length)
-      const y = Math.floor(Math.random() * bombedMap.length)
-      bombedMap[x][y].isBomb = true
+    let bombsPlaced = 0
+    while (bombsPlaced < bombAmount) {
+      const randomX = Math.floor(Math.random() * bombedMap.length)
+      const randomY = Math.floor(Math.random() * bombedMap.length)
+      const cell = bombedMap[randomX][randomY]
+      if (!cell.isBomb) {
+        cell.isBomb = true
+        bombsPlaced++
+      }
     }
     return bombedMap
   }
