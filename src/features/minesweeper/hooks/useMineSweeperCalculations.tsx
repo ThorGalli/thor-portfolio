@@ -1,3 +1,4 @@
+import { bluePrintList } from '../data/initialValues'
 import { StageBlueprint, Stage, Cell } from '../types'
 
 export default function useMineSweeperCalculations() {
@@ -23,13 +24,11 @@ export default function useMineSweeperCalculations() {
   function calculatePrizeSeconds(totalBombs: number) {
     const globalMultiplier = 1
     const secondsPerBomb = 2
-    const bonuses = [
-      { bombsRequired: 4, seconds: 0.05 },
-      { bombsRequired: 14, seconds: 0.05 },
-      { bombsRequired: 28, seconds: 0.05 },
-      { bombsRequired: 140, seconds: 0.05 },
-      { bombsRequired: 280, seconds: 0.05 },
-    ]
+    const bonuses = bluePrintList.map((blueprint) => ({
+      bombsRequired: blueprint.bombAmount,
+      seconds: 0.05,
+    }))
+
     const extraSeconds = bonuses.reduce((acc, bonus) => {
       const bonusCount = Math.floor(totalBombs / bonus.bombsRequired)
       return acc + bonusCount * bonus.seconds
