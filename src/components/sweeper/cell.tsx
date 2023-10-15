@@ -21,7 +21,7 @@ export default function CellBox({
 
   const getClassNames = useMemo(() => {
     const base =
-      'flex h-7 w-7 flex-col items-center justify-around disabled:cursor-default'
+      'flex h-7 min-w-[1.75rem] flex-col items-center justify-around disabled:cursor-default'
 
     if (cell.id === losingCellID) return `${base} bg-red-500`
 
@@ -57,7 +57,7 @@ export default function CellBox({
 
   const value = useMemo(() => {
     if (isBomb) return '💣'
-    return surroundingBombs || ''
+    return surroundingBombs
   }, [isBomb, surroundingBombs])
 
   return (
