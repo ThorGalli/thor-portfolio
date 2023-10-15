@@ -13,7 +13,7 @@ export default function NavbarLayout({
   ]
 
   return (
-    <div className="mt-[3.5rem] w-full bg-gray-900">
+    <div className="mb-[3.5rem] w-full bg-gray-900 lg:mt-[3.5rem]">
       <div
         id="navbar-wrapper"
         className="fixed bottom-0 z-10 flex w-full justify-center bg-slate-800 lg:top-0"

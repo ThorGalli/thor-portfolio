@@ -18,7 +18,7 @@ export default function NavButton({
   const isCurrent = path === route
 
   const buttonClasses = isCurrent
-    ? 'border-t-transparent border-b-yellow-700 text-yellow-100 font-semibold'
+    ? 'border-transparent lg:border-b-yellow-700 border-t-yellow-700 text-yellow-100 font-semibold'
     : 'border-transparent hover:bg-slate-700'
 
   return (

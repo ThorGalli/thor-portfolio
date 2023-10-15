@@ -94,7 +94,7 @@ export default function MineSweeper() {
   }, [totalRevealedCells])
 
   return (
-    <div className="mx-[-0.5rem] mt-[-0.5rem] pt-2">
+    <div className="mx-[-0.5rem] pt-[3.5rem] lg:mt-[-0.5rem] lg:pt-2">
       <div className="flex flex-col items-center justify-around gap-4 bg-slate-900 ">
         <div id="greetText" className="flex flex-col items-center gap-2 p-2">
           <p className="text-yellow-200">
