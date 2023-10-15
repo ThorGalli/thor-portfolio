@@ -16,7 +16,7 @@ export default function NavbarLayout({
     <div className="mt-[3.5rem] w-full bg-gray-900">
       <div
         id="navbar-wrapper"
-        className="fixed top-0 z-10 flex w-full justify-center bg-slate-800"
+        className="fixed bottom-0 z-10 flex w-full justify-center bg-slate-800 lg:top-0"
       >
         <div className="flex h-[3.5rem] w-screen max-w-screen-md flex-row justify-center">
           {navList}
