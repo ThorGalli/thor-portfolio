@@ -3,13 +3,12 @@ import React from 'react'
 export default function Drawer({
   children,
   isOpen,
-  setIsOpen,
+  onClose,
   side = 'right', // New prop for specifying the side ("left" or "right")
 }: {
   children: React.ReactNode
   isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  title?: string
+  onClose: () => void
   side: 'left' | 'right' // Specify the prop type for "side"
 }) {
   const isLeftSide = side === 'left'
@@ -37,9 +36,7 @@ export default function Drawer({
           }
         >
           <button
-            onClick={() => {
-              setIsOpen(false)
-            }}
+            onClick={onClose}
             className="absolute right-5 top-5 text-5xl font-bold text-orange-700"
           >
             X
@@ -47,12 +44,7 @@ export default function Drawer({
           {children}
         </div>
       </div>
-      <div
-        className="h-full w-screen cursor-pointer"
-        onClick={() => {
-          setIsOpen(false)
-        }}
-      ></div>
+      <div className="h-full w-screen cursor-pointer" onClick={onClose}></div>
     </div>
   )
 }

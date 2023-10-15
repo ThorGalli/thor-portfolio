@@ -1,48 +1,38 @@
 'use client'
-
+import React from 'react'
 import { useClickerContext } from '@/contexts/useClickerContext'
-import { useState } from 'react'
+import ConfirmationDialog from './confirmationDialog'
+import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
 
 export default function DeleteGameDataButton() {
-  const [showConfirmation, setShowConfirmation] = useState(false)
   const { deleteGameData, loading } = useClickerContext()
+  const { isOpen, onOpen, onClose } = useUrlDisclosure('confirmDelete')
+
   const handleDelete = () => {
     deleteGameData()
-    setShowConfirmation(false)
+    onClose()
   }
 
   return (
     <>
       <button
         className="relative h-fit cursor-pointer overflow-hidden rounded-md border-2 border-orange-900 bg-orange-700 px-2 text-black hover:bg-orange-600 hover:text-black"
-        onClick={() => setShowConfirmation(true)}
+        onClick={onOpen} // Update the query parameter
       >
         <p className="relative z-20">
           {loading && 'Loading...'}
           {!loading && 'Delete Game Data'}
         </p>
       </button>
-      {showConfirmation && (
-        <div className="fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="rounded-md bg-orange-950 p-4">
-            <p className="mb-4">Are you sure you want to delete game data?</p>
-            <div className="flex justify-end">
-              <button
-                className="mr-2 rounded-md bg-yellow-700 px-4 py-2 text-white"
-                onClick={() => setShowConfirmation(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="rounded-md bg-red-500 px-4 py-2 text-white"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
+      {/* Use the ConfirmationDialog component here */}
+      <ConfirmationDialog
+        isOpen={isOpen}
+        onConfirm={handleDelete}
+        confirmQuestion="Are you sure you want to delete all your game data?"
+        confirmAnswer="Delete"
+        onCancel={onClose} // Update the query parameter
+      />
     </>
   )
 }
