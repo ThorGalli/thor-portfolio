@@ -124,28 +124,37 @@ export default function MineSweeper() {
         id="gameWrapper"
         className="flex w-fit flex-col gap-2 border-slate-700"
       >
-        <button
-          className="white-hover mx-auto w-fit text-4xl active:opacity-70"
-          onClick={promptRestartGame}
-        >
-          {gameStatus === GameStatus.NOT_STARTED && '😉'}
-          {gameStatus === GameStatus.PLAYING && '🙂'}
-          {gameStatus === GameStatus.LOST && '💀'}
-          {gameStatus === GameStatus.WON && '😎'}
-        </button>
+        {!hasStarted && (
+          <button
+            className="white-hover mx-auto w-fit text-4xl active:opacity-70"
+            onClick={promptRestartGame}
+          >
+            😉
+          </button>
+        )}
         {hasStarted && (
-          <div className="mx-2 flex w-fit flex-col items-center rounded-[14px] border-8 border-slate-700 bg-slate-700">
-            <header className="flex w-full justify-evenly">
-              <p>
-                ✅ {totalRevealedCells}/{totalSafeCells}
-              </p>
-              <p>
-                {totalFlaggedCells}/{totalBombs} 🚩
-              </p>
-            </header>
+          <header className="sweeper-header sticky left-4 top-14 flex w-[calc(100vw-2rem)] items-center justify-evenly rounded-[14px] border-8 border-slate-700 bg-slate-950 p-1 text-yellow-200 lg:w-full">
+            <p>
+              ✅ {totalRevealedCells}/{totalSafeCells}
+            </p>
+            <button
+              className="white-hover w-fit text-4xl active:opacity-70"
+              onClick={promptRestartGame}
+            >
+              {gameStatus === GameStatus.PLAYING && '🙂'}
+              {gameStatus === GameStatus.LOST && '💀'}
+              {gameStatus === GameStatus.WON && '😎'}
+            </button>
+            <p>
+              {totalFlaggedCells}/{totalBombs} 🚩
+            </p>
+          </header>
+        )}
+        {hasStarted && (
+          <div className="mx-auto flex w-fit flex-col items-center justify-around rounded-[14px] border-8 border-slate-700 bg-slate-700">
             <div
               id="mineField"
-              className={cursorClass + ' my-1 overflow-hidden rounded-[6px]'}
+              className={cursorClass + ' overflow-hidden rounded-[6px]'}
             >
               {cellComponents}
             </div>

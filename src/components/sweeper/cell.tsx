@@ -57,7 +57,7 @@ export default function CellBox({
 
   const value = useMemo(() => {
     if (isBomb) return '💣'
-    return surroundingBombs
+    return surroundingBombs || ''
   }, [isBomb, surroundingBombs])
 
   return (
