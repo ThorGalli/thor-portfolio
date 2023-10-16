@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { ProvidersWrapper } from '@/contexts/providersWrapper'
+import ToastHolder from '@/components/toast/toastHolder'
 
 export const metadata: Metadata = {
   title: 'Thor Galli',
@@ -15,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ProvidersWrapper>{children}</ProvidersWrapper>
+        <ProvidersWrapper>
+          <ToastHolder />
+          {children}
+        </ProvidersWrapper>
       </body>
     </html>
   )

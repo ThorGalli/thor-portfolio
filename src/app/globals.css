@@ -78,3 +78,31 @@ body {
 .sweeper-header {
   @apply fixed left-2 right-2 lg:top-16 top-0 flex h-[3.5rem] w-[calc(100vw-1rem)] lg:max-w-[calc(1536px-1rem)] items-center justify-evenly rounded-[14px] border-8 border-slate-700 bg-slate-950 text-yellow-200 lg:mx-auto !important;
 }
+
+.toast-box {
+  @apply opacity-0 transition-all duration-300 
+}
+
+.toast-box.entering {
+  @apply opacity-0 bg-green-400 scale-y-0 translate-y-1/2
+}
+
+.toast-box.exiting {
+  @apply opacity-0 bg-red-400 scale-y-0 translate-y-1/2
+}
+
+.toast-box.active {
+  @apply opacity-100 scale-y-100
+}
+
+.toast-layout {
+  transition: transform 0.5s ease-in-out;
+}
+
+.toast-list-entering {
+  transform: translateY(0);
+}
+
+.toast-list-exiting {
+  transform: translateY(-100%);
+}

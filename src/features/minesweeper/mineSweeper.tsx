@@ -10,6 +10,7 @@ import { useSweeperContext } from '@/contexts/useSweeperContext'
 import BluePrintBar from '@/components/sweeper/bluePrintBar'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/contexts/useClickerContext'
+import { useToast } from '@/contexts/useToast'
 
 export default function MineSweeper() {
   const {
@@ -31,7 +32,7 @@ export default function MineSweeper() {
 
   const { short } = useClickerCalculations()
   const { onWinMineSweeper } = useClickerContext()
-
+  const { toast } = useToast()
   const restartDialog = useUrlDisclosure('restartMineSweeper')
   const stageSelectDrawer = useUrlDisclosure('stageSelectOpen')
 
@@ -87,9 +88,13 @@ export default function MineSweeper() {
 
   useEffect(() => {
     if (!stage) return
-    if (totalRevealedCells === totalSafeCells) {
+    if (
+      totalRevealedCells === totalSafeCells &&
+      gameStatus === GameStatus.PLAYING
+    ) {
       onWinGame()
       onWinMineSweeper(prize)
+      toast(`Congratulations! You earned ${prizeDisplay} coins!`, 'success')
     }
   }, [totalRevealedCells])
 
@@ -145,14 +150,6 @@ export default function MineSweeper() {
               {totalFlaggedCells}/{totalBombs} 🚩
             </p>
           </header>
-        )}
-
-        {gameStatus === GameStatus.WON && (
-          <div className="flex flex-col items-center">
-            <p className="text-2xl text-yellow-200">
-              Congratulations! You earned {prizeDisplay} coins!
-            </p>
-          </div>
         )}
 
         <ConfirmationDialog

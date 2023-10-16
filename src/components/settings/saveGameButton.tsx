@@ -1,6 +1,7 @@
 'use client'
 
 import { useClickerContext } from '@/contexts/useClickerContext'
+import { useToast } from '@/contexts/useToast'
 
 export default function SaveGameButton() {
   const { onSave, loading, lastSaveTime } = useClickerContext()
@@ -15,11 +16,15 @@ export default function SaveGameButton() {
       : (timeSinceLastSave / saveInterval) * 100
 
   const textColor = !canSaveAgain || loading ? 'text-teal-200' : ''
+  const { toast } = useToast()
 
   return (
     <button
       className={'btn-yellow relative overflow-hidden rounded-md border-2 px-2'}
-      onClick={onSave}
+      onClick={() => {
+        onSave()
+        toast('Game Saved!')
+      }}
       disabled={!canSaveAgain || loading}
     >
       <div
