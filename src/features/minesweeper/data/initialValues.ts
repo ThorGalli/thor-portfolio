@@ -2,11 +2,6 @@ import { GameStatus, StageBlueprint, SweeperState } from '../types'
 
 export const bluePrintList: StageBlueprint[] = [
   {
-    name: 'Banana',
-    size: 6,
-    bombAmount: 4,
-  }, // 6/(5*5) = 11,11% bomb density
-  {
     name: 'Beginner',
     size: 8,
     bombAmount: 8,

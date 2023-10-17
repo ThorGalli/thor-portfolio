@@ -22,20 +22,45 @@ export default function BluePrintBar({
   children?: React.ReactNode
 }) {
   const { calculatePrizeSeconds } = useMineSweeperCalculations()
+  const { short } = useClickerCalculations()
   const { resourceIncome } = useClickerContext()
 
-  const prizePreview = useMemo(() => {
+  const prize = useMemo(() => {
+    // const incomeBuff = Math.round(resourceIncome ** (1 / 2) / 100)
+    // const incomeMultiplier = 1 + incomeBuff / 100
     const seconds = calculatePrizeSeconds(blueprint.bombAmount)
-    const prize = seconds * resourceIncome
-    return { prize, seconds: Math.floor(seconds) }
+    const value = seconds * resourceIncome
+
+    return {
+      value,
+      display: short(value, 2),
+      seconds: secondsToShortTime(seconds),
+    }
   }, [blueprint, resourceIncome])
 
   const handleClick = () => {
     onClick?.()
-    onSelect?.(index, prizePreview?.prize)
+    onSelect?.(index, prize?.value)
   }
 
-  const { short } = useClickerCalculations()
+  function secondsToShortTime(seconds: number) {
+    if (seconds < 60) return seconds + 's'
+    if (seconds < 3600) return Math.floor(seconds / 60) + 'm'
+    if (seconds < 86400)
+      return (
+        Math.floor(seconds / 3600) +
+        'h ' +
+        Math.floor((seconds % 3600) / 60) +
+        'm'
+      )
+    return (
+      Math.floor(seconds / 86400) +
+      'd ' +
+      Math.floor((seconds % 86400) / 3600) +
+      'h'
+    )
+  }
+
   return (
     <button onClick={handleClick} className={className}>
       <p
@@ -52,7 +77,10 @@ export default function BluePrintBar({
           </span>
         </p>
         <div className="price-tag">
-          <p>{short(prizePreview.prize, 2)}</p>
+          <p>
+            <span className="text-stone-400">({prize.seconds}) </span>
+            {prize.display}
+          </p>
           <BaseCoin size={20} />
         </div>
       </div>

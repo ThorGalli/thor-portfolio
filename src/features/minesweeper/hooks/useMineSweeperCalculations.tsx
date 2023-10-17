@@ -22,20 +22,12 @@ export default function useMineSweeperCalculations() {
   }
 
   function calculatePrizeSeconds(totalBombs: number) {
-    const globalMultiplier = 1
-    const secondsPerBomb = 2
-    const bonuses = bluePrintList.map((blueprint) => ({
-      bombsRequired: blueprint.bombAmount,
-      seconds: blueprint.size / 50,
-    }))
-
-    const extraSeconds = bonuses.reduce((acc, bonus) => {
-      const bonusCount = Math.floor(totalBombs / bonus.bombsRequired)
-      return acc + bonusCount * bonus.seconds
-    }, 0)
-    const seconds =
-      globalMultiplier * totalBombs * (secondsPerBomb + extraSeconds)
-    return seconds
+    const secondsPerBomb = 60
+    const bombFactor = 2
+    const baseSeconds = secondsPerBomb * totalBombs
+    const bonusSeconds = secondsPerBomb * ((totalBombs * bombFactor) / 100) ** 2
+    const totalSeconds = baseSeconds + bonusSeconds
+    return totalSeconds
   }
 
   function placeBombs(stage: Stage, bombAmount: number) {
