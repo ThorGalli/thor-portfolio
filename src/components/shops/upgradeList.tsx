@@ -1,5 +1,5 @@
 'use client'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useMemo } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'

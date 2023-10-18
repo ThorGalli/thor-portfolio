@@ -1,5 +1,5 @@
 'use client'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import useMineSweeperCalculations from '@/features/minesweeper/hooks/useMineSweeperCalculations'
 import { StageBlueprint } from '@/features/minesweeper/types'

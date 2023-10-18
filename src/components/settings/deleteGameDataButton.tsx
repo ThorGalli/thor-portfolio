@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import ConfirmationDialog from './confirmationDialog'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
 

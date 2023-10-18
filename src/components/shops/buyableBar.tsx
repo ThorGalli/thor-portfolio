@@ -1,4 +1,4 @@
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import React, { useState } from 'react'
 import BaseCoin from '../coins/baseCoins'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'

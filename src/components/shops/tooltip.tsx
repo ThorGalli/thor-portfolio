@@ -1,5 +1,5 @@
 'use client'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { getUpgradeInfo } from '@/features/clicker/data/upgrades'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'

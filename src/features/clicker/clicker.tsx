@@ -4,7 +4,7 @@ import MainCoin from '@/components/coins/mainCoin'
 import ItemList from '@/components/shops/itemList'
 import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
 
 export default function ClickerGame() {

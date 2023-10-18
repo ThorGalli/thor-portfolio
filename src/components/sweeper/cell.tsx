@@ -1,5 +1,5 @@
 'use client'
-import { useSweeperContext } from '@/contexts/useSweeperContext'
+import { useSweeperContext } from '@/features/minesweeper/useSweeperContext'
 import { Cell } from '@/features/minesweeper/types'
 import { useMemo } from 'react'
 

@@ -1,5 +1,5 @@
 'use client'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import BaseCoin from './baseCoins'
 import SaveGameButton from '../settings/saveGameButton'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'

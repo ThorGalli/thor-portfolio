@@ -6,10 +6,10 @@ import { GameStatus } from '@/features/minesweeper/types'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
 import { useEffect, useMemo } from 'react'
 import useClickerCalculations from '../clicker/hooks/useClickerCalculations'
-import { useSweeperContext } from '@/contexts/useSweeperContext'
+import { useSweeperContext } from '@/features/minesweeper/useSweeperContext'
 import BluePrintBar from '@/components/sweeper/bluePrintBar'
 import Drawer from '@/components/navigation/drawer'
-import { useClickerContext } from '@/contexts/useClickerContext'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useToast } from '@/contexts/useToast'
 
 export default function MineSweeper() {
