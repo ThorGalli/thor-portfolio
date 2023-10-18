@@ -5,7 +5,7 @@ import ToastHolder from '@/components/toast/toastHolder'
 
 export const metadata: Metadata = {
   title: 'Thor Galli',
-  description: 'Portfolio + Clicker Game',
+  description: 'Portfolio + Games',
 }
 
 export default function RootLayout({
