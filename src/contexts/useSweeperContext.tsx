@@ -91,7 +91,7 @@ export const MineSweeperProvider = ({
           const isUnflaggedNeighbour =
             neighbour && neighbour !== cell && !neighbour.isFlagged
           if (isUnflaggedNeighbour) onRevealCell(neighbour)
-          if (neighbour.isBomb) return
+          if (isUnflaggedNeighbour && neighbour.isBomb) return
         }
       }
       setSweeperState({ stage: newStage })
