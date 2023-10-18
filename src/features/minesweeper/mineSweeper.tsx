@@ -28,6 +28,7 @@ export default function MineSweeper() {
     prize,
     setPrize,
     onWinGame,
+    onRevealAround,
   } = useSweeperContext()
 
   const { short } = useClickerCalculations()
@@ -78,6 +79,7 @@ export default function MineSweeper() {
                 cell={cell}
                 onReavelCell={onRevealCell}
                 onFlagCell={onFlagCell}
+                onRevealAround={onRevealAround}
               />
             )
           })}

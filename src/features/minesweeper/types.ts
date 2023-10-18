@@ -16,7 +16,10 @@ export type Cell = {
   isBomb: boolean
   isRevealed: boolean
   isFlagged: boolean
-  surroundingBombs: number
+  bombsAround: number
+  flagsAround: number
+  revealedAround: number
+  cellsAround: number
 }
 
 export type Stage = Cell[][]
@@ -31,6 +34,7 @@ export type MineSweeperContextProps = {
   gameStatus: GameStatus
   onStartGame: (blueprint: StageBlueprint) => void
   onRevealCell: (cell: Cell) => void
+  onRevealAround: (cell: Cell) => void
   onFlagCell: (cell: Cell) => void
   onWinGame: () => void
   setSelectedStage: (index: number) => void

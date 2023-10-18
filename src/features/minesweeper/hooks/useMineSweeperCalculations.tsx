@@ -1,4 +1,3 @@
-import { bluePrintList } from '../data/initialValues'
 import { StageBlueprint, Stage, Cell } from '../types'
 
 export default function useMineSweeperCalculations() {
@@ -14,11 +13,25 @@ export default function useMineSweeperCalculations() {
           isBomb: false,
           isRevealed: false,
           isFlagged: false,
-          surroundingBombs: 0,
+          bombsAround: 0,
+          flagsAround: 0,
+          revealedAround: 0,
+          cellsAround: getCellsAroundAmount(x, y, blueprint.size),
         })
       }
     }
     return blankStage
+  }
+
+  function getCellsAroundAmount(x: number, y: number, size: number) {
+    let cellsAround = 8
+    if (x === 0 || x === size - 1) cellsAround -= 3
+    if (y === 0 || y === size - 1) cellsAround -= 3
+    if (x === 0 && y === 0) cellsAround++
+    if (x === 0 && y === size - 1) cellsAround++
+    if (x === size - 1 && y === 0) cellsAround++
+    if (x === size - 1 && y === size - 1) cellsAround++
+    return cellsAround
   }
 
   function calculatePrizeSeconds(totalBombs: number) {
@@ -46,13 +59,47 @@ export default function useMineSweeperCalculations() {
   }
 
   function revealCell(cell: Cell, stage: Stage) {
-    if (cell.isRevealed) return
     let newStage: Stage = [...stage]
-    newStage[cell.x][cell.y].isRevealed = true
-    newStage[cell.x][cell.y].isFlagged = false
-    if (cell.surroundingBombs === 0) {
+    const currentCell = newStage[cell.x][cell.y]
+
+    // increment revealedAround and decrement flagsAround for all neighbours
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        const neighbour = newStage[cell.x + i]?.[cell.y + j]
+        if (neighbour && neighbour !== currentCell) {
+          neighbour.revealedAround++
+          if (currentCell.isFlagged) {
+            neighbour.flagsAround--
+          }
+        }
+      }
+    }
+
+    currentCell.isRevealed = true
+    currentCell.isFlagged = false
+    if (cell.bombsAround === 0) {
       newStage = revealTilesAroundZeros(cell, newStage)
     }
+    return newStage
+  }
+
+  function flagCell(cell: Cell, stage: Stage) {
+    if (cell.isRevealed) return
+    const newStage = [...stage]
+    const currentCell = newStage[cell.x][cell.y]
+    const isFlagged = currentCell.isFlagged
+
+    // increment revealedAround and decrement flagsAround for all neighbours
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        const neighbour = newStage[cell.x + i]?.[cell.y + j]
+        if (neighbour && neighbour !== currentCell) {
+          neighbour.flagsAround += isFlagged ? -1 : 1
+        }
+      }
+    }
+
+    newStage[cell.x][cell.y].isFlagged = !cell.isFlagged
     return newStage
   }
 
@@ -62,7 +109,7 @@ export default function useMineSweeperCalculations() {
       for (let y = 0; y < numberedStage.length; y++) {
         const cell = numberedStage[x][y]
         if (cell.isBomb) {
-          cell.surroundingBombs = -1
+          cell.bombsAround = -1
         } else {
           let surroundingBombs = 0
           for (let i = -1; i < 2; i++) {
@@ -73,7 +120,7 @@ export default function useMineSweeperCalculations() {
               }
             }
           }
-          cell.surroundingBombs = surroundingBombs
+          cell.bombsAround = surroundingBombs
         }
       }
     }
@@ -97,7 +144,6 @@ export default function useMineSweeperCalculations() {
         }
       }
     }
-    console.log('newStage', newStage)
     return newStage
   }
 
@@ -115,11 +161,25 @@ export default function useMineSweeperCalculations() {
         colAround < Math.min(size, y + 2);
         colAround++
       ) {
-        const neighbour = stage[rowAround][colAround]
-        if (neighbour.isRevealed) continue
-        stage[rowAround][colAround].isRevealed = true
-        if (neighbour.surroundingBombs === 0) {
-          stage = revealTilesAroundZeros(neighbour, stage)
+        const currentCell = stage[rowAround][colAround]
+        if (currentCell.isRevealed) continue
+        currentCell.isRevealed = true
+
+        // increment revealedAround and decrement flagsAround for all neighbours
+        for (let i = -1; i < 2; i++) {
+          for (let j = -1; j < 2; j++) {
+            const adjacent = stage[currentCell.x + i]?.[currentCell.y + j]
+            if (adjacent && adjacent !== currentCell) {
+              adjacent.revealedAround++
+              if (currentCell.isFlagged) {
+                adjacent.flagsAround--
+              }
+            }
+          }
+        }
+
+        if (currentCell.bombsAround === 0) {
+          stage = revealTilesAroundZeros(currentCell, stage)
         }
       }
     }
@@ -127,6 +187,7 @@ export default function useMineSweeperCalculations() {
   }
 
   return {
+    flagCell,
     revealCell,
     revealAllBombs,
     generateStage,

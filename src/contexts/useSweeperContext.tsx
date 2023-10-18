@@ -4,6 +4,7 @@ import {
   Cell,
   GameStatus,
   MineSweeperContextProps,
+  Stage,
   StageBlueprint,
   SweeperState,
 } from '@/features/minesweeper/types'
@@ -28,7 +29,7 @@ export const MineSweeperProvider = ({
   const [selectedStage, setSelectedStage] = useState(0)
   const [prize, setPrize] = useState(0)
 
-  const { generateStage, revealCell, revealAllBombs } =
+  const { generateStage, revealCell, revealAllBombs, flagCell } =
     useMineSweeperCalculations()
 
   const isPlaying = useMemo(() => {
@@ -38,8 +39,7 @@ export const MineSweeperProvider = ({
   const onFlagCell = useCallback(
     (cell: Cell) => {
       if (cell.isRevealed || !stage || !isPlaying) return
-      const newStage = [...stage]
-      newStage[cell.x][cell.y].isFlagged = !cell.isFlagged
+      const newStage = flagCell(cell, stage)
       setSweeperState({ stage: newStage })
     },
     [stage, isPlaying],
@@ -47,7 +47,7 @@ export const MineSweeperProvider = ({
 
   const onRevealCell = useCallback(
     (cell: Cell) => {
-      if (!stage || !isPlaying) return
+      if (!stage || !isPlaying || cell.isRevealed) return
       if (cell.isBomb) {
         setSweeperState({ losingCellID: cell.id })
         onLoseGame()
@@ -80,6 +80,25 @@ export const MineSweeperProvider = ({
     })
   }, [])
 
+  const onRevealAround = useCallback(
+    (cell: Cell) => {
+      if (!stage || !isPlaying) return
+      if (cell.bombsAround !== cell.flagsAround) return
+      const newStage: Stage = [...stage]
+      for (let i = -1; i < 2; i++) {
+        for (let j = -1; j < 2; j++) {
+          const neighbour = stage[cell.x + i]?.[cell.y + j]
+          const isUnflaggedNeighbour =
+            neighbour && neighbour !== cell && !neighbour.isFlagged
+          if (isUnflaggedNeighbour) onRevealCell(neighbour)
+          if (neighbour.isBomb) return
+        }
+      }
+      setSweeperState({ stage: newStage })
+    },
+    [stage, isPlaying],
+  )
+
   const totalRevealedCells = useMemo(() => {
     if (!stage) return 0
     return stage.flat().filter((cell) => cell.isRevealed && !cell.isBomb).length
@@ -110,6 +129,7 @@ export const MineSweeperProvider = ({
       gameStatus,
       onStartGame,
       onRevealCell,
+      onRevealAround,
       onFlagCell,
       onWinGame,
       selectedStage,
@@ -128,6 +148,7 @@ export const MineSweeperProvider = ({
       gameStatus,
       onStartGame,
       onRevealCell,
+      onRevealAround,
       onFlagCell,
       onWinGame,
       selectedStage,
@@ -155,6 +176,7 @@ const SweeperContext = createContext<MineSweeperContextProps>({
   gameStatus: GameStatus.NOT_STARTED,
   onStartGame: () => null,
   onRevealCell: () => null,
+  onRevealAround: () => null,
   onFlagCell: () => null,
   onWinGame: () => null,
   setSelectedStage: () => null,
