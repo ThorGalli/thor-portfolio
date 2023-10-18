@@ -80,21 +80,42 @@ export const MineSweeperProvider = ({
     })
   }, [])
 
-  const onRevealAround = useCallback(
+  function revealAround(cell: Cell) {
+    const newStage: Stage = [...stage]
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        const neighbour = newStage[cell.x + i]?.[cell.y + j]
+        const isUnflaggedNeighbour =
+          neighbour && neighbour !== cell && !neighbour.isFlagged
+        if (isUnflaggedNeighbour) onRevealCell(neighbour)
+        if (isUnflaggedNeighbour && neighbour.isBomb) return
+      }
+    }
+  }
+
+  function flagAround(cell: Cell) {
+    const newStage: Stage = [...stage]
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        const neighbour = newStage[cell.x + i]?.[cell.y + j]
+        const isUnflaggedNeighbour =
+          neighbour && neighbour !== cell && !neighbour.isFlagged
+        if (isUnflaggedNeighbour) onFlagCell(neighbour)
+      }
+    }
+  }
+
+  const onSmartClick = useCallback(
     (cell: Cell) => {
       if (!stage || !isPlaying) return
-      if (cell.bombsAround !== cell.flagsAround) return
-      const newStage: Stage = [...stage]
-      for (let i = -1; i < 2; i++) {
-        for (let j = -1; j < 2; j++) {
-          const neighbour = stage[cell.x + i]?.[cell.y + j]
-          const isUnflaggedNeighbour =
-            neighbour && neighbour !== cell && !neighbour.isFlagged
-          if (isUnflaggedNeighbour) onRevealCell(neighbour)
-          if (isUnflaggedNeighbour && neighbour.isBomb) return
-        }
-      }
-      setSweeperState({ stage: newStage })
+
+      const shouldRevealAround =
+        cell.isRevealed && cell.bombsAround === cell.flagsAround
+      if (shouldRevealAround) revealAround(cell)
+
+      const shouldFlagAround =
+        cell.revealedAround === cell.cellsAround - cell.bombsAround
+      if (shouldFlagAround) flagAround(cell)
     },
     [stage, isPlaying],
   )
@@ -129,7 +150,7 @@ export const MineSweeperProvider = ({
       gameStatus,
       onStartGame,
       onRevealCell,
-      onRevealAround,
+      onSmartClick,
       onFlagCell,
       onWinGame,
       selectedStage,
@@ -148,7 +169,7 @@ export const MineSweeperProvider = ({
       gameStatus,
       onStartGame,
       onRevealCell,
-      onRevealAround,
+      onSmartClick,
       onFlagCell,
       onWinGame,
       selectedStage,
@@ -176,7 +197,7 @@ const SweeperContext = createContext<MineSweeperContextProps>({
   gameStatus: GameStatus.NOT_STARTED,
   onStartGame: () => null,
   onRevealCell: () => null,
-  onRevealAround: () => null,
+  onSmartClick: () => null,
   onFlagCell: () => null,
   onWinGame: () => null,
   setSelectedStage: () => null,

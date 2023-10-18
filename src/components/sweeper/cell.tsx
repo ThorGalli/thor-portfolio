@@ -5,14 +5,14 @@ import { useMemo } from 'react'
 
 export default function CellBox({
   cell,
-  onReavelCell,
-  onFlagCell,
-  onRevealAround,
+  onReveal,
+  onFlag,
+  onSmartClick,
 }: {
   cell: Cell
-  onReavelCell: (cell: Cell) => void
-  onFlagCell: (cell: Cell) => void
-  onRevealAround: (cell: Cell) => void
+  onReveal: (cell: Cell) => void
+  onFlag: (cell: Cell) => void
+  onSmartClick: (cell: Cell) => void
 }) {
   const {
     isBomb,
@@ -84,8 +84,8 @@ export default function CellBox({
 
   function handleReveal() {
     if (isFlagged) return
-    if (isRevealed) return onRevealAround(cell)
-    return onReavelCell(cell)
+    if (isRevealed) return onSmartClick(cell)
+    return onReveal(cell)
   }
 
   return (
@@ -94,7 +94,7 @@ export default function CellBox({
       onClick={handleReveal}
       onContextMenu={(e) => {
         e.preventDefault()
-        onFlagCell(cell)
+        onFlag(cell)
       }}
     >
       {isRevealed && <p className={textColor}>{value || ''}</p>}
