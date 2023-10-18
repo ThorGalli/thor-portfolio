@@ -83,9 +83,9 @@ export default function CellBox({
   }, [isBomb, bombsAround])
 
   function handleReveal() {
-    if (isResolved || isFlagged) return
+    if (isFlagged) return
     if (isRevealed) return onRevealAround(cell)
-    onReavelCell(cell)
+    return onReavelCell(cell)
   }
 
   return (
