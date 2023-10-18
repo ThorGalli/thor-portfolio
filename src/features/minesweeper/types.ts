@@ -34,7 +34,7 @@ export type MineSweeperContextProps = {
   gameStatus: GameStatus
   onStartGame: (blueprint: StageBlueprint) => void
   onRevealCell: (cell: Cell) => void
-  onRevealAround: (cell: Cell) => void
+  onSmartClick: (cell: Cell) => void
   onFlagCell: (cell: Cell) => void
   onWinGame: () => void
   setSelectedStage: (index: number) => void

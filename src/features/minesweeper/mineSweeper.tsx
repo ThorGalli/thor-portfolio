@@ -28,7 +28,7 @@ export default function MineSweeper() {
     prize,
     setPrize,
     onWinGame,
-    onRevealAround,
+    onSmartClick,
   } = useSweeperContext()
 
   const { short } = useClickerCalculations()
@@ -40,7 +40,7 @@ export default function MineSweeper() {
   const isPlaying = gameStatus === GameStatus.PLAYING
   const hasStarted = gameStatus !== GameStatus.NOT_STARTED
 
-  const handleSelectBlueprint = (index: number, prize: number) => {
+  const handleSelectBlueprint = (index: number, prize: number): void => {
     stageSelectDrawer.onClose()
     setSelectedStage(index)
     setPrize(prize)
@@ -77,9 +77,9 @@ export default function MineSweeper() {
               <CellBox
                 key={mapKey + cell.id}
                 cell={cell}
-                onReavelCell={onRevealCell}
-                onFlagCell={onFlagCell}
-                onRevealAround={onRevealAround}
+                onReveal={onRevealCell}
+                onFlag={onFlagCell}
+                onSmartClick={onSmartClick}
               />
             )
           })}
