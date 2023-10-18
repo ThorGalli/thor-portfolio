@@ -40,7 +40,7 @@ export default function Home() {
               </div>
               <Image
                 className="mb-2 max-h-[200px] max-w-[200px] rounded-full shadow-[0_0_10px_2px] shadow-yellow-800"
-                src="/assets/images/profile-pic.jpg"
+                src="/assets/images/profile-pic.png"
                 alt="profile-picture"
                 width={200}
                 height={200}
