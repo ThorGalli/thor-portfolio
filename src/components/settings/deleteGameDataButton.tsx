@@ -16,7 +16,7 @@ export default function DeleteGameDataButton() {
   return (
     <>
       <button
-        className="relative h-fit cursor-pointer overflow-hidden rounded-md border-2 border-orange-900 bg-orange-700 px-2 text-black hover:bg-orange-600 hover:text-black"
+        className="relative h-fit cursor-pointer overflow-hidden rounded-md  border-orange-900 bg-orange-700 p-2 text-black hover:bg-orange-600 hover:text-black"
         onClick={onOpen} // Update the query parameter
       >
         <p className="relative z-20">
