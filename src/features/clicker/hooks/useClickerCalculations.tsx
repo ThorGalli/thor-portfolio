@@ -2,11 +2,12 @@ import { Buyable, LoopControl } from '@/features/clicker/clickerTypes'
 
 export default function useClickerCalculations() {
   function short(num: number, decimals = 1) {
-    if (num < 1000) return num
+    if (num < 1000) return num.toFixed(0)
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
-    const numShort = (num / 1000 ** unit).toFixed(decimals)
-    return `${numShort} ${units[unit]}`
+    const numShort = num / 1000 ** unit
+    const rounded = numShort.toFixed(decimals)
+    return `${rounded} ${units[unit]}`
   }
 
   function getAdjustedPrice(buyable: Buyable) {

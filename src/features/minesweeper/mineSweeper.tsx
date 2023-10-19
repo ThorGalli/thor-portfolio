@@ -11,6 +11,7 @@ import BluePrintBar from '@/components/sweeper/bluePrintBar'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useToast } from '@/contexts/useToast'
+import useMineSweeperCalculations from './hooks/useMineSweeperCalculations'
 
 export default function MineSweeper() {
   const {
@@ -33,10 +34,15 @@ export default function MineSweeper() {
 
   const { short } = useClickerCalculations()
   const { onWinMineSweeper } = useClickerContext()
-
+  const { resourceIncome, autoIncome } = useClickerContext()
   const { toast } = useToast()
+  const { calculatePrizeSeconds, secondsToShortTime } =
+    useMineSweeperCalculations()
   const restartDialog = useUrlDisclosure('restartMineSweeper')
   const stageSelectDrawer = useUrlDisclosure('stageSelectOpen')
+
+  const totalIncome = resourceIncome + autoIncome
+  const currentStage = bluePrintList[selectedStage]
 
   const isPlaying = gameStatus === GameStatus.PLAYING
   const hasStarted = gameStatus !== GameStatus.NOT_STARTED
@@ -58,8 +64,24 @@ export default function MineSweeper() {
   }
 
   const prizeDisplay = useMemo(() => {
-    return short(prize, 2)
-  }, [prize])
+    const { value, display, seconds } = getPrizeDisplay()
+    setPrize?.(value)
+    return {
+      value,
+      display,
+      seconds,
+    }
+  }, [currentStage, totalIncome])
+
+  function getPrizeDisplay(index: number = selectedStage) {
+    const seconds = calculatePrizeSeconds(bluePrintList[index].bombAmount)
+    const value = seconds * totalIncome
+    return {
+      value,
+      display: short(value, 2).toString(),
+      seconds: secondsToShortTime(seconds),
+    }
+  }
 
   const cursorClass = isPlaying ? '' : 'cursor-default  pointer-events-none'
 
@@ -97,7 +119,7 @@ export default function MineSweeper() {
           blueprint={blueprint}
           key={blueprint.name}
           onSelect={handleSelectBlueprint}
-          setPrize={setPrize}
+          prizeDisplay={getPrizeDisplay(index)}
         />
       )
     })
@@ -156,6 +178,7 @@ export default function MineSweeper() {
             index={selectedStage}
             blueprint={bluePrintList[selectedStage]}
             onClick={stageSelectDrawer.onOpen}
+            prizeDisplay={getPrizeDisplay()}
           />
         </div>
 

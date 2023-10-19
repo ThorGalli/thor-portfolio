@@ -1,9 +1,6 @@
 'use client'
-import { useClickerContext } from '@/features/clicker/useClickerContext'
-import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
-import useMineSweeperCalculations from '@/features/minesweeper/hooks/useMineSweeperCalculations'
+
 import { StageBlueprint } from '@/features/minesweeper/types'
-import { useMemo } from 'react'
 import BaseCoin from '../coins/baseCoins'
 
 export default function BluePrintBar({
@@ -12,38 +9,20 @@ export default function BluePrintBar({
   blueprint,
   onSelect,
   onClick,
-  setPrize,
   children,
+  prizeDisplay,
 }: {
   className: string
   index: number
   blueprint: StageBlueprint
-  onSelect?: (index: number, prize: number) => void
+  onSelect?: (index: number) => void
   onClick?: () => void
   children?: React.ReactNode
-  setPrize?: (prize: number) => void
+  prizeDisplay: { value: number; display: string; seconds: string }
 }) {
-  const { calculatePrizeSeconds, secondsToShortTime } =
-    useMineSweeperCalculations()
-  const { short } = useClickerCalculations()
-  const { resourceIncome } = useClickerContext()
-
-  const prize = useMemo(() => {
-    // const incomeBuff = Math.round(resourceIncome ** (1 / 2) / 100)
-    // const incomeMultiplier = 1 + incomeBuff / 100
-    const seconds = calculatePrizeSeconds(blueprint.bombAmount)
-    const value = seconds * resourceIncome
-    setPrize?.(value)
-    return {
-      value,
-      display: short(value, 2),
-      seconds: secondsToShortTime(seconds),
-    }
-  }, [blueprint, resourceIncome])
-
   const handleClick = () => {
     onClick?.()
-    onSelect?.(index, prize?.value)
+    onSelect?.(index)
   }
 
   return (
@@ -63,8 +42,8 @@ export default function BluePrintBar({
         </p>
         <div className="price-tag">
           <p>
-            <span className="text-stone-400">({prize.seconds}) </span>
-            {prize.display}
+            <span className="text-stone-400">({prizeDisplay.seconds}) </span>
+            {prizeDisplay.display}
           </p>
           <BaseCoin size={20} />
         </div>
