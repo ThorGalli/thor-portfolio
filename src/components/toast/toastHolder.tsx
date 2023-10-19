@@ -9,7 +9,7 @@ export default function ToastHolder() {
     <ToastBox key={toast.id} toast={toast} />
   ))
   return (
-    <div className="absolute bottom-14 left-1/2 z-20 flex -translate-x-1/2 flex-col gap-2 pb-2 lg:bottom-0">
+    <div className="fixed bottom-14 left-1/2 z-20 flex -translate-x-1/2 flex-col gap-2 pb-2 lg:bottom-0">
       {toastComponents}
     </div>
   )

@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useCallback,
   useContext,
@@ -6,39 +6,37 @@ import {
   useState,
 } from 'react'
 
+export type ToastData = {
+  message: string | React.ReactNode
+  variant?: 'success' | 'info' | 'warning' | 'error'
+  duration?: number
+}
+
 export type Toast = {
   id: number
-  message: string
-  duration: number
-  variant: 'success' | 'info' | 'warning' | 'error'
   onClose: () => void
-}
+} & ToastData
+
 type ToastContextProps = {
-  toast: (
-    message: string,
-    variant?: Toast['variant'],
-    duration?: number,
-  ) => void
+  toast: (toastData: ToastData) => void
   toastList: Toast[]
 }
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toastList, setToastList] = useState<Toast[]>([])
 
-  const toast = useCallback(
-    (message: string, variant?: Toast['variant'], duration?: number) => {
-      const id = new Date().getTime()
-      const newToast: Toast = {
-        id,
-        message,
-        variant: variant ?? 'success',
-        onClose: () => removeToast(id),
-        duration: duration ?? 5000,
-      }
-      setToastList((prev) => [...prev, newToast])
-    },
-    [],
-  )
+  const toast = useCallback((toastData: ToastData) => {
+    const { message, variant, duration } = toastData
+    const id = new Date().getTime()
+    const newToast: Toast = {
+      id,
+      message,
+      variant: variant ?? 'success',
+      onClose: () => removeToast(id),
+      duration: duration ?? 5000,
+    }
+    setToastList((prev) => [...prev, newToast])
+  }, [])
 
   const removeToast = useCallback(
     (id: number) => {

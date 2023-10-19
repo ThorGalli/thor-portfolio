@@ -23,7 +23,7 @@ export default function SaveGameButton() {
       className={'btn-yellow relative overflow-hidden rounded-md px-2 py-2'}
       onClick={() => {
         onSave()
-        toast('Game Saved!')
+        toast({ message: 'Game Saved!' })
       }}
       disabled={!canSaveAgain || loading}
     >

@@ -111,7 +111,14 @@ export default function MineSweeper() {
     ) {
       onWinGame()
       onWinMineSweeper(prize)
-      toast(`Congratulations! You earned ${prizeDisplay} coins!`, 'success')
+      toast({
+        message: (
+          <p>
+            Congratulations!
+            <br /> You earned {prizeDisplay.display} coins!
+          </p>
+        ),
+      })
     }
   }, [totalRevealedCells])
 
