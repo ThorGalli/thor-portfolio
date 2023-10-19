@@ -20,7 +20,7 @@ export default function SaveGameButton() {
 
   return (
     <button
-      className={'btn-yellow relative overflow-hidden rounded-md border-2 px-2'}
+      className={'btn-yellow relative overflow-hidden rounded-md px-2 py-2'}
       onClick={() => {
         onSave()
         toast('Game Saved!')
@@ -28,10 +28,10 @@ export default function SaveGameButton() {
       disabled={!canSaveAgain || loading}
     >
       <div
-        className={'absolute left-0 z-10 h-full bg-slate-800'}
+        className={'absolute left-0 top-0 z-10 h-full bg-slate-700'}
         style={{ width: `${width}%` }}
-      ></div>
-      <p className={'relative z-20 ' + textColor}>
+      />
+      <p className={'relative z-10 ' + textColor}>
         {loading && 'Loading...'}
         {!loading && canSaveAgain ? 'Save Game' : 'Just Saved!'}
       </p>

@@ -18,13 +18,13 @@ export default function ClickerGame() {
       {/* Mobile Buttons */}
       <div className="flex justify-between lg:hidden">
         <button
-          className="btn-yellow rounded-[14px] border-4 px-2 py-4"
+          className="btn-yellow rounded-md px-4 py-4"
           onClick={() => upgradeDrawer.onOpen()}
         >
           Upgrades
         </button>
         <button
-          className="btn-yellow rounded-[14px] border-4 px-2 py-4"
+          className="btn-yellow rounded-md px-4 py-4"
           onClick={() => itemDrawer.onOpen()}
         >
           Resources

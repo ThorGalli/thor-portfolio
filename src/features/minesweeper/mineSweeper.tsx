@@ -33,6 +33,7 @@ export default function MineSweeper() {
 
   const { short } = useClickerCalculations()
   const { onWinMineSweeper } = useClickerContext()
+
   const { toast } = useToast()
   const restartDialog = useUrlDisclosure('restartMineSweeper')
   const stageSelectDrawer = useUrlDisclosure('stageSelectOpen')
@@ -40,10 +41,9 @@ export default function MineSweeper() {
   const isPlaying = gameStatus === GameStatus.PLAYING
   const hasStarted = gameStatus !== GameStatus.NOT_STARTED
 
-  const handleSelectBlueprint = (index: number, prize: number): void => {
+  const handleSelectBlueprint = (index: number): void => {
     stageSelectDrawer.onClose()
     setSelectedStage(index)
-    setPrize(prize)
     onStartGame(bluePrintList[index])
   }
 
@@ -88,6 +88,21 @@ export default function MineSweeper() {
     })
   }, [stage, gameStatus])
 
+  const bluePrintComponents = useMemo(() => {
+    return bluePrintList.map((blueprint, index) => {
+      return (
+        <BluePrintBar
+          className="btn-yellow bar"
+          index={index}
+          blueprint={blueprint}
+          key={blueprint.name}
+          onSelect={handleSelectBlueprint}
+          setPrize={setPrize}
+        />
+      )
+    })
+  }, [bluePrintList])
+
   useEffect(() => {
     if (!stage) return
     if (
@@ -122,6 +137,8 @@ export default function MineSweeper() {
             </p>
           </div>
         )}
+
+        {/* Selected dificulty */}
         <div
           id="difficulty-selector"
           className="flex w-full flex-col items-center px-2"
@@ -135,13 +152,14 @@ export default function MineSweeper() {
           />
         </div>
 
+        {/* Game Header */}
         {hasStarted && (
           <header className="sweeper-header">
             <p>
               ✅ {totalRevealedCells}/{totalSafeCells}
             </p>
             <button
-              className="white-hover w-fit text-4xl active:opacity-70"
+              className="white-hover absolute w-fit text-4xl active:opacity-70"
               onClick={promptRestartGame}
             >
               {gameStatus === GameStatus.PLAYING && '🙂'}
@@ -154,6 +172,7 @@ export default function MineSweeper() {
           </header>
         )}
 
+        {/* Absolute components */}
         <ConfirmationDialog
           isOpen={restartDialog.isOpen}
           onCancel={restartDialog.onClose}
@@ -161,6 +180,7 @@ export default function MineSweeper() {
           confirmQuestion="Are you sure you want abandon your progress and restart?"
           confirmAnswer="Restart"
         />
+
         <Drawer
           isOpen={stageSelectDrawer.isOpen}
           onClose={stageSelectDrawer.onClose}
@@ -168,22 +188,12 @@ export default function MineSweeper() {
         >
           <div className="list-wrapper">
             <header className="list-header">Stage Selector</header>
-            <div className="list">
-              {bluePrintList.map((blueprint, index) => {
-                return (
-                  <BluePrintBar
-                    className="btn-yellow bar"
-                    index={index}
-                    blueprint={blueprint}
-                    key={blueprint.name}
-                    onSelect={handleSelectBlueprint}
-                  />
-                )
-              })}
-            </div>
+            <div className="list">{bluePrintComponents}</div>
           </div>
         </Drawer>
       </div>
+
+      {/* Game Window */}
       {hasStarted && (
         <div className="mx-auto mb-8 mt-4 flex max-w-fit overflow-x-auto rounded-[14px] border-slate-700 bg-slate-700 p-2">
           <div

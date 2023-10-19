@@ -23,6 +23,24 @@ export default function useMineSweeperCalculations() {
     return blankStage
   }
 
+  function secondsToShortTime(seconds: number) {
+    if (seconds < 60) return seconds + 's'
+    if (seconds < 3600) return Math.floor(seconds / 60) + 'm'
+    if (seconds < 86400)
+      return (
+        Math.floor(seconds / 3600) +
+        'h ' +
+        Math.floor((seconds % 3600) / 60) +
+        'm'
+      )
+    return (
+      Math.floor(seconds / 86400) +
+      'd ' +
+      Math.floor((seconds % 86400) / 3600) +
+      'h'
+    )
+  }
+
   function getCellsAroundAmount(x: number, y: number, size: number) {
     let cellsAround = 8
     if (x === 0 || x === size - 1) cellsAround -= 3
@@ -192,5 +210,6 @@ export default function useMineSweeperCalculations() {
     revealAllBombs,
     generateStage,
     calculatePrizeSeconds,
+    secondsToShortTime,
   }
 }

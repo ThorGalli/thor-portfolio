@@ -12,6 +12,7 @@ export default function BluePrintBar({
   blueprint,
   onSelect,
   onClick,
+  setPrize,
   children,
 }: {
   className: string
@@ -20,8 +21,10 @@ export default function BluePrintBar({
   onSelect?: (index: number, prize: number) => void
   onClick?: () => void
   children?: React.ReactNode
+  setPrize?: (prize: number) => void
 }) {
-  const { calculatePrizeSeconds } = useMineSweeperCalculations()
+  const { calculatePrizeSeconds, secondsToShortTime } =
+    useMineSweeperCalculations()
   const { short } = useClickerCalculations()
   const { resourceIncome } = useClickerContext()
 
@@ -30,7 +33,7 @@ export default function BluePrintBar({
     // const incomeMultiplier = 1 + incomeBuff / 100
     const seconds = calculatePrizeSeconds(blueprint.bombAmount)
     const value = seconds * resourceIncome
-
+    setPrize?.(value)
     return {
       value,
       display: short(value, 2),
@@ -41,24 +44,6 @@ export default function BluePrintBar({
   const handleClick = () => {
     onClick?.()
     onSelect?.(index, prize?.value)
-  }
-
-  function secondsToShortTime(seconds: number) {
-    if (seconds < 60) return seconds + 's'
-    if (seconds < 3600) return Math.floor(seconds / 60) + 'm'
-    if (seconds < 86400)
-      return (
-        Math.floor(seconds / 3600) +
-        'h ' +
-        Math.floor((seconds % 3600) / 60) +
-        'm'
-      )
-    return (
-      Math.floor(seconds / 86400) +
-      'd ' +
-      Math.floor((seconds % 86400) / 3600) +
-      'h'
-    )
   }
 
   return (
