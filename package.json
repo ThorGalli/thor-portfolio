@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^0.1.5",
+    "@supabase/supabase-js": "^2.38.2",
+    "@types/jsonwebtoken": "^9.0.4",
     "@vercel/postgres": "^0.5.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
     "next-auth": "^4.24.3",
     "nookies": "^2.5.2",
