@@ -53,7 +53,7 @@ export default function Tooltip({
           </p>
           {getUpgradeInfo(buyable, items).map((info) => (
             <div
-              key={buyable.id}
+              key={buyable.id + '-' + info.prefix}
               className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200"
             >
               <p className="">{info.prefix}</p>
