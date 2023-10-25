@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import MainCoin from '@/components/coins/mainCoin'
-import ItemList from '@/components/shops/itemList'
+import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
@@ -45,7 +45,7 @@ export default function ClickerGame() {
           <MainCoin />
         )}
         <div className="absolute right-0 hidden lg:flex">
-          <ItemList />
+          <ResourceList />
         </div>
       </div>
       {/*  */}
@@ -67,7 +67,7 @@ export default function ClickerGame() {
           onClose={itemDrawer.onClose}
           side="right"
         >
-          <ItemList />
+          <ResourceList />
         </Drawer>
       </div>
       {/*  */}
