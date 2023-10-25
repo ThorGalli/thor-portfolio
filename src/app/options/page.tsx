@@ -22,7 +22,9 @@ export default function ClickerPage() {
         )}
         {loggedIn && (
           <div className="flex flex-col items-center justify-center gap-2">
-            <p className="text-yellow-200">Welcome, {data?.user?.name}</p>
+            <p className="text-yellow-200">
+              Welcome, {data?.user?.name ?? 'user'}
+            </p>
             <button
               className="btn-yellow rounded-md p-2"
               onClick={() => signOut()}
