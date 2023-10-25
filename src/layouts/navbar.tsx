@@ -1,28 +1,15 @@
+'use client'
+import ClickerButton from '@/components/navigation/clickerButton'
 import NavButton from '@/components/navigation/navButton'
+import { usePathname, useRouter } from 'next/navigation'
 
 export default function NavbarLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const navList = [
-    <NavButton key="home" route="/" label={<p className="text-2xl">🏠</p>} />,
-    <NavButton
-      key="clicker"
-      route="/clicker"
-      label={<p className="text-2xl">👆</p>}
-    />,
-    <NavButton
-      key="mineSweeper"
-      route="/minesweeper"
-      label={<p className="text-2xl">💣</p>}
-    />,
-    <NavButton
-      key="options"
-      route="/options"
-      label={<p className="text-2xl">⚙️</p>}
-    />,
-  ]
+  const router = useRouter()
+  const path = usePathname()
 
   return (
     <div className="relative mb-[3.5rem] w-full bg-gray-900 lg:mb-0 lg:mt-[3.5rem]">
@@ -31,7 +18,26 @@ export default function NavbarLayout({
         className="fixed bottom-0 z-10 flex h-fit w-full justify-center bg-slate-800 lg:top-0"
       >
         <div className="flex h-[3.5rem] w-screen max-w-screen-2xl flex-row justify-center">
-          {navList}
+          <NavButton
+            label={<p className="text-2xl">🏠</p>}
+            isCurrent={path === '/'}
+            onClick={() => router.push('/')}
+          />
+          <ClickerButton
+            label={<p className="text-2xl">👆</p>}
+            onClick={() => router.push('/clicker')}
+            isCurrent={path === '/clicker'}
+          />
+          <NavButton
+            label={<p className="text-2xl">💣</p>}
+            isCurrent={path === '/minesweeper'}
+            onClick={() => router.push('/minesweeper')}
+          />
+          <NavButton
+            onClick={() => router.push('/options')}
+            isCurrent={path === '/options'}
+            label={<p className="text-2xl">⚙️</p>}
+          />
         </div>
       </div>
       <div

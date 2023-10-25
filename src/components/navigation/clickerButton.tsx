@@ -1,5 +1,9 @@
 'use client'
-export default function NavButton({
+
+import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
+import { useClickerContext } from '@/features/clicker/useClickerContext'
+
+export default function ClickerButton({
   label,
   onClick,
   isCurrent,
@@ -12,6 +16,8 @@ export default function NavButton({
     ? 'lg:border-b-yellow-700 border-t-yellow-700 text-yellow-100 font-semibold'
     : 'lg:border-b-stone-700 border-t-stone-700 hover:bg-slate-700'
 
+  const { totalCoins } = useClickerContext()
+  const { short } = useClickerCalculations()
   return (
     <div
       className={
@@ -21,6 +27,7 @@ export default function NavButton({
       onClick={onClick}
     >
       {label}
+      <div className="text-sm lg:text-lg">{short(totalCoins)}</div>
     </div>
   )
 }
