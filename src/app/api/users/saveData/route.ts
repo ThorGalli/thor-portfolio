@@ -2,7 +2,7 @@ import { supabase } from '@/config/supabase'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  const sessionToken = req.cookies.get('next-auth.session-token')
+  const sessionToken = req.cookies.get('__Secure-next-auth.session-token')
   if (!sessionToken?.value)
     return NextResponse.json({
       data: null,
@@ -33,7 +33,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const sessionToken = req.cookies.get('next-auth.session-token')
+  const sessionToken = req.cookies.get('__Secure-next-auth.session-token')
+
   const saveData = await req.json()
 
   if (!sessionToken?.value)
