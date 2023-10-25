@@ -11,38 +11,9 @@ export default function useClickerProgress() {
   })
   const [loading, setLoading] = useState(true)
   const [lastSaveTime, setLastSaveTime] = useState(performance.now())
+  const [saving, setSaving] = useState(false)
 
-  function loadGameData() {
-    try {
-      const cookies = parseCookies(null)
-      const saveData = cookies['thor-cookie-saveData']
-      if (!saveData) {
-        setLoading(false)
-        return
-      }
-      const parsedData = JSON.parse(saveData)
-      const { items, upgrades, coins, saveTime } = parsedData
-      if (!items || !upgrades || !coins || !saveTime) {
-        setLoading(false)
-        return
-      }
-      const offlineTime = new Date().getTime() - saveTime
-      setCacheGameData({
-        shouldReset: true,
-        items,
-        upgrades,
-        coins,
-        offlineTime,
-      })
-    } catch (error) {
-      console.log(error)
-    }
-    setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }
-
-  function deleteGameData() {
+  function deleteCookies() {
     setLoading(true)
     setCookie(null, 'thor-cookie-saveData', '', {
       maxAge: 0,
@@ -58,7 +29,12 @@ export default function useClickerProgress() {
     }, 500)
   }
 
-  function saveGameData(gameState: ClickerState) {
+  async function saveGameProgress(
+    gameState: ClickerState,
+    status: 'authenticated' | 'unauthenticated' | 'loading',
+  ) {
+    if (status === 'loading') return { success: false }
+    setSaving(true)
     const currentDateTimeInMS = new Date().getTime()
     const currentRunTime = performance.now()
     const compactItems = Object.fromEntries(
@@ -74,33 +50,115 @@ export default function useClickerProgress() {
       ]),
     )
 
-    const saveData = {
-      items: compactItems,
-      upgrades: compactUpgrades,
-      coins: gameState.coins,
-      saveTime: currentDateTimeInMS,
+    try {
+      const saveData = {
+        items: compactItems,
+        upgrades: compactUpgrades,
+        coins: gameState.coins,
+        saveTime: currentDateTimeInMS,
+      }
+      if (status === 'unauthenticated') saveToCookies(JSON.stringify(saveData))
+      if (status === 'authenticated')
+        await saveToServer(JSON.stringify(saveData))
+    } catch (error) {
+      console.log(error)
+      return { success: false }
+    } finally {
+      setSaving(false)
+    }
+    setLastSaveTime(currentRunTime)
+    return { success: true }
+  }
+
+  function saveToCookies(stringfiedJSON: string) {
+    setCookie(null, 'thor-cookie-saveData', stringfiedJSON, {
+      maxAge: 2147483647,
+      path: '/',
+      sameSite: 'Strict',
+    })
+  }
+
+  async function saveToServer(stringfiedJSON: string) {
+    await fetch('/api/users/saveData', {
+      method: 'POST',
+      body: stringfiedJSON,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
+  async function loadGameProgress(
+    status: 'authenticated' | 'unauthenticated' | 'loading',
+  ) {
+    let loadedData = null
+    if (status === 'loading') return
+    setLoading(true)
+    if (status === 'unauthenticated') {
+      loadedData = loadFromCookies()
+    }
+    if (status === 'authenticated') {
+      loadedData = await loadFromServer()
+    }
+    if (!loadedData) {
+      setLoading(false)
+      return null
     }
 
+    const parsedData = JSON.parse(loadedData)
+    const { items, upgrades, coins, saveTime } = parsedData
+
+    if (!items || !upgrades || !coins || !saveTime) {
+      setLoading(false)
+      return null
+    }
+
+    const offlineTime = new Date().getTime() - saveTime
+
+    setCacheGameData({
+      shouldReset: true,
+      items,
+      upgrades,
+      coins,
+      offlineTime,
+    })
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }
+
+  function loadFromCookies() {
     try {
-      setCookie(null, 'thor-cookie-saveData', JSON.stringify(saveData), {
-        maxAge: 2147483647,
-        path: '/',
-        sameSite: 'Strict',
-      })
+      const cookies = parseCookies(null)
+      const saveData = cookies['thor-cookie-saveData']
+      if (!saveData) {
+        setLoading(false)
+        return null
+      }
+      return saveData
     } catch (error) {
       console.log(error)
     }
+    return null
+  }
 
-    setLastSaveTime(currentRunTime)
+  async function loadFromServer() {
+    const response = await fetch('/api/users/saveData', { method: 'GET' })
+    const serverData = await response.json()
+    const saveData = serverData?.data?.clicker_state
+    if (!saveData) return null
+    return JSON.stringify(saveData)
   }
 
   return {
-    saveGameData,
-    deleteGameData,
-    loadGameData,
+    saveGameProgress,
+    loadGameProgress,
+    deleteCookies,
     setCacheGameData,
     cacheGameData,
-    loading,
     lastSaveTime,
+    loading,
+    saving,
   }
 }

@@ -25,9 +25,12 @@ import React, {
   useReducer,
   useState,
 } from 'react'
+import { useSession } from 'next-auth/react'
+import { useToast } from '@/contexts/useToast'
+import { usePathname } from 'next/navigation'
 
 const BASE_COIN_VALUE = 1
-const GAME_FPS = 30
+const GAME_FPS = 10
 const FRAME_TIME = 1000 / GAME_FPS
 
 export const ClickerProvider = ({
@@ -44,11 +47,14 @@ export const ClickerProvider = ({
     estimateClicksIncome,
   } = useClickerCalculations()
 
+  const { data: session, status } = useSession()
+
   const {
     loading,
-    loadGameData,
-    saveGameData,
-    deleteGameData,
+    saving,
+    loadGameProgress,
+    saveGameProgress,
+    deleteCookies,
     setCacheGameData,
     cacheGameData,
     lastSaveTime,
@@ -61,6 +67,12 @@ export const ClickerProvider = ({
     },
     getInitialControl(),
   )
+
+  const path = usePathname()
+
+  const adjustedFrameTime = useMemo(() => {
+    return path === '/clicker' ? FRAME_TIME : FRAME_TIME * 10
+  }, [path])
 
   // This variable switches between true and false every frame to trigger a re-render
   const [frameSwitch, setFrameSwitch] = useState(false)
@@ -87,6 +99,7 @@ export const ClickerProvider = ({
     getInitialClicker(),
   )
 
+  const { toast } = useToast()
   const coinsPerClick: number = useMemo(() => {
     const clickMultiplier =
       gameState.upgrades.clickMultiplier.multiplier **
@@ -145,20 +158,19 @@ export const ClickerProvider = ({
     const currentTime = performance.now()
     updateIncome(currentTime)
     checkForSave(currentTime)
-    const frameDuration = currentTime - loopControl.lastFrameTime
-    const awaitTime =
-      FRAME_TIME > frameDuration ? FRAME_TIME - frameDuration : 0
 
     setTimeout(() => {
       setFrameSwitch(!frameSwitch)
-    }, awaitTime)
+    }, adjustedFrameTime)
   }
 
   function updateIncome(currentTime: number) {
     const elapsedTime =
       currentTime - loopControl.lastFrameTime + gameState.offlineTime
+
     let resourceCoins = calculateResourceIncome(elapsedTime, resourceIncome)
     let autoCoins = calculateAutoCoins(elapsedTime, autoIncome)
+
     if (gameState.offlineTime > 0) {
       const { offlineResourceCoins, offlineAutoCoins } = calculateOfflineIncome(
         gameState.offlineTime,
@@ -171,12 +183,14 @@ export const ClickerProvider = ({
         offlineTime: 0,
       })
     }
+
     setGameState({
       coins: {
         fromResources: gameState.coins.fromResources + resourceCoins,
         fromAuto: gameState.coins.fromAuto + autoCoins,
       },
     })
+
     const coinsFromClicks = estimateClicksIncome(
       loopControl,
       setLoopControl,
@@ -214,9 +228,7 @@ export const ClickerProvider = ({
       },
     })
     setCacheGameData({ ...cacheGameData, shouldReset: false })
-    setTimeout(() => {
-      setFrameSwitch(!frameSwitch)
-    }, 100)
+    setFrameSwitch(!frameSwitch)
   }
 
   const onClickCoin = useCallback(() => {
@@ -231,13 +243,17 @@ export const ClickerProvider = ({
     })
   }, [gameState.coins])
 
-  const onSave = useCallback(() => {
-    saveGameData(gameState)
-  }, [gameState])
+  const onSave = useCallback(async () => {
+    if (loading) return
+    toast({ message: 'Saving Game...', variant: 'info' })
+    const { success } = await saveGameProgress(gameState, status)
+    if (success) toast({ message: 'Game Saved Successfully!' })
+    else toast({ message: 'Failed to save game.', variant: 'error' })
+  }, [gameState, status])
 
   function checkForSave(currentTime: number) {
     if (currentTime - lastSaveTime > 1000 * 60 * 5) {
-      saveGameData(gameState)
+      saveGameProgress(gameState, status)
     }
   }
 
@@ -258,8 +274,9 @@ export const ClickerProvider = ({
   }, [frameSwitch, loading])
 
   useEffect(() => {
-    loadGameData()
-  }, [])
+    if (status === 'loading') return
+    loadGameProgress(status)
+  }, [status])
 
   // Variables for Display
   //
@@ -311,8 +328,9 @@ export const ClickerProvider = ({
       onSave,
       onWinMineSweeper,
       loading,
+      saving,
       lastSaveTime,
-      deleteGameData,
+      deleteGameData: deleteCookies,
     }),
     [
       displayClicksIncome,
@@ -327,8 +345,9 @@ export const ClickerProvider = ({
       onSave,
       onWinMineSweeper,
       loading,
+      saving,
       lastSaveTime,
-      deleteGameData,
+      deleteCookies,
     ],
   )
 
@@ -352,6 +371,7 @@ const ClickerContext = createContext<ClickerContextProps>({
   onSave: () => null,
   onWinMineSweeper: () => null,
   loading: true,
+  saving: false,
   lastSaveTime: 0,
   deleteGameData: () => null,
 })

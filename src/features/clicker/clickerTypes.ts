@@ -45,6 +45,7 @@ export type ClickerContextProps = {
   onSave: () => void
   onWinMineSweeper: (prize: number) => void
   loading: boolean
+  saving: boolean
   deleteGameData: () => void
   lastSaveTime: number
 }
