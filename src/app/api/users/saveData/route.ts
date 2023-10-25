@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
   try {
     const response = await supabase
       .from('save_data')
-      .update({ clicker_state: saveData })
+      .upsert({ clicker_state: saveData })
       .eq('user_id', userId.data?.userId)
     return NextResponse.json(response)
   } catch (error) {
