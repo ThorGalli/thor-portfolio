@@ -13,9 +13,9 @@ export default function ToastBox({ toast }: { toast: Omit<Toast, 'id'> }) {
       case 'success':
         return ' bg-yellow-700 border-yellow-900 text-yellow-200 '
       case 'info':
-        return ' bg-blue-400 text-white '
+        return ' bg-stone-600 border-stone-500 text-white '
       case 'warning':
-        return ' bg-yellow-400 text-white '
+        return ' bg-yellow-400  border-yellow-500 text-white '
       case 'error':
         return ' bg-red-400 text-white '
     }
@@ -68,7 +68,7 @@ export default function ToastBox({ toast }: { toast: Omit<Toast, 'id'> }) {
         closeToast()
       }}
     >
-      <p className="my-auto p-1 lg:text-lg">{message}</p>
+      <div className="my-auto p-1 lg:text-lg">{message}</div>
       <div
         className="h-8 min-w-[2rem] cursor-pointer text-center text-orange-950"
         onClick={closeToast}

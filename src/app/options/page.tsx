@@ -4,11 +4,10 @@ import NavbarLayout from '@/layouts/navbar'
 import { signIn, useSession, signOut } from 'next-auth/react'
 
 export default function ClickerPage() {
-  const { data: session, status } = useSession()
+  const { data, status } = useSession()
   const loading = status === 'loading'
-  const loggedIn = session && status === 'authenticated'
-  const loggedOut = !session && status === 'unauthenticated'
-
+  const loggedIn = data && status === 'authenticated'
+  const loggedOut = !data && status === 'unauthenticated'
   return (
     <NavbarLayout>
       <div className="flex flex-col items-center justify-center gap-2">
@@ -23,8 +22,11 @@ export default function ClickerPage() {
         )}
         {loggedIn && (
           <div className="flex flex-col items-center justify-center gap-2">
-            <p className="text-yellow-200">Welcome, {session.user?.name}</p>
-            <button className="btn-yellow" onClick={() => signOut()}>
+            <p className="text-yellow-200">Welcome, {data?.user?.name}</p>
+            <button
+              className="btn-yellow rounded-md p-2"
+              onClick={() => signOut()}
+            >
               Logout
             </button>
           </div>
