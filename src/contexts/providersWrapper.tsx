@@ -8,11 +8,11 @@ import { SessionProvider } from 'next-auth/react'
 export function ProvidersWrapper({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ClickerProvider>
-        <ToastProvider>
+      <ToastProvider>
+        <ClickerProvider>
           <MineSweeperProvider>{children}</MineSweeperProvider>
-        </ToastProvider>
-      </ClickerProvider>
+        </ClickerProvider>
+      </ToastProvider>
     </SessionProvider>
   )
 }
