@@ -1,3 +1,4 @@
+import { BASE_SECONDS_PER_BOMB } from '@/features/clicker/data/upgrades'
 import { StageBlueprint, Stage, Cell } from '../types'
 
 export default function useMineSweeperCalculations() {
@@ -24,7 +25,7 @@ export default function useMineSweeperCalculations() {
   }
 
   function secondsToShortTime(seconds: number) {
-    if (seconds < 60) return seconds + 's'
+    if (seconds < 60) return Math.floor(seconds) + 's'
     if (seconds < 3600) return Math.floor(seconds / 60) + 'm'
     if (seconds < 86400)
       return (
@@ -52,9 +53,9 @@ export default function useMineSweeperCalculations() {
     return cellsAround
   }
 
-  function calculatePrizeSeconds(totalBombs: number) {
-    const secondsPerBomb = 60
-    const bombFactor = 2
+  function calculatePrizeSeconds(totalBombs: number, goldMineSeconds: number) {
+    const bombFactor = 3
+    const secondsPerBomb = BASE_SECONDS_PER_BOMB + goldMineSeconds
     const baseSeconds = secondsPerBomb * totalBombs
     const bonusSeconds = secondsPerBomb * ((totalBombs * bombFactor) / 100) ** 2
     const totalSeconds = baseSeconds + bonusSeconds

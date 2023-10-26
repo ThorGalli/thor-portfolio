@@ -34,7 +34,7 @@ export default function MineSweeper() {
 
   const { short } = useClickerCalculations()
   const { onWinMineSweeper } = useClickerContext()
-  const { resourceIncome, autoIncome } = useClickerContext()
+  const { resourceIncome, autoIncome, upgrades } = useClickerContext()
   const { toast } = useToast()
   const { calculatePrizeSeconds, secondsToShortTime } =
     useMineSweeperCalculations()
@@ -71,10 +71,14 @@ export default function MineSweeper() {
       display,
       seconds,
     }
-  }, [currentStage, totalIncome])
+  }, [currentStage, totalIncome, upgrades?.goldMine?.amount])
 
   function getPrizeDisplay(index: number = selectedStage) {
-    const seconds = calculatePrizeSeconds(bluePrintList[index].bombAmount)
+    const secondsPerBomb = upgrades?.goldMine?.amount ?? 0
+    const seconds = calculatePrizeSeconds(
+      bluePrintList[index].bombAmount,
+      secondsPerBomb,
+    )
     const value = seconds * totalIncome
     return {
       value,
