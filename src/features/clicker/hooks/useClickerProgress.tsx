@@ -132,10 +132,7 @@ export default function useClickerProgress() {
     try {
       const cookies = parseCookies(null)
       const saveData = cookies['thor-cookie-saveData']
-      if (!saveData) {
-        setLoading(false)
-        return null
-      }
+      if (!saveData) return null
       return saveData
     } catch (error) {
       console.log(error)
@@ -146,6 +143,13 @@ export default function useClickerProgress() {
   async function loadFromServer() {
     const response = await fetch('/api/users/saveData', { method: 'GET' })
     const serverData = await response.json()
+
+    // If the user is new, the server will return an error and we will load from cookies
+    const firstTime =
+      serverData?.error?.details === 'The result contains 0 rows'
+    if (firstTime) return loadFromCookies()
+
+    // If the user is not new, the server will return the saveData
     const saveData = serverData?.data?.clicker_state
     if (!saveData) return null
     return JSON.stringify(saveData)
