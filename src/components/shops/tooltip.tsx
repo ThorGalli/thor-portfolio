@@ -13,7 +13,9 @@ export default function Tooltip({
   mobile?: boolean
 }) {
   const { short } = useClickerCalculations()
-  const { items } = useClickerContext()
+  const { items, resourceIncome, autoIncome } = useClickerContext()
+
+  const totalIncome = resourceIncome + autoIncome
 
   const toolTipPlacement =
     side === 'left' ? ' lg:right-full lg:mr-2' : ' lg:left-full lg:ml-2'
@@ -31,7 +33,14 @@ export default function Tooltip({
       <p className="whitespace-nowrap font-bold text-yellow-200">
         {buyable.name}
       </p>
-
+      {isItem && (
+        <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
+          <p className="text-slate-200">
+            {((buyable.income * buyable.amount * 100) / totalIncome).toFixed(2)}
+            % of your total income
+          </p>
+        </div>
+      )}
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Income/s:</p>
@@ -42,10 +51,11 @@ export default function Tooltip({
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Total (x{buyable.amount}): </p>
           <p className="text-yellow-500">
-            {short(Math.round(buyable.income * buyable.amount * 10) / 10)}
+            {short(buyable.income * buyable.amount)}
           </p>
         </div>
       )}
+
       {isUpgrade && (
         <div className="flex flex-col leading-none text-slate-50">
           <p className=" whitespace-break-spaces py-2 text-slate-300">
@@ -57,7 +67,11 @@ export default function Tooltip({
               className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200"
             >
               <p className="">{info.prefix}</p>
-              <p className="text-yellow-500">{info.value}</p>
+              <p className="text-yellow-500">
+                {typeof info.value === 'number'
+                  ? short(info.value)
+                  : info.value}
+              </p>
             </div>
           ))}
         </div>

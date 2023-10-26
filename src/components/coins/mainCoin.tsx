@@ -22,7 +22,7 @@ export default function MainCoin() {
   const totalIncome =
     Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
   return (
-    <div className="flex flex-col items-center gap-2 rounded-[14px] bg-slate-800 p-2">
+    <div className="flex select-none flex-col items-center gap-2 rounded-[14px] bg-slate-800 p-2">
       <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 p-2 lg:w-96">
         <header
           id="info_wrapper"
@@ -31,7 +31,8 @@ export default function MainCoin() {
         >
           <div id="main_info" className="flex w-full justify-center">
             <div className="flex w-full justify-between text-yellow-200">
-              <p>Income [coins/s]:</p> <p>{short(totalIncome, 2)}</p>
+              <p>{isOpen ? '[-]' : '[+]'} Income:</p>{' '}
+              <p>+{short(totalIncome, 2)}/s</p>
             </div>
           </div>
           <section
@@ -39,16 +40,17 @@ export default function MainCoin() {
               isOpen ? 'max-h-screen' : 'max-h-0'
             }`}
           >
-            <div className="flex w-full justify-between">
-              <p>Resources:&nbsp;</p> <p>{short(resourceIncome, 2)}</p>
+            <div className="mt-1 flex w-full justify-between border-t border-slate-500">
+              <p>&nbsp;L Resources:&nbsp;</p>
+              <p>+{short(resourceIncome, 2)}/s</p>
             </div>
             <div className="flex w-full justify-between">
-              <p>Auto Clicker:&nbsp;</p>
-              <p>{short(autoIncome, 2)}</p>
+              <p>&nbsp;L Auto Clicker:&nbsp;</p>
+              <p>+{short(autoIncome, 2)}/s</p>
             </div>
             <div className="flex w-full justify-between">
-              <p>Clicks:&nbsp;</p>
-              <p>{short(clicksIncome, 2)}</p>
+              <p>&nbsp;L Clicks:&nbsp;</p>
+              <p>+{short(clicksIncome, 2)}/s</p>
             </div>
           </section>
         </header>
