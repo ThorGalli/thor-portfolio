@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     .eq('sessionToken', sessionToken?.value)
     .single()
 
-  if (!userId)
+  if (!userId?.data?.userId)
     return NextResponse.json({
       data: null,
       error: 'User not found',
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   const saveData = await supabase
     .from('save_data')
     .select('*')
-    .eq('user_id', userId.data?.userId)
+    .eq('user_id', userId.data.userId)
     .single()
 
   return NextResponse.json(saveData)
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     .eq('sessionToken', sessionToken.value)
     .single()
 
-  if (!userId)
+  if (!userId?.data?.userId)
     return NextResponse.json({
       data: null,
       error: 'User not found',
@@ -60,8 +60,7 @@ export async function POST(req: NextRequest) {
   try {
     const response = await supabase
       .from('save_data')
-      .upsert({ user_id: userId, clicker_state: saveData })
-      .eq('user_id', userId.data?.userId)
+      .upsert({ user_id: userId.data.userId, clicker_state: saveData })
     return NextResponse.json(response)
   } catch (error) {
     console.log(error)
