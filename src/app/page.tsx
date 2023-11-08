@@ -26,39 +26,53 @@ export default function Home() {
                 </p>
               </section>
               <section className="profile-section">
-                <h3 className="text-xl font-semibold">Contact</h3>
-                <ul className="ml-6 list-disc">
-                  <li>
-                    Email:{' '}
-                    <a
-                      href="mailto:gallithor@gmail.com"
-                      target="_blank"
-                      className="text-blue-400"
-                      rel="noreferrer"
-                    >
-                      gallithor@gmail.com
-                    </a>
-                  </li>
-                  <li>
-                    Phone:{' '}
-                    <span className="text-green-400">+55 53 9 8144 1755</span>
-                  </li>
-                  <li>
-                    Location:{' '}
-                    <span className="text-yellow-400">
-                      Pelotas, RS - Brasil
-                    </span>
-                  </li>
-                  <li>
-                    Linkedin:{' '}
-                    <a
-                      href="https://www.linkedin.com/in/thor-galli/"
-                      className="text-blue-400"
-                    >
-                      /in/thor-galli
-                    </a>
-                  </li>
-                </ul>
+                <h3 className="profile-subtitle">Contact</h3>
+                <div className="flex flex-col gap-3 lg:flex-row">
+                  <ul className="ml-6 list-disc">
+                    <li>
+                      Email:{' '}
+                      <a
+                        href="mailto:gallithor@gmail.com"
+                        target="_blank"
+                        className="text-blue-400"
+                        rel="noreferrer"
+                      >
+                        gallithor@gmail.com
+                      </a>
+                    </li>
+                    <li>
+                      Phone:{' '}
+                      <span className="text-green-400">+55 53 9 8144 1755</span>
+                    </li>
+                    <li>
+                      Location:{' '}
+                      <span className="text-yellow-400">
+                        Pelotas, RS - Brasil
+                      </span>
+                    </li>
+                  </ul>
+                  <div className="h-[2px] w-full rounded bg-slate-800 lg:hidden" />
+                  <ul className="ml-6 list-disc">
+                    <li>
+                      Linkedin:{' '}
+                      <a
+                        href="https://linkedin.com/in/thor-galli/"
+                        className="text-blue-400"
+                      >
+                        /in/thor-galli
+                      </a>
+                    </li>
+                    <li>
+                      Github:{' '}
+                      <a
+                        href="https://github.com/ThorGalli"
+                        className="text-green-400"
+                      >
+                        github.com/ThorGalli
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </section>
             </article>
             <div className="flex rounded-[14px] bg-slate-800 p-2">
@@ -119,35 +133,10 @@ export default function Home() {
           <article id="experience" className="profile-article">
             <h2 className="text-3xl font-bold">Experience</h2>
             <section className="profile-section">
-              <h3 className="text-xl font-semibold">
-                Full Stack Developer at BRIDGE Management Technologies
-              </h3>
-              <p className="profile-time">August 2023 - Present</p>
-              <ul className="ml-6 list-disc">
-                <li>Outsourced by Brainny Smart Solutions</li>
-                <li>
-                  Bug fixing, maintenance, and development of a full stack web
-                  application.
-                </li>
-                <li>Top skills: Java, Spring, PostgreSQL, JavaScript, HTML.</li>
-              </ul>
-            </section>
-            <section className="profile-section">
-              <h3 className="text-xl font-semibold">
-                Front End Developer at Wunderman Thompson Technology Brasil
-              </h3>
-              <p className="profile-time">May 2023 - July 2023 (3 months)</p>
-              <ul className="ml-6 list-disc">
-                <li>Outsourced by Brainny Smart Solutions</li>
-                <li>
-                  Bug fixing and maintenance of a front end web application.
-                </li>
-                <li>Top skills: React, Redux, TypeScript, Git, Scrum.</li>
-              </ul>
-            </section>
-            <section className="profile-section">
-              <h3 className="text-xl font-semibold">
-                Full Stack Developer at Brainny Smart Solutions
+              <h3 className="profile-subtitle">
+                <span className="text-yellow-200">Full Stack Developer </span>
+                at{' '}
+                <span className="text-pink-400">Brainny Smart Solutions</span>
               </h3>
               <p className="profile-time">June 2022 - Present</p>
               <ul className="ml-6 list-disc">
@@ -156,36 +145,73 @@ export default function Home() {
                   stack web applications.
                 </li>
                 <li>
-                  Testing and reports for completed tasks, code reviewing,
-                  outsourcing to different projects on demand.
+                  Testing and reports for completed tasks, code reviewing,{' '}
+                  <span className="text-pink-400">outsourcing</span> to
+                  different projects on demand.
                 </li>
                 <li>
                   Top Skills: React, Next.js, NestJS, GraphQL, TypeScript,
                   PostgreSQL.
                 </li>
               </ul>
+              <div className="mt-4 flex flex-col gap-2 rounded-md bg-slate-900 p-2">
+                <h3 className="profile-subtitle text-pink-400">
+                  Outsourcing contracts:
+                </h3>
+                <section className="profile-section">
+                  <h3 className="profile-subtitle">
+                    <span className="text-pink-400">
+                      BRIDGE Management Technologies
+                    </span>
+                  </h3>
+                  <p className="profile-time">August 2023 - Present</p>
+                  <ul className="ml-6 list-disc">
+                    <li>
+                      Bug fixing, maintenance, and development of a full stack
+                      web application.
+                    </li>
+                    <li>
+                      Top skills: Java, Spring, PostgreSQL, JavaScript, HTML.
+                    </li>
+                  </ul>
+                </section>
+                <section className="profile-section">
+                  <h3 className="profile-subtitle">
+                    <span className="text-pink-400">
+                      Wunderman Thompson Technology Brasil
+                    </span>
+                  </h3>
+                  <p className="profile-time">
+                    May 2023 - July 2023 (3 months)
+                  </p>
+                  <ul className="ml-6 list-disc">
+                    <li>
+                      Bug fixing and maintenance of a front end web application.
+                    </li>
+                    <li>Top skills: React, Redux, TypeScript, Git, Scrum.</li>
+                  </ul>
+                </section>
+              </div>
             </section>
           </article>
 
           <article id="education" className="profile-article">
             <h2 className="text-3xl font-bold">Education</h2>
             <section className="profile-section">
-              <h3 className="text-xl font-semibold">
+              <h3 className="profile-subtitle">
                 Bachelor of Technology - BTech, Computer Systems Analysis at
                 SenacRS
               </h3>
               <p className="profile-time">
-                March 2022 - present (graduation in 2024){' '}
+                2021 - present (graduation in 2024){' '}
               </p>
             </section>
             <section className="profile-section">
-              <h3 className="text-xl font-semibold">
+              <h3 className="profile-subtitle">
                 Bachelor&apos;s in Civil Engineering at Universidade Federal do
                 Rio Grande
               </h3>
-              <p className="profile-time">
-                March 2014 - December 2020 (graduated)
-              </p>
+              <p className="profile-time">2014 - 2020 (graduated)</p>
             </section>
           </article>
         </div>
