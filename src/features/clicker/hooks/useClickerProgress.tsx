@@ -4,6 +4,7 @@ import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
 
+const COOKIE_LABEL = 'thorClickerSaveData'
 export default function useClickerProgress() {
   const [cacheGameData, setCacheGameData] = useState<ClickerState>({
     shouldReset: false,
@@ -15,7 +16,7 @@ export default function useClickerProgress() {
 
   function deleteCookies() {
     setLoading(true)
-    setCookie(null, 'thor-cookie-saveData', '', {
+    setCookie(null, COOKIE_LABEL, '', {
       maxAge: 0,
       path: '/',
       sameSite: 'Strict',
@@ -133,7 +134,7 @@ export default function useClickerProgress() {
   function loadFromCookies() {
     try {
       const cookies = parseCookies(null)
-      const saveData = cookies['thor-cookie-saveData']
+      const saveData = cookies[COOKIE_LABEL]
       if (!saveData) return null
       return saveData
     } catch (error) {

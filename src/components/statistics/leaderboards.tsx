@@ -17,7 +17,7 @@ export default function Leaderboards() {
       setLoading(true)
       const response = await fetch('/api/users/leaderBoards', {
         method: 'GET',
-        cache: 'no-store',
+        next: { revalidate: 60 },
       })
       const { data } = await response.json()
       if (!data) return
