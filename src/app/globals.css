@@ -124,8 +124,8 @@ body {
   @apply text-slate-300
 }
 
-.profile-section > h3 {
-  @apply text-yellow-200 opacity-80
+.profile-subtitle {
+  @apply text-xl font-semibold opacity-80 inline
 }
 
 .profile-article > h2 {
