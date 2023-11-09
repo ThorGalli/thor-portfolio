@@ -2,7 +2,6 @@
 import ClickerButton from '@/components/navigation/clickerButton'
 import NavButton from '@/components/navigation/navButton'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
 export default function NavbarLayout({
@@ -12,7 +11,7 @@ export default function NavbarLayout({
 }) {
   const router = useRouter()
   const path = usePathname()
-  const { status, data } = useSession()
+  const { status } = useSession()
 
   function getOptionsLabel() {
     switch (status) {
