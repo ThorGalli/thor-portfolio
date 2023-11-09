@@ -15,7 +15,10 @@ export default function Leaderboards() {
     if (status !== 'authenticated') return
     try {
       setLoading(true)
-      const response = await fetch('/api/users/leaderBoards', { method: 'GET' })
+      const response = await fetch('/api/users/leaderBoards', {
+        method: 'GET',
+        cache: 'no-store',
+      })
       const { data } = await response.json()
       if (!data) return
       setLeaderboards(data)
