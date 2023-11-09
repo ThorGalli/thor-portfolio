@@ -6,6 +6,7 @@ import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
+import Leaderboards from '@/components/statistics/leaderboards'
 
 export default function ClickerGame() {
   const itemDrawer = useUrlDisclosure('itemDrawer')
@@ -42,7 +43,10 @@ export default function ClickerGame() {
             <p className="text-yellow-200">Loading...</p>
           </div>
         ) : (
-          <MainCoin />
+          <div className="flex flex-col items-center gap-4">
+            <MainCoin />
+            <Leaderboards />
+          </div>
         )}
         <div className="absolute right-0 hidden lg:flex">
           <ResourceList />

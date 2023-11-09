@@ -28,6 +28,7 @@ import React, {
 import { useSession } from 'next-auth/react'
 import { useToast } from '@/contexts/useToast'
 import { usePathname } from 'next/navigation'
+import { getIncome } from './data/items'
 
 const BASE_COIN_VALUE = 1
 const GAME_FPS = 10
@@ -42,12 +43,12 @@ export const ClickerProvider = ({
   const {
     getAdjustedPrice,
     calculateOfflineIncome,
-    calculateResourceIncome,
+    calculateTotalResourceIncome,
     calculateAutoCoins,
     estimateClicksIncome,
   } = useClickerCalculations()
 
-  const { data: session, status } = useSession()
+  const { status } = useSession()
 
   const {
     loading,
@@ -119,7 +120,7 @@ export const ClickerProvider = ({
 
   const resourceIncome = useMemo(() => {
     return Object.values(gameState.items).reduce((total, item: Item) => {
-      return total + item.income * item.amount
+      return total + getIncome(item)
     }, 0)
   }, [gameState.items])
 
@@ -168,7 +169,10 @@ export const ClickerProvider = ({
     const elapsedTime =
       currentTime - loopControl.lastFrameTime + gameState.offlineTime
 
-    let resourceCoins = calculateResourceIncome(elapsedTime, resourceIncome)
+    let resourceCoins = calculateTotalResourceIncome(
+      elapsedTime,
+      resourceIncome,
+    )
     let autoCoins = calculateAutoCoins(elapsedTime, autoIncome)
 
     if (gameState.offlineTime > 0) {
@@ -246,14 +250,16 @@ export const ClickerProvider = ({
   const onSave = useCallback(async () => {
     if (loading) return
     toast({ message: 'Saving Game...', variant: 'info' })
-    const { success } = await saveGameProgress(gameState, status)
+    const totalIncome = resourceIncome + autoIncome
+    const { success } = await saveGameProgress(gameState, status, totalIncome)
     if (success) toast({ message: 'Game Saved Successfully!' })
     else toast({ message: 'Failed to save game.', variant: 'error' })
   }, [gameState, status])
 
   function checkForSave(currentTime: number) {
     if (currentTime - lastSaveTime > 1000 * 60 * 5) {
-      saveGameProgress(gameState, status)
+      const totalIncome = resourceIncome + autoIncome
+      saveGameProgress(gameState, status, totalIncome)
     }
   }
 

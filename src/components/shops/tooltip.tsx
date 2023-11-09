@@ -3,6 +3,7 @@ import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { getUpgradeInfo } from '@/features/clicker/data/upgrades'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'
+import { getIncome, getSingleIncome } from '@/features/clicker/data/items'
 
 export default function Tooltip({
   side,
@@ -36,23 +37,21 @@ export default function Tooltip({
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p className="text-slate-200">
-            {((buyable.income * buyable.amount * 100) / totalIncome).toFixed(2)}
-            % of your total income
+            {((getIncome(buyable) * 100) / totalIncome).toFixed(2)}% of your
+            total income
           </p>
         </div>
       )}
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Income/s:</p>
-          <p className="text-yellow-500"> {short(buyable.income)}</p>
+          <p className="text-yellow-500"> {short(getSingleIncome(buyable))}</p>
         </div>
       )}
       {isItem && buyable.amount > 1 && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Total (x{buyable.amount}): </p>
-          <p className="text-yellow-500">
-            {short(buyable.income * buyable.amount)}
-          </p>
+          <p className="text-yellow-500">{short(getIncome(buyable))}</p>
         </div>
       )}
 

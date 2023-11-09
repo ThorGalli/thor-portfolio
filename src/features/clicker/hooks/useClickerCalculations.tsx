@@ -1,7 +1,9 @@
-import { Buyable, LoopControl } from '@/features/clicker/clickerTypes'
+import { Buyable, Item, LoopControl } from '@/features/clicker/clickerTypes'
+import { getTier } from '../data/items'
 
 export default function useClickerCalculations() {
   function short(num: number, decimals = 1) {
+    if (num < 1) return num.toFixed(2)
     if (num < 1000) return num.toFixed(0)
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
@@ -19,7 +21,7 @@ export default function useClickerCalculations() {
     resourceIncome: number,
     autoIncome: number,
   ) {
-    const offlineResourceCoins = calculateResourceIncome(
+    const offlineResourceCoins = calculateTotalResourceIncome(
       offlineTime,
       resourceIncome,
     )
@@ -27,7 +29,7 @@ export default function useClickerCalculations() {
     return { offlineResourceCoins, offlineAutoCoins }
   }
 
-  function calculateResourceIncome(
+  function calculateTotalResourceIncome(
     elapsedTime: number,
     resourceIncome: number,
   ) {
@@ -67,7 +69,7 @@ export default function useClickerCalculations() {
     short,
     getAdjustedPrice,
     calculateOfflineIncome,
-    calculateResourceIncome,
+    calculateTotalResourceIncome,
     calculateAutoCoins,
     estimateClicksIncome,
   }

@@ -61,7 +61,7 @@ body {
 }
 
 .price-tag {
-  @apply flex items-center justify-end gap-1 text-sm font-bold
+  @apply flex items-center justify-end gap-1 text-lg
 }
 
 .list-wrapper {

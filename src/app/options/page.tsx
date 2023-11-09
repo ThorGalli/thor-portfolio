@@ -10,14 +10,14 @@ export default function ClickerPage() {
   const loggedOut = !data && status === 'unauthenticated'
   return (
     <NavbarLayout>
-      <div className="flex flex-col items-center justify-center gap-2">
-        {loading && <p className="animate-spin text-yellow-200">Loading...</p>}
+      <div className="flex flex-col items-center justify-center gap-4">
+        {loading && <p className="animate-spin text-4xl text-yellow-200">⚙</p>}
         {loggedOut && (
           <button
             className="btn-yellow rounded-md p-2"
             onClick={() => signIn()}
           >
-            Login
+            Sign in
           </button>
         )}
         {loggedIn && (

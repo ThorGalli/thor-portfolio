@@ -62,17 +62,18 @@ export async function POST(req: NextRequest) {
     })
 
   try {
-    const response = await supabase
-      .from('save_data')
-      .upsert({ user_id: userId.data.userId, clicker_state: saveData })
+    const response = await supabase.from('save_data').upsert({
+      user_id: userId.data.userId,
+      clicker_state: saveData,
+      income: +saveData.income,
+    })
     return NextResponse.json(response)
   } catch (error) {
     console.log(error)
+    return NextResponse.json({
+      data: null,
+      error: 'Something went wrong',
+      status: 500,
+    })
   }
-
-  return NextResponse.json({
-    data: null,
-    error: 'Something went wrong',
-    status: 500,
-  })
 }

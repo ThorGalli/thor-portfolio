@@ -1,6 +1,8 @@
 'use client'
 import ClickerButton from '@/components/navigation/clickerButton'
 import NavButton from '@/components/navigation/navButton'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
 export default function NavbarLayout({
@@ -10,7 +12,18 @@ export default function NavbarLayout({
 }) {
   const router = useRouter()
   const path = usePathname()
+  const { status, data } = useSession()
 
+  function getOptionsLabel() {
+    switch (status) {
+      case 'authenticated':
+        return <p className="text-2xl">👨‍💼</p>
+      case 'loading':
+        return <p className="animate-spin text-2xl">⚙️</p>
+      default:
+        return <p>Sign in</p>
+    }
+  }
   return (
     <div className="relative mb-[3.5rem] w-full bg-gray-900 lg:mb-0 lg:mt-[3.5rem]">
       <div
@@ -36,7 +49,7 @@ export default function NavbarLayout({
           <NavButton
             onClick={() => router.push('/options')}
             isCurrent={path === '/options'}
-            label={<p className="text-2xl">⚙️</p>}
+            label={getOptionsLabel()}
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ export default function DeleteGameDataButton() {
       >
         <p className="relative z-20">
           {loading && 'Loading...'}
-          {!loading && 'Delete Game Data'}
+          {!loading && 'Delete Cookies'}
         </p>
       </button>
 

@@ -32,6 +32,7 @@ export default function useClickerProgress() {
   async function saveGameProgress(
     gameState: ClickerState,
     status: 'authenticated' | 'unauthenticated' | 'loading',
+    totalIncome: number,
   ) {
     if (status === 'loading') return { success: false }
     setSaving(true)
@@ -56,6 +57,7 @@ export default function useClickerProgress() {
         upgrades: compactUpgrades,
         coins: gameState.coins,
         saveTime: currentDateTimeInMS,
+        income: totalIncome,
       }
       if (status === 'unauthenticated') saveToCookies(JSON.stringify(saveData))
       if (status === 'authenticated')

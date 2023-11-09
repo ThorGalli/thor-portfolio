@@ -15,22 +15,22 @@ export const shopUgrades = {
     id: 'clickMultiplier',
     name: 'Click Multiplier',
     description: 'Multiplies click value by 2, including Auto Clicker clicks!',
-    price: 200,
+    price: 100,
     multiplier: 2,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 3,
+    priceMultiplier: 4,
   },
   goldMine: {
     id: 'goldMine',
     name: 'Gold mine',
     description:
       'Winning a round of Mine Sweeper earns you coins! +1 second of income per mine per upgrade.',
-    price: 100,
+    price: 120,
     multiplier: 1,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 3.5,
+    priceMultiplier: 4,
   },
   volunteerClicking: {
     id: 'volunteerClicking',
@@ -41,7 +41,7 @@ export const shopUgrades = {
     multiplier: 0.001,
     amount: 0,
     maxAmount: 10,
-    priceMultiplier: 5,
+    priceMultiplier: 6,
   },
 }
 
