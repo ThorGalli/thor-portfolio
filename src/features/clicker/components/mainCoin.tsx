@@ -1,9 +1,9 @@
 'use client'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
-import BaseCoin from './baseCoins'
-import SaveGameButton from '../settings/saveGameButton'
+import BaseCoin from '../../../components/coins/baseCoins'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { useState } from 'react'
+import SaveGameButton from '@/components/settings/saveGameButton'
 
 export default function MainCoin() {
   const { resourceIncome, autoIncome, totalCoins, clicksIncome, onClickCoin } =
@@ -22,11 +22,11 @@ export default function MainCoin() {
   const totalIncome =
     Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
   return (
-    <div className="flex select-none flex-col items-center gap-2 rounded-[14px] bg-slate-800 p-2">
-      <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 p-2 lg:w-96">
-        <header
+    <div className="flex select-none flex-col items-center gap-2 rounded-t-[14px] bg-slate-800 p-2">
+      <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-96">
+        <button
           id="info_wrapper"
-          className="w-full cursor-pointer rounded-b-md rounded-t-sm bg-slate-700 p-2"
+          className="w-full cursor-pointer rounded-t-md bg-slate-700 p-2"
           onClick={toggleAccordion}
         >
           <div id="main_info" className="flex w-full justify-center">
@@ -53,7 +53,7 @@ export default function MainCoin() {
               <p>+{short(clicksIncome, 2)}/s</p>
             </div>
           </section>
-        </header>
+        </button>
 
         <div
           id="coin"
@@ -71,7 +71,6 @@ export default function MainCoin() {
           </span>
         </p>
       </div>
-      <SaveGameButton />
     </div>
   )
 }

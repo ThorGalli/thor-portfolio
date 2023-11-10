@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
-import MainCoin from '@/components/coins/mainCoin'
+import MainCoin from '@/features/clicker/components/mainCoin'
 import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
-import Leaderboards from '@/components/statistics/leaderboards'
+import ClickerNavbar from './components/clickerNavbar'
 
 export default function ClickerGame() {
   const itemDrawer = useUrlDisclosure('itemDrawer')
@@ -43,9 +43,9 @@ export default function ClickerGame() {
             <p className="text-yellow-200">Loading...</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center">
             <MainCoin />
-            <Leaderboards />
+            <ClickerNavbar />
           </div>
         )}
         <div className="absolute right-0 hidden lg:flex">

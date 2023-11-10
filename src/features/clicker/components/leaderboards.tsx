@@ -42,24 +42,31 @@ export default function Leaderboards() {
 
   function getComponent() {
     if (status === 'loading' || loading)
-      return <p className="animate-spin text-4xl text-yellow-200">⚙</p>
+      return (
+        <div className="">
+          <p className="animate-spin text-4xl text-yellow-200">⚙</p>
+        </div>
+      )
     if (status === 'unauthenticated')
       return (
-        <p
+        <button
           className="cursor-pointer text-yellow-200 hover:underline"
           onClick={() => router.push('/options')}
         >
           Sign in to see leaderboards
-        </p>
+        </button>
       )
     if (leaderboards.length > 0) {
       return (
-        <div className="flex flex-col items-center gap-2 overflow-hidden rounded-[14px] border-8 border-slate-800 bg-slate-800">
+        <div className="flex w-full flex-col items-center gap-2 overflow-hidden">
           <h1 className="text-yellow-400">Top {leaderboards.length} players</h1>
-          <table className="table-auto">
+          <table className="w-full table-auto">
             <thead className="text-yellow-200">
               <tr>
                 <th className="rounded-tl-md border border-slate-800 bg-slate-700 px-2">
+                  Rank
+                </th>
+                <th className="border border-slate-800 bg-slate-700 px-2">
                   Username
                 </th>
                 <th className="rounded-tr-md border border-slate-800 bg-slate-700 px-2">
@@ -76,10 +83,13 @@ export default function Leaderboards() {
                   <tr key={'i' + i}>
                     <td
                       className={
-                        'border border-slate-800 bg-slate-950 px-2 ' +
+                        'border border-slate-800 bg-slate-950 px-2 text-right ' +
                         leftBorder
                       }
                     >
+                      {i + 1}
+                    </td>
+                    <td className={'border border-slate-800 bg-slate-950 px-2'}>
                       {leaderboard.users.name}
                     </td>
                     <td

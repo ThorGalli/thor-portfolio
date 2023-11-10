@@ -42,6 +42,11 @@ body {
   @apply border-slate-950 bg-slate-800 text-slate-200 hover:bg-slate-600 hover:border-slate-900 active:bg-slate-950;
 }
 
+.btn-dark {
+  @apply btn;
+  @apply border-slate-950 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-slate-900 active:bg-slate-950;
+}
+
 .btn-yellow {
   @apply btn;
   @apply border-yellow-950 bg-yellow-900 text-yellow-200 hover:bg-yellow-700 hover:border-yellow-900 active:bg-yellow-950;
