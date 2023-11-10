@@ -214,9 +214,11 @@ export const ClickerProvider = ({
     const newItems = getInitialClicker().items
     const newUpgrades = getInitialClicker().upgrades
     Object.entries(cacheGameData.items).forEach(([key, value]) => {
+      if (!newItems[key]) return
       newItems[key].amount = value.amount
     })
     Object.entries(cacheGameData.upgrades).forEach(([key, value]) => {
+      if (!newUpgrades[key]) return
       newUpgrades[key].amount = value.amount
     })
     setGameState({

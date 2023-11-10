@@ -6,20 +6,29 @@ const baseItems = [
   { id: 'juniorDev', name: 'Junior Developer' },
   { id: 'midDev', name: 'Mid-level Developer' },
   { id: 'seniorDev', name: 'Senior Developer' },
+
   { id: 'techLeader', name: 'Tech Leader' },
   { id: 'startup', name: 'Startup' },
   { id: 'smallCompany', name: 'Small Company' },
   { id: 'mediumCompany', name: 'Medium Company' },
   { id: 'bigCompany', name: 'Big Company' },
+
   { id: 'corporation', name: 'Corporation' },
-  { id: 'bank', name: 'Bank' },
+  { id: 'techUnicorn', name: 'Tech Unicorn' },
+  { id: 'bank', name: 'National Bank' },
+  { id: 'investBank', name: 'Investment Bank' },
   { id: 'interBank', name: 'International Bank' },
-  { id: 'interGalacticBank', name: 'Inter-Galactic Bank' },
+
+  { id: 'ventureCapital', name: 'Global Conglomerate' },
+  { id: 'terraformingcorp', name: 'Terraforming Corp' },
+  { id: 'spaceTravelCorp', name: 'Space Travel Corp' },
+  { id: 'spaceMiningCorp', name: 'Space Mining Corp' },
+  { id: 'interGalacticBank', name: 'Inter-Planetary Bank' },
 ]
 
 function generateItemBasePrice(index: number) {
-  const base = 10 ** (index + 1)
-  const multiplier = (1 + index / 10) ** 2
+  const base = 10 ** (index + 1) // 10^1, 10^2, 10^3, ...
+  const multiplier = (1 + index ** 2 / 100) ** 3
   return base * multiplier
 }
 
@@ -33,7 +42,7 @@ function generateItemIncome(index: number, price: number) {
 function prettyRound(num: number) {
   const charCount = Math.floor(Math.log10(num))
   const roundTo = 10 ** (charCount - 1)
-  return Math.ceil(Math.round(num / roundTo) * roundTo)
+  return Math.round(Math.round(num / roundTo) * roundTo)
 }
 
 export function generateItems() {
@@ -56,12 +65,17 @@ export function generateItems() {
     }
 
     items[item.id] = newItem
-    console.log({
-      name: item.name,
-      prices: { price, rawPrice },
-      incomes: { income, rawIncome },
-      ratio: (income / price) * 100 + '%',
-    })
+
+    // const prevPrice =
+    //   index === 0 ? 1 : prettyRound(generateItemBasePrice(index - 1))
+    // console.log({
+    //   index: index + 1,
+    //   name: item.name,
+    //   prices: { price, rawPrice },
+    //   incomes: { income, rawIncome },
+    //   ratio: (income / price) * 100 + '%',
+    //   jump: (price / prevPrice).toFixed(1) + 'x',
+    // })
   })
 
   return items
