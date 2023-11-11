@@ -4,7 +4,12 @@ import BaseCoin from '../coins/baseCoins'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'
 import Tooltip from './tooltip'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
-import { getAmountAndProgress, getTier } from '@/features/clicker/data/items'
+import {
+  getAmountAndProgress,
+  getIncome,
+  getSingleIncome,
+  getTier,
+} from '@/features/clicker/data/items'
 
 export default function BuyableBar({
   buyable,
@@ -30,18 +35,13 @@ export default function BuyableBar({
 
   const isDisabled = totalCoins < adjustedPrice
 
-  const counterPlacement =
-    infoSide === 'left' ? 'flex-column' : 'flex-row-reverse'
-
   const showItem = buyable.amount > 0 && 'income' in buyable
   const isUpgrade = 'multiplier' in buyable
 
   const progress = showItem ? getAmountAndProgress(buyable) : null
   return (
     <div
-      className={
-        'relative flex flex-col items-center gap-2 ' + counterPlacement
-      }
+      className={'relative flex flex-col items-center gap-2'}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onTouchStart={() => setHovered(true)}
@@ -50,33 +50,41 @@ export default function BuyableBar({
       <button
         onClick={() => buy(buyable)}
         className={
-          'btn-yellow flex w-full flex-col rounded-[6px] p-1 text-left'
+          'btn-yellow flex w-full justify-between rounded-[6px] p-2 text-left'
         }
         disabled={isDisabled}
       >
-        <div id="nameAndPriceWrapper" className="flex w-52 flex-col">
-          <p className="text-lg">{buyable.name}</p>
+        {/* left */}
+        <div className="flex flex-col justify-between leading-tight">
+          <p>{buyable.name}</p>
+          {showItem && (
+            <p className="text-white text-opacity-40">
+              Total Income: +{short(getIncome(buyable))}/s
+            </p>
+          )}
+          <p>
+            <span className="text-2xl">{buyable.amount}</span>
+            {showItem && <span>/{progress?.next}</span>}
+          </p>
         </div>
-        <div className="flex justify-between">
-          <div
-            id="counter"
-            className={
-              'flex flex-col justify-end text-lg leading-none text-white text-opacity-40'
-            }
-          >
-            {showItem ? <p>{' Lv. ' + (getTier(buyable) + 1)}</p> : null}
-            {showItem ? (
-              <p>{progress?.current + '/' + progress?.next}</p>
-            ) : null}
-            <p className="text-2xl">{(isUpgrade && buyable.amount) || ''}</p>
+
+        {/* right */}
+        <div className="flex flex-col items-end justify-center">
+          <div className={'price-tag'}>
+            <p>Buy: </p>
+            <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
+              {short(adjustedPrice, 2)}
+            </p>
+            <BaseCoin size={20} />
           </div>
           <div
             className={
-              'price-tag ' + (isDisabled ? 'text-red-700' : 'text-green-500')
+              'flex flex-col justify-end text-right leading-tight text-white text-opacity-40'
             }
           >
-            <p>{short(adjustedPrice, 2)}</p>
-            <BaseCoin size={20} />
+            {'income' in buyable && (
+              <p>Adds +{short(getSingleIncome(buyable))}/s</p>
+            )}
           </div>
         </div>
       </button>

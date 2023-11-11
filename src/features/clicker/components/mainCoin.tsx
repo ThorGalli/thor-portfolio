@@ -3,7 +3,6 @@ import { useClickerContext } from '@/features/clicker/useClickerContext'
 import BaseCoin from '../../../components/coins/baseCoins'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { useState } from 'react'
-import SaveGameButton from '@/components/settings/saveGameButton'
 
 export default function MainCoin() {
   const { resourceIncome, autoIncome, totalCoins, clicksIncome, onClickCoin } =
@@ -23,7 +22,7 @@ export default function MainCoin() {
     Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
   return (
     <div className="flex select-none flex-col items-center gap-2 rounded-t-[14px] bg-slate-800 p-2">
-      <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-96">
+      <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-[40rem]">
         <button
           id="info_wrapper"
           className="w-full cursor-pointer rounded-t-md bg-slate-700 p-2"
@@ -55,14 +54,14 @@ export default function MainCoin() {
           </section>
         </button>
 
-        <div
+        <button
           id="coin"
           onClick={handleClick}
           style={{ transition: 'all 0.1s ease-in-out' }}
           className="mt-2 cursor-pointer overflow-hidden rounded-full transition-all hover:scale-110 active:scale-95"
         >
           <BaseCoin />
-        </div>
+        </button>
 
         <p className="text-2xl text-slate-400">
           Total Coins:{' '}

@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
 
-export default function ResourceList() {
+export default function ResourceList({ tight }: { tight?: boolean }) {
   const { items } = useClickerContext()
 
   const itemBars = useMemo(() => {
@@ -14,5 +14,5 @@ export default function ResourceList() {
     })
   }, [items])
 
-  return <BuyableList title={'Resources'} list={itemBars} />
+  return <BuyableList title={'Resources'} list={itemBars} tight={tight} />
 }

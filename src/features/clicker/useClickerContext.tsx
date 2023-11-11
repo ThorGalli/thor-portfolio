@@ -30,9 +30,11 @@ import { useToast } from '@/contexts/useToast'
 import { usePathname } from 'next/navigation'
 import { getIncome } from './data/items'
 
+const MINUTE = 1000 * 60
 const BASE_COIN_VALUE = 1
 const GAME_FPS = 10
 const FRAME_TIME = 1000 / GAME_FPS
+const SAVE_INTERVAL_IN_MINUTES = 1 * MINUTE
 
 export const ClickerProvider = ({
   children,
@@ -250,8 +252,7 @@ export const ClickerProvider = ({
   }, [gameState.coins])
 
   const onSave = useCallback(async () => {
-    if (loading) return
-    toast({ message: 'Saving Game...', variant: 'info' })
+    if (loading || saving) return
     const totalIncome = resourceIncome + autoIncome
     const { success } = await saveGameProgress(gameState, status, totalIncome)
     if (success) toast({ message: 'Game Saved Successfully!' })
@@ -259,9 +260,8 @@ export const ClickerProvider = ({
   }, [gameState, status])
 
   function checkForSave(currentTime: number) {
-    if (currentTime - lastSaveTime > 1000 * 60 * 5) {
-      const totalIncome = resourceIncome + autoIncome
-      saveGameProgress(gameState, status, totalIncome)
+    if (currentTime - lastSaveTime > SAVE_INTERVAL_IN_MINUTES) {
+      if (!saving) onSave()
     }
   }
 

@@ -2,7 +2,7 @@ import { supabase } from '@/config/supabase'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  console.log(req?.url?.charAt(0))
+  const _unused = req?.url?.charAt(0)
   try {
     const response = await supabase
       .from('save_data')

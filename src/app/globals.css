@@ -44,8 +44,9 @@ body {
 
 .btn-dark {
   @apply btn;
-  @apply border-slate-950 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:border-slate-900 active:bg-slate-950;
+  @apply border-slate-950 bg-slate-950 text-slate-200 hover:bg-slate-900 hover:border-slate-900 active:bg-black;
 }
+
 
 .btn-yellow {
   @apply btn;
@@ -66,19 +67,11 @@ body {
 }
 
 .price-tag {
-  @apply flex items-center justify-end gap-1 text-lg
+  @apply flex items-center justify-end gap-1
 }
 
 .list-wrapper {
   @apply flex flex-col gap-2
-}
-
-.list-header {
-  @apply h-fit rounded-[14px] border-8 border-slate-800 bg-slate-950 px-2 py-4 text-center text-yellow-200
-}
-
-.list {
-  @apply flex flex-col gap-2 rounded-[14px] bg-slate-800 p-2
 }
 
 .sweeper-header {

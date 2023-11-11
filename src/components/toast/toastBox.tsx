@@ -63,6 +63,7 @@ export default function ToastBox({ toast }: { toast: Omit<Toast, 'id'> }) {
         animationClasses +
         'flex w-64 justify-between rounded-lg border-8 lg:w-96 lg:pl-2'
       }
+      style={{ boxShadow: '0 0 5px 3px #0004' }}
       onContextMenu={(e) => {
         e.preventDefault()
         closeToast()
