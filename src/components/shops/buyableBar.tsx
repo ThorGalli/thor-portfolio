@@ -59,7 +59,7 @@ export default function BuyableBar({
           <p>{buyable.name}</p>
           {showItem && (
             <p className="text-white text-opacity-40">
-              Total Income: +{short(getIncome(buyable))}/s
+              Income: +{short(getIncome(buyable))}/s
             </p>
           )}
           <p>
@@ -71,7 +71,6 @@ export default function BuyableBar({
         {/* right */}
         <div className="flex flex-col items-end justify-center">
           <div className={'price-tag'}>
-            <p>Buy: </p>
             <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
               {short(adjustedPrice, 2)}
             </p>
