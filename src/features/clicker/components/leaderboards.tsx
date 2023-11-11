@@ -5,19 +5,24 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Leaderboards() {
-  const [leaderboards, setLeaderboards] = useState<any>([])
-  const { status } = useSession()
-  const [loading, setLoading] = useState(false)
-
-  const { short } = useClickerCalculations()
   const router = useRouter()
+  const { status } = useSession()
+  const { short } = useClickerCalculations()
+
+  const [leaderboards, setLeaderboards] = useState<unknown[]>([])
+  const [loadingLeaderboards, setLoadingLeaderboards] = useState(false)
+
+  const loading = status === 'loading' || loadingLeaderboards
+  const unauthenticated = status === 'unauthenticated'
+  const isLeaderboardsReady = leaderboards.length > 0
+
   async function loadLeaderboards() {
     if (status !== 'authenticated') return
     try {
-      setLoading(true)
+      setLoadingLeaderboards(true)
       const response = await fetch('/api/users/leaderBoards', {
         method: 'GET',
-        next: { revalidate: 60 },
+        next: { revalidate: 120 },
       })
       const { data } = await response.json()
       if (!data) return
@@ -26,7 +31,7 @@ export default function Leaderboards() {
     } catch (error) {
       console.log(error)
     } finally {
-      setLoading(false)
+      setLoadingLeaderboards(false)
     }
   }
 
@@ -34,30 +39,26 @@ export default function Leaderboards() {
     loadLeaderboards()
     const interalId = setInterval(() => {
       loadLeaderboards()
-    }, 300000)
+    }, 120000)
     return () => {
       clearInterval(interalId)
     }
   }, [status])
 
-  function getComponent() {
-    if (status === 'loading' || loading)
-      return (
-        <div className="">
-          <p className="animate-spin text-4xl text-yellow-200">⚙</p>
-        </div>
-      )
-    if (status === 'unauthenticated')
-      return (
+  return (
+    <>
+      {loading && <p className="animate-spin text-4xl text-yellow-200">⚙</p>}
+
+      {unauthenticated && (
         <button
           className="cursor-pointer text-yellow-200 hover:underline"
           onClick={() => router.push('/options')}
         >
           Sign in to see leaderboards
         </button>
-      )
-    if (leaderboards.length > 0) {
-      return (
+      )}
+
+      {isLeaderboardsReady ? (
         <div className="flex w-full flex-col items-center gap-2 overflow-hidden">
           <h1 className="text-yellow-400">Top {leaderboards.length} players</h1>
           <table className="w-full table-auto">
@@ -106,12 +107,9 @@ export default function Leaderboards() {
             </tbody>
           </table>
         </div>
-      )
-    } else {
-      return (
+      ) : (
         <p className="text-yellow-200">We couldn&apos;t find leaderboards</p>
-      )
-    }
-  }
-  return getComponent()
+      )}
+    </>
+  )
 }
