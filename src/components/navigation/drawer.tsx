@@ -37,7 +37,7 @@ export default function Drawer({
         >
           <button
             onClick={onClose}
-            className="absolute right-5 top-5 text-5xl font-bold text-orange-700"
+            className="absolute right-5 top-3 text-5xl font-bold text-orange-700"
           >
             X
           </button>

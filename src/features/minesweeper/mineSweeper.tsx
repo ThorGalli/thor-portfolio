@@ -149,7 +149,7 @@ export default function MineSweeper() {
   }, [totalRevealedCells])
 
   return (
-    <div className="relative mx-[-0.5rem] pt-[3.5rem] lg:mt-14 lg:pt-2">
+    <div className="relative mx-[-0.5rem] pt-[3rem] lg:mt-14 lg:pt-2">
       <div className="flex flex-col items-center justify-around gap-4 bg-slate-900 ">
         {!hasStarted && (
           <div id="greetText" className="flex flex-col items-center gap-2 p-2">
@@ -171,7 +171,27 @@ export default function MineSweeper() {
           </div>
         )}
 
-        {/* Selected dificulty */}
+        {/* Game Header */}
+        {hasStarted && (
+          <div className="fixed top-0 flex w-[calc(100vw-1rem)] flex-col rounded-b-[14px] border-x-8 border-b-8 border-slate-700 bg-slate-950  text-yellow-200 lg:top-12 lg:mx-auto">
+            <div className="flex w-full items-center justify-around py-3">
+              <p>
+                ✅ {totalRevealedCells}/{totalSafeCells}
+              </p>
+              <button
+                className="white-hover absolute w-fit text-4xl active:opacity-70"
+                onClick={promptRestartGame}
+              >
+                {gameStatus === GameStatus.PLAYING && '🙂'}
+                {gameStatus === GameStatus.LOST && '💀'}
+                {gameStatus === GameStatus.WON && '😎'}
+              </button>
+              <p>
+                {totalFlaggedCells}/{totalBombs} 🚩
+              </p>
+            </div>
+          </div>
+        )}
         <div
           id="difficulty-selector"
           className="flex w-full flex-col items-center px-2"
@@ -185,27 +205,6 @@ export default function MineSweeper() {
             prizeDisplay={getPrizeDisplay()}
           />
         </div>
-
-        {/* Game Header */}
-        {hasStarted && (
-          <header className="sweeper-header">
-            <p>
-              ✅ {totalRevealedCells}/{totalSafeCells}
-            </p>
-            <button
-              className="white-hover absolute w-fit text-4xl active:opacity-70"
-              onClick={promptRestartGame}
-            >
-              {gameStatus === GameStatus.PLAYING && '🙂'}
-              {gameStatus === GameStatus.LOST && '💀'}
-              {gameStatus === GameStatus.WON && '😎'}
-            </button>
-            <p>
-              {totalFlaggedCells}/{totalBombs} 🚩
-            </p>
-          </header>
-        )}
-
         {/* Absolute components */}
         <ConfirmationDialog
           isOpen={restartDialog.isOpen}
@@ -221,8 +220,12 @@ export default function MineSweeper() {
           side="right"
         >
           <div className="list-wrapper">
-            <header className="list-header">Stage Selector</header>
-            <div className="list">{bluePrintComponents}</div>
+            <header className="mx-2 h-fit rounded-md bg-slate-700 px-2 py-4 text-center text-yellow-200">
+              Stage Selector
+            </header>
+            <div className="flex flex-col gap-2 px-2">
+              {bluePrintComponents}
+            </div>
           </div>
         </Drawer>
       </div>

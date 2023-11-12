@@ -21,8 +21,8 @@ export default function MainCoin() {
   const totalIncome =
     Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
   return (
-    <div className="flex select-none flex-col items-center gap-2 rounded-t-[14px] bg-slate-800 p-2">
-      <div className="flex w-[calc(100vw-2rem)] flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-[40rem]">
+    <div className="flex w-full flex-col items-center gap-2 rounded-t-[14px] bg-slate-800 p-2">
+      <div className="flex w-full flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-full">
         <button
           id="info_wrapper"
           className="w-full cursor-pointer rounded-t-md bg-slate-700 p-2"

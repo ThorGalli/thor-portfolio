@@ -74,9 +74,7 @@ body {
   @apply flex flex-col gap-2
 }
 
-.sweeper-header {
-  @apply fixed left-2 right-2 lg:top-16 top-0 flex h-[3.5rem] w-[calc(100vw-1rem)] lg:max-w-[calc(1536px-1rem)] items-center justify-around rounded-[14px] border-8 border-slate-700 bg-slate-950 text-yellow-200 lg:mx-auto !important;
-}
+
 
 .toast-box {
   @apply opacity-0 transition-all duration-300 
