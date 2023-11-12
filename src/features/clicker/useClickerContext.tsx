@@ -127,14 +127,14 @@ export const ClickerProvider = ({
   }, [gameState.items])
 
   const buy = useCallback(
-    (buyable: Item | Upgrade) => {
-      const price = getAdjustedPrice(buyable)
+    (buyable: Item | Upgrade, amount = 1) => {
+      const price = getAdjustedPrice(buyable, amount)
       if (totalCoins < price) {
         return
       }
       if ('income' in buyable) {
         const newItems = { ...gameState.items }
-        newItems[buyable.id].amount += 1
+        newItems[buyable.id].amount += amount
         setGameState({
           items: newItems,
           coins: { spent: gameState.coins.spent + price },
@@ -142,7 +142,7 @@ export const ClickerProvider = ({
       }
       if ('multiplier' in buyable) {
         const newUpgrades = { ...gameState.upgrades }
-        newUpgrades[buyable.id].amount += 1
+        newUpgrades[buyable.id].amount += amount
         setGameState({
           upgrades: newUpgrades,
           coins: { spent: gameState.coins.spent + price },

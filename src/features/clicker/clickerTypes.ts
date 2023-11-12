@@ -35,8 +35,8 @@ export type Coins = {
 export type ClickerContextProps = {
   items: ShopItems
   upgrades: ShopUpgrades
-  buy: (buyable: Item | Upgrade) => void
-  getAdjustedPrice: (buyable: Item | Upgrade) => number
+  buy: (buyable: Item | Upgrade, amount: number) => void
+  getAdjustedPrice: (buyable: Item | Upgrade, amount: number) => number
   totalCoins: number
   resourceIncome: number
   autoIncome: number

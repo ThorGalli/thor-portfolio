@@ -1,7 +1,6 @@
 'use client'
 
 import { StageBlueprint } from '@/features/minesweeper/types'
-import BaseCoin from '../coins/baseCoins'
 
 export default function BluePrintBar({
   className,
@@ -11,6 +10,7 @@ export default function BluePrintBar({
   onClick,
   children,
   prizeDisplay,
+  small,
 }: {
   className: string
   index: number
@@ -19,11 +19,29 @@ export default function BluePrintBar({
   onClick?: () => void
   children?: React.ReactNode
   prizeDisplay: { value: number; display: string; seconds: string }
+  small?: boolean
 }) {
   const handleClick = () => {
     onClick?.()
     onSelect?.(index)
   }
+
+  if (small)
+    return (
+      <button onClick={handleClick} className="btn-slate rounded-md px-2">
+        <div className="flex gap-2">
+          <p id="stageName" className="text-lg text-yellow-200">
+            {blueprint.name}
+          </p>
+          <div className="price-tag">
+            <p>
+              <span className="text-stone-400">({prizeDisplay.seconds}) </span>
+              {prizeDisplay.display} 💰
+            </p>
+          </div>
+        </div>
+      </button>
+    )
 
   return (
     <button onClick={handleClick} className={className}>
@@ -43,9 +61,8 @@ export default function BluePrintBar({
         <div className="price-tag">
           <p>
             <span className="text-stone-400">({prizeDisplay.seconds}) </span>
-            {prizeDisplay.display}
+            {prizeDisplay.display} 💰
           </p>
-          <BaseCoin size={20} />
         </div>
       </div>
       {children}

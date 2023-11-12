@@ -12,8 +12,12 @@ export default function useClickerCalculations() {
     return `${rounded} ${units[unit]}`
   }
 
-  function getAdjustedPrice(buyable: Buyable) {
-    return Math.round(buyable.price * buyable.priceMultiplier ** buyable.amount)
+  function getAdjustedPrice(buyable: Buyable, amount: number) {
+    let price = 0
+    for (let i = 0; i < amount; i++) {
+      price += buyable.price * buyable.priceMultiplier ** (buyable.amount + i)
+    }
+    return price
   }
 
   function calculateOfflineIncome(

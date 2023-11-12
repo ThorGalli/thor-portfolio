@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Leaderboards from './tabs/leaderboards'
-import SaveGameButton from '@/components/settings/saveGameButton'
 import { useSession } from 'next-auth/react'
 import Options from './tabs/options'
 import ResourceList from '@/components/shops/resourceList'
@@ -11,6 +10,7 @@ type Tab = {
     label: string
     emoji: string | React.ReactNode
     component: React.ReactNode
+    extraClass: string
   }
 }
 export default function ClickerNavBar() {
@@ -32,22 +32,26 @@ export default function ClickerNavBar() {
     resources: {
       label: 'Resources',
       emoji: '💻',
-      component: <ResourceList tight />,
+      component: <ResourceList mobile />,
+      extraClass: 'lg:hidden flex',
     },
     upgrades: {
       label: 'Upgrades',
       emoji: '🔨',
-      component: <UpgradeList tight />,
+      component: <UpgradeList mobile />,
+      extraClass: 'lg:hidden flex',
     },
     leaderboards: {
       label: 'Leaderboards',
       emoji: '📈',
       component: <Leaderboards />,
+      extraClass: '',
     },
     config: {
       label: 'config',
       emoji: getOptionsLabel(),
       component: <Options />,
+      extraClass: '',
     },
   }
 
@@ -66,15 +70,16 @@ export default function ClickerNavBar() {
           <button
             key={name}
             onClick={() => handleClickTab(name)}
-            className="btn-slate btn-slate relative my-[1px] flex flex-grow flex-col items-center justify-center border-slate-600 p-2"
+            className={
+              'btn-slate relative my-[1px] flex-grow flex-col items-center justify-center border-slate-600 p-2 ' +
+              tabs[name].extraClass
+            }
           >
             <div
               className={
                 'absolute bottom-0 h-1 w-full ' +
                 (selectedTab === name && ' bg-yellow-700 ') +
-                (selectedTab !== null &&
-                  selectedTab !== name &&
-                  ' bg-stone-700 ')
+                (selectedTab !== name && ' bg-stone-700 ')
               }
             />
             <p className="text-2xl">{emoji}</p>
@@ -87,7 +92,8 @@ export default function ClickerNavBar() {
             key={name}
             className={
               'flex flex-col items-center justify-center gap-2 ' +
-              ((selectedTab === name && ' ') || ' hidden ')
+              ((selectedTab === name && ' ') || ' hidden ') +
+              tabs[name].extraClass
             }
           >
             {component}
