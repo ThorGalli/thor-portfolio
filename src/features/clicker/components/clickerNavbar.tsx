@@ -6,6 +6,7 @@ import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
 import { clsx } from 'clsx'
 import useWindowDimensions from '@/hooks/useWindowsDimensions'
+import { useClickerContext } from '../useClickerContext'
 
 type Tab = {
   label: string
@@ -17,6 +18,7 @@ type Tab = {
 export default function ClickerNavBar() {
   const { width } = useWindowDimensions()
   const { status } = useSession()
+  const { items, upgrades } = useClickerContext()
   const tabs: Tab[] = [
     {
       label: 'Resources',
@@ -84,7 +86,7 @@ export default function ClickerNavBar() {
         setTabHeight(tabElement.offsetHeight)
       }
     }
-  }, [width])
+  }, [width, items, upgrades])
 
   return (
     <div className="relative flex w-full flex-col">
