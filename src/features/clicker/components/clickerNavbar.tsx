@@ -1,21 +1,52 @@
-import { useState } from 'react'
+import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react'
 import Leaderboards from './tabs/leaderboards'
 import { useSession } from 'next-auth/react'
 import Options from './tabs/options'
 import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
+import { clsx } from 'clsx'
+import useWindowDimensions from '@/hooks/useWindowsDimensions'
 
 type Tab = {
-  [key: string]: {
-    label: string
-    emoji: string | React.ReactNode
-    component: React.ReactNode
-    extraClass: string
-  }
+  label: string
+  emoji: string | React.ReactNode
+  component: React.ReactNode
+  extraClass: string
 }
+
 export default function ClickerNavBar() {
-  const [selectedTab, setSelectedTab] = useState<string | null>('resources')
+  const { width } = useWindowDimensions()
   const { status } = useSession()
+  const tabs: Tab[] = [
+    {
+      label: 'Resources',
+      emoji: '💻',
+      component: <ResourceList mobile />,
+      extraClass: 'lg:hidden',
+    },
+    {
+      label: 'Upgrades',
+      emoji: '🔨',
+      component: <UpgradeList mobile />,
+      extraClass: 'lg:hidden',
+    },
+    {
+      label: 'Leaderboards',
+      emoji: '📈',
+      component: <Leaderboards />,
+      extraClass: '',
+    },
+    {
+      label: 'config',
+      emoji: getOptionsLabel(),
+      component: <Options />,
+      extraClass: '',
+    },
+  ]
+
+  const [selectedTab, setSelectedTab] = useState<number | null>(null)
+  const [tabHeight, setTabHeight] = useState<number | null>(null)
+  const refs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   function getOptionsLabel() {
     switch (status) {
@@ -28,78 +59,123 @@ export default function ClickerNavBar() {
     }
   }
 
-  const tabs: Tab = {
-    resources: {
-      label: 'Resources',
-      emoji: '💻',
-      component: <ResourceList mobile />,
-      extraClass: 'lg:hidden flex',
-    },
-    upgrades: {
-      label: 'Upgrades',
-      emoji: '🔨',
-      component: <UpgradeList mobile />,
-      extraClass: 'lg:hidden flex',
-    },
-    leaderboards: {
-      label: 'Leaderboards',
-      emoji: '📈',
-      component: <Leaderboards />,
-      extraClass: '',
-    },
-    config: {
-      label: 'config',
-      emoji: getOptionsLabel(),
-      component: <Options />,
-      extraClass: '',
-    },
-  }
-
-  function handleClickTab(name: string) {
-    if (selectedTab === name) {
+  function handleClickTab(index: number) {
+    if (selectedTab === index) {
       setSelectedTab(null)
+      setTabHeight(0)
       return
     }
-    setSelectedTab(name)
+    const tabElement = refs.current[index]
+
+    if (tabElement) {
+      setTabHeight(tabElement.offsetHeight)
+      setSelectedTab(index)
+    }
   }
+
+  useEffect(() => {
+    if (selectedTab === null) {
+      setTabHeight(0)
+    }
+
+    if (selectedTab !== null) {
+      const tabElement = refs.current[selectedTab]
+      if (tabElement) {
+        setTabHeight(tabElement.offsetHeight)
+      }
+    }
+  }, [width])
 
   return (
     <div className="relative flex w-full flex-col">
       <div className="flex w-full gap-[1px]">
-        {Object.entries(tabs).map(([name, { label, emoji }]) => (
+        {tabs.map((tab, index) => (
           <button
-            key={name}
-            onClick={() => handleClickTab(name)}
+            key={tab.label}
+            onClick={() => handleClickTab(index)}
             className={
               'btn-slate relative my-[1px] flex-grow flex-col items-center justify-center border-slate-600 p-2 ' +
-              tabs[name].extraClass
+              tab.extraClass
             }
           >
             <div
               className={
                 'absolute bottom-0 h-1 w-full ' +
-                (selectedTab === name && ' bg-yellow-700 ') +
-                (selectedTab !== name && ' bg-stone-700 ')
+                (selectedTab === index && ' bg-yellow-700 ') +
+                (selectedTab !== index && ' bg-stone-700 ')
               }
             />
-            <p className="text-2xl">{emoji}</p>
+            <p className="text-2xl">{tab.emoji}</p>
           </button>
         ))}
       </div>
-      <div className="rounded-b-[14px] border-8 border-slate-800 bg-slate-800 duration-200">
-        {Object.entries(tabs).map(([name, { component }]) => (
-          <div
-            key={name}
-            className={
-              'flex flex-col items-center justify-center gap-2 ' +
-              ((selectedTab === name && ' ') || ' hidden ') +
-              tabs[name].extraClass
-            }
+
+      <div
+        className="relative flex overflow-clip rounded-b-[14px] border-8 border-slate-800 bg-slate-800 duration-200"
+        style={{ height: tabHeight ? tabHeight + 16 : 0 }}
+      >
+        {tabs.map((tab, index) => (
+          <SliderWraper
+            key={tab.label}
+            index={index}
+            extraClass={tab.extraClass}
+            selectedTab={selectedTab}
+            tabHeight={tabHeight}
           >
-            {component}
-          </div>
+            <TabContent ref={(element) => (refs.current[index] = element)}>
+              {tab.component}
+            </TabContent>
+          </SliderWraper>
         ))}
       </div>
     </div>
   )
 }
+
+const TabContent = forwardRef<HTMLDivElement, { children: ReactNode }>(
+  (props, ref) => {
+    return (
+      <div className="relative w-full" ref={ref}>
+        {props.children}
+      </div>
+    )
+  },
+)
+
+function SliderWraper({
+  index,
+  extraClass,
+  selectedTab,
+  tabHeight,
+  children,
+}: {
+  index: number
+  extraClass: string
+  children: ReactNode
+  selectedTab: number | null
+  tabHeight: number | null
+}) {
+  const show = selectedTab === index
+  const isPrevious = selectedTab !== null && selectedTab < index
+  const isNext = selectedTab !== null && selectedTab > index
+  return (
+    <div
+      className={clsx(
+        'absolute w-full transform duration-200',
+        extraClass,
+        selectedTab === null ? 'opacity-0' : '',
+        show && 'transform-none opacity-100',
+        isPrevious && 'translate-x-12 opacity-0',
+        isNext && '-translate-x-12 opacity-0',
+      )}
+      style={{
+        height: tabHeight ? tabHeight + 16 : 0,
+        pointerEvents: selectedTab === index ? 'auto' : 'none',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+TabContent.displayName = 'TabContent'
