@@ -132,11 +132,12 @@ export default function Home() {
 
           <article id="experience" className="profile-article">
             <h2 className="text-3xl font-bold">Experience</h2>
+
             <section className="profile-section">
               <h3 className="profile-subtitle">
-                <span className="text-yellow-200">Full Stack Developer </span>
-                at{' '}
-                <span className="text-pink-400">Brainny Smart Solutions</span>
+                <span className="text-yellow-200">
+                  Full Stack Developer at Brainny Smart Solutions{' {'}
+                </span>
               </h3>
               <p className="profile-time">June 2022 - Present</p>
               <ul className="ml-6 list-disc">
@@ -154,13 +155,14 @@ export default function Home() {
                   PostgreSQL.
                 </li>
               </ul>
-              <div className="mt-4 flex flex-col gap-2 rounded-md bg-slate-900 p-2">
+
+              <div className="ml-4 mt-4 flex flex-col">
                 <h3 className="profile-subtitle text-pink-400">
-                  Outsourcing contracts:
+                  Outsourcing contracts {' {'}
                 </h3>
-                <section className="profile-section">
+                <section className="profile-section ml-4">
                   <h3 className="profile-subtitle">
-                    <span className="text-pink-400">
+                    <span className="text-blue-400">
                       BRIDGE Management Technologies
                     </span>
                   </h3>
@@ -175,9 +177,9 @@ export default function Home() {
                     </li>
                   </ul>
                 </section>
-                <section className="profile-section">
+                <section className="profile-section ml-4">
                   <h3 className="profile-subtitle">
-                    <span className="text-pink-400">
+                    <span className="text-blue-400">
                       Wunderman Thompson Technology Brasil
                     </span>
                   </h3>
@@ -191,14 +193,35 @@ export default function Home() {
                     <li>Top skills: React, Redux, TypeScript, Git, Scrum.</li>
                   </ul>
                 </section>
+                <p className="profile-subtitle text-pink-400">{'}'}</p>
               </div>
+              <p className="profile-subtitle text-yellow-200">{'}'}</p>
+            </section>
+
+            <section className="profile-section">
+              <h3 className="profile-subtitle">
+                <span className="text-yellow-200">
+                  Freelance Developer{' {'}
+                </span>
+              </h3>
+              <p className="profile-time">Mar 2021 - May 2022</p>
+
+              <ul className="ml-6 list-disc">
+                <li>
+                  Development of Responsive Landing Pages built with Bootstrap
+                  and React
+                </li>
+                <li>Data Cleaning and formating with Python</li>
+                <li>Top Skills: React, Bootstrap, Git, Python</li>
+              </ul>
+              <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </section>
           </article>
 
           <article id="education" className="profile-article">
             <h2 className="text-3xl font-bold">Education</h2>
             <section className="profile-section">
-              <h3 className="profile-subtitle">
+              <h3 className="profile-subtitle text-yellow-200">
                 Bachelor of Technology - BTech, Computer Systems Analysis at
                 SenacRS
               </h3>
@@ -207,7 +230,7 @@ export default function Home() {
               </p>
             </section>
             <section className="profile-section">
-              <h3 className="profile-subtitle">
+              <h3 className="profile-subtitle text-yellow-200">
                 Bachelor&apos;s in Civil Engineering at Universidade Federal do
                 Rio Grande
               </h3>
