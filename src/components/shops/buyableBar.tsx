@@ -7,7 +7,7 @@ import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculati
 import {
   getAmountAndProgress,
   getIncome,
-  getSingleIncome,
+  getIncomePerAmount,
   getTier,
 } from '@/features/clicker/data/items'
 import { BuyAmount } from './resourceList'
@@ -71,7 +71,7 @@ export default function BuyableBar({
       <button
         onClick={() => buy(buyable, getBuyAmount())}
         className={
-          'btn-yellow flex w-full justify-between rounded-[6px] p-2 text-left'
+          'btn-yellow flex w-full justify-between rounded-[6px] p-2 text-left transition-all duration-200'
         }
         disabled={isDisabled}
       >
@@ -107,7 +107,7 @@ export default function BuyableBar({
           </div>
           {isItem && (
             <p className="leading-tight text-white text-opacity-40">
-              +{short(getSingleIncome(buyable))}/s
+              +{short(getIncomePerAmount(buyable, getBuyAmount()))}/s
             </p>
           )}
         </div>

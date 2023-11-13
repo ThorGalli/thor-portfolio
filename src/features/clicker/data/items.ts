@@ -94,8 +94,8 @@ export function getIncome(item: Item) {
   return item.income * item.amount * 2 ** getTier(item)
 }
 
-export function getSingleIncome(item: Item) {
-  return item.income * 2 ** getTier(item)
+export function getIncomePerAmount(item: Item, amount = 1) {
+  return amount * item.income * 2 ** getTier(item)
 }
 
 export function getAmountAndProgress(item: Item) {
