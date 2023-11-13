@@ -57,16 +57,19 @@ function BuyAmountSelector({
 
   return (
     <div className="flex flex-col gap-2">
-      {'Resources'}
+      <p className="leading-none ">Resources</p>
       <div className="flex justify-center gap-2">
         {options.map((amount) => (
           <button
             key={amount}
             className={
               'rounded-md px-2 py-1 text-yellow-200 ' +
-              (buyAmount === amount ? ' bg-slate-900' : 'bg-slate-800')
+              (buyAmount === amount
+                ? ' bg-slate-950 hover:bg-slate-900 '
+                : ' bg-slate-600 hover:bg-slate-500 ')
             }
             onClick={() => setBuyAmount(amount)}
+            disabled={buyAmount === amount}
           >
             {amount}
           </button>

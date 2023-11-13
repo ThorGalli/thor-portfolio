@@ -10,6 +10,7 @@ export default function Options() {
   const loggedOut = !data && status === 'unauthenticated'
   return (
     <div className="flex flex-col items-center justify-center gap-4">
+      <header className="header-slate w-full">Options</header>
       <SaveGameButton />
       {loading && <p className="animate-spin text-4xl text-yellow-200">⚙</p>}
 

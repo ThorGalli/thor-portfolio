@@ -3,7 +3,7 @@ import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { getUpgradeInfo } from '@/features/clicker/data/upgrades'
 import useClickerCalculations from '@/features/clicker/hooks/useClickerCalculations'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'
-import { getIncome, getSingleIncome } from '@/features/clicker/data/items'
+import { getIncome, getIncomePerAmount } from '@/features/clicker/data/items'
 
 export default function Tooltip({
   side,
@@ -27,7 +27,7 @@ export default function Tooltip({
   return (
     <div
       className={
-        'absolute top-full z-10 ml-10 mt-2 flex flex-col rounded-[6px] border-slate-700 bg-slate-950 p-1 text-xs shadow-md lg:top-0 lg:mt-0 lg:border-2 lg:p-1' +
+        'absolute top-full z-20 ml-10 mt-2 flex flex-col rounded-[6px] border-slate-700 bg-slate-950 p-1 text-xs shadow-md lg:top-0 lg:mt-0 lg:border-2 lg:p-1' +
         toolTipPlacement
       }
     >
@@ -45,7 +45,10 @@ export default function Tooltip({
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p>Income/s:</p>
-          <p className="text-yellow-500"> {short(getSingleIncome(buyable))}</p>
+          <p className="text-yellow-500">
+            {' '}
+            {short(getIncomePerAmount(buyable))}
+          </p>
         </div>
       )}
       {isItem && buyable.amount > 1 && (

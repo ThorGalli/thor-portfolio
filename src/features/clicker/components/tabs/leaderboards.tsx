@@ -66,8 +66,10 @@ export default function Leaderboards() {
   }
   if (isLeaderboardsReady)
     return (
-      <div className="flex w-full flex-col items-center gap-2 overflow-hidden">
-        <h1 className="text-yellow-400">Top {leaderboards.length} players</h1>
+      <div className="flex flex-col items-center gap-2 overflow-hidden">
+        <h1 className="header-slate w-full">
+          Top {leaderboards.length} players
+        </h1>
         <table className="w-full table-auto">
           <thead className="text-yellow-200">
             <tr>

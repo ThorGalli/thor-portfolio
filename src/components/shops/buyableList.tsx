@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-
+import { clsx } from 'clsx'
 type BuyableListProps = {
   title: string | JSX.Element
   list: JSX.Element[]
@@ -13,23 +13,19 @@ export default function BuyableList({ title, list, mobile }: BuyableListProps) {
   return (
     <div
       className={
-        'h-fit w-full flex-col rounded-[14px] border-slate-800 bg-slate-800  first-line:flex ' +
-        (mobile ? ' flex ' : ' hidden lg:flex')
+        'h-fit w-full flex-col rounded-[14px] border-slate-800 bg-slate-800 first-line:flex ' +
+        (mobile ? ' flex gap-2 ' : ' hidden lg:flex')
       }
     >
       <header
         ref={headerRef}
-        className={
-          'h-fit rounded-md bg-slate-700 px-2 py-2 text-center text-yellow-200 ' +
-          (mobile ? ' ' : ' m-2 ')
-        }
+        className={clsx('header-slate', mobile ? ' ' : ' m-2 ')}
       >
         {title}
       </header>
       <div
         className={
-          'flex flex-col gap-2 overflow-y-auto rounded-[14px]' +
-          (mobile ? ' ' : ' px-2 pb-2 ')
+          'flex flex-col gap-2 overflow-y-auto' + (mobile ? ' ' : ' px-2 pb-2 ')
         }
         style={{ maxHeight: listHeight }}
       >

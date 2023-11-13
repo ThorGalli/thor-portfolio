@@ -33,6 +33,10 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.header-slate {
+  @apply h-fit bg-slate-700 rounded-md p-2 text-center text-yellow-200
+}
+
 .btn {
   @apply flex h-fit cursor-pointer select-none disabled:cursor-default disabled:border-black disabled:bg-slate-950 disabled:text-slate-500 disabled:hover:bg-slate-900 disabled:hover:border-black;   
 }

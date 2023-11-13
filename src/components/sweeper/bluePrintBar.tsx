@@ -28,7 +28,10 @@ export default function BluePrintBar({
 
   if (small)
     return (
-      <button onClick={handleClick} className="btn-slate rounded-md px-2">
+      <button
+        onClick={handleClick}
+        className="btn-slate rounded-md px-2 transition-all duration-200"
+      >
         <div className="flex gap-2">
           <p id="stageName" className="text-lg text-yellow-200">
             {blueprint.name}
@@ -44,7 +47,10 @@ export default function BluePrintBar({
     )
 
   return (
-    <button onClick={handleClick} className={className}>
+    <button
+      onClick={handleClick}
+      className={className + ' transition-all duration-200 '}
+    >
       <p
         className="ml-2 font-bold text-red-400"
         style={{ textShadow: '0 0 10px black' }}
