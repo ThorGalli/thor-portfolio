@@ -54,5 +54,7 @@ export function getInitialSweeper(): SweeperState {
     gameStatus: GameStatus.NOT_STARTED,
     stage: [],
     losingCellID: null,
+    firstClick: true,
+    bombsClicked: [],
   }
 }

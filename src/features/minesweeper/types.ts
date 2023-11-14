@@ -42,6 +42,7 @@ export type MineSweeperContextProps = {
   prize: number
   setPrize: (prize: number) => void
   losingCellID: string | null
+  bombsClicked: string[]
 }
 
 export type SweeperState = {
@@ -49,4 +50,6 @@ export type SweeperState = {
   gameStatus: GameStatus
   stage: Stage
   losingCellID: string | null
+  firstClick: boolean
+  bombsClicked: string[]
 }

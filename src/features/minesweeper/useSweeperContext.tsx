@@ -22,15 +22,23 @@ export const MineSweeperProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [{ blueprint, gameStatus, stage, losingCellID }, setSweeperState] =
-    useReducer((prev: SweeperState, next: Partial<SweeperState>) => {
-      return { ...prev, ...next }
-    }, getInitialSweeper())
+  const [
+    { blueprint, gameStatus, stage, losingCellID, firstClick, bombsClicked },
+    setSweeperState,
+  ] = useReducer((prev: SweeperState, next: Partial<SweeperState>) => {
+    return { ...prev, ...next }
+  }, getInitialSweeper())
   const [selectedStage, setSelectedStage] = useState(0)
   const [prize, setPrize] = useState(0)
 
-  const { generateStage, revealCell, revealAllBombs, flagCell } =
-    useMineSweeperCalculations()
+  const {
+    createBlankStage,
+    placeBombs,
+    calculateSurroundingBombs,
+    revealCell,
+    revealAllBombs,
+    flagCell,
+  } = useMineSweeperCalculations()
 
   const isPlaying = useMemo(() => {
     return gameStatus === GameStatus.PLAYING
@@ -38,21 +46,46 @@ export const MineSweeperProvider = ({
 
   const onFlagCell = useCallback(
     (cell: Cell) => {
-      if (cell.isRevealed || !stage || !isPlaying) return
+      if (
+        cell.isRevealed ||
+        !stage ||
+        !isPlaying ||
+        bombsClicked.includes(cell.id)
+      )
+        return
       const newStage = flagCell(cell, stage)
       setSweeperState({ stage: newStage })
     },
     [stage, isPlaying],
   )
 
+  function generateGameBombs(clickedCell: Cell, stage: Stage) {
+    const bombedStage = placeBombs(clickedCell, stage, blueprint.bombAmount)
+    const completeStage = calculateSurroundingBombs(bombedStage)
+    setSweeperState({ stage: completeStage, firstClick: false })
+  }
+
   const onRevealCell = useCallback(
     (cell: Cell) => {
       if (!stage || !isPlaying || cell.isRevealed) return
+      if (firstClick) {
+        generateGameBombs(cell, stage)
+      }
+
       if (cell.isBomb) {
-        setSweeperState({ losingCellID: cell.id })
-        onLoseGame()
+        const newBombsClicked = [...bombsClicked, cell.id]
+        const newStage = flagCell(cell, stage)
+        setSweeperState({
+          stage: newStage,
+          losingCellID: cell.id,
+          bombsClicked: newBombsClicked,
+        })
+        if (newBombsClicked.length === 3) {
+          onLoseGame()
+        }
         return
       }
+
       const newStage = revealCell(cell, stage)
       setSweeperState({ stage: newStage })
     },
@@ -71,12 +104,14 @@ export const MineSweeperProvider = ({
   }, [stage])
 
   const onStartGame = useCallback((stageBlueprint: StageBlueprint) => {
-    const newStage = generateStage(stageBlueprint)
+    const newStage = createBlankStage(stageBlueprint)
     setSweeperState({
       blueprint: stageBlueprint,
       stage: newStage,
       gameStatus: GameStatus.PLAYING,
       losingCellID: '',
+      firstClick: true,
+      bombsClicked: [],
     })
   }, [])
 
@@ -111,10 +146,10 @@ export const MineSweeperProvider = ({
 
       const shouldRevealAround =
         cell.isRevealed && cell.bombsAround === cell.flagsAround
-      if (shouldRevealAround) revealAround(cell)
-
       const shouldFlagAround =
         cell.revealedAround === cell.cellsAround - cell.bombsAround
+
+      if (shouldRevealAround) revealAround(cell)
       if (shouldFlagAround) flagAround(cell)
     },
     [stage, isPlaying],
@@ -158,6 +193,7 @@ export const MineSweeperProvider = ({
       prize,
       setPrize,
       losingCellID,
+      bombsClicked,
     }),
     [
       totalRevealedCells,
@@ -177,6 +213,7 @@ export const MineSweeperProvider = ({
       prize,
       setPrize,
       losingCellID,
+      bombsClicked,
     ],
   )
 
@@ -205,6 +242,7 @@ const SweeperContext = createContext<MineSweeperContextProps>({
   prize: 0,
   setPrize: () => null,
   losingCellID: '',
+  bombsClicked: [],
 })
 
 export function useSweeperContext() {

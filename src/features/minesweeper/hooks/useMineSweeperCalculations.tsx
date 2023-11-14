@@ -24,6 +24,10 @@ export default function useMineSweeperCalculations() {
     return blankStage
   }
 
+  function areCellsApart(cell1: Cell, cell2: Cell) {
+    return Math.abs(cell1.x - cell2.x) > 1 || Math.abs(cell1.y - cell2.y) > 1
+  }
+
   function secondsToShortTime(seconds: number) {
     if (seconds < 60) return Math.floor(seconds) + 's'
     if (seconds < 3600) return Math.floor(seconds / 60) + 'm'
@@ -62,14 +66,14 @@ export default function useMineSweeperCalculations() {
     return totalSeconds
   }
 
-  function placeBombs(stage: Stage, bombAmount: number) {
+  function placeBombs(clickedCell: Cell, stage: Stage, bombAmount: number) {
     const bombedMap: Stage = [...stage]
     let bombsPlaced = 0
     while (bombsPlaced < bombAmount) {
       const randomX = Math.floor(Math.random() * bombedMap.length)
       const randomY = Math.floor(Math.random() * bombedMap.length)
       const cell = bombedMap[randomX][randomY]
-      if (!cell.isBomb) {
+      if (areCellsApart(cell, clickedCell) && !cell.isBomb) {
         cell.isBomb = true
         bombsPlaced++
       }
@@ -146,13 +150,6 @@ export default function useMineSweeperCalculations() {
     return numberedStage
   }
 
-  function generateStage(blueprint: StageBlueprint) {
-    const blankStage = createBlankStage(blueprint)
-    const bombedStage = placeBombs(blankStage, blueprint.bombAmount)
-    const completeStage = calculateSurroundingBombs(bombedStage)
-    return completeStage
-  }
-
   function revealAllBombs(stage: Stage) {
     const newStage: Stage = JSON.parse(JSON.stringify(stage))
     for (let x = 0; x < newStage.length; x++) {
@@ -209,8 +206,10 @@ export default function useMineSweeperCalculations() {
     flagCell,
     revealCell,
     revealAllBombs,
-    generateStage,
     calculatePrizeSeconds,
     secondsToShortTime,
+    placeBombs,
+    createBlankStage,
+    calculateSurroundingBombs,
   }
 }

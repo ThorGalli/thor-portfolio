@@ -1,17 +1,18 @@
 'use client'
 import ConfirmationDialog from '@/components/settings/confirmationDialog'
-import CellBox from '@/components/sweeper/cell'
 import { bluePrintList } from '@/features/minesweeper/data/initialValues'
 import { GameStatus } from '@/features/minesweeper/types'
 import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import useClickerCalculations from '../clicker/hooks/useClickerCalculations'
 import { useSweeperContext } from '@/features/minesweeper/useSweeperContext'
-import BluePrintBar from '@/components/sweeper/bluePrintBar'
+import BluePrintBar from '@/features/minesweeper/components/bluePrintBar'
 import Drawer from '@/components/navigation/drawer'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useToast } from '@/contexts/useToast'
 import useMineSweeperCalculations from './hooks/useMineSweeperCalculations'
+import CellBox from './components/cell'
+import GameHeader from './components/gameHeader'
 
 export default function MineSweeper() {
   const {
@@ -30,6 +31,7 @@ export default function MineSweeper() {
     setPrize,
     onWinGame,
     onSmartClick,
+    bombsClicked,
   } = useSweeperContext()
 
   const { short } = useClickerCalculations()
@@ -41,9 +43,9 @@ export default function MineSweeper() {
   const restartDialog = useUrlDisclosure('restartMineSweeper')
   const stageSelectDrawer = useUrlDisclosure('stageSelectOpen')
 
+  const penalty = (3 - bombsClicked.length) / 3
   const totalIncome = resourceIncome + autoIncome
   const currentStage = bluePrintList[selectedStage]
-
   const isPlaying = gameStatus === GameStatus.PLAYING
   const hasStarted = gameStatus !== GameStatus.NOT_STARTED
 
@@ -64,26 +66,26 @@ export default function MineSweeper() {
   }
 
   const prizeDisplay = useMemo(() => {
-    const { value, display, seconds } = getPrizeDisplay()
+    const { value, display, seconds } = getPrizeDisplay(selectedStage, penalty)
     setPrize?.(value)
     return {
       value,
       display,
       seconds,
     }
-  }, [currentStage, totalIncome, upgrades?.goldMine?.amount])
+  }, [currentStage, totalIncome, upgrades?.goldMine?.amount, penalty])
 
-  function getPrizeDisplay(index: number = selectedStage) {
+  function getPrizeDisplay(index: number = selectedStage, penalty = 1) {
     const secondsPerBomb = upgrades?.goldMine?.amount ?? 0
     const seconds = calculatePrizeSeconds(
       bluePrintList[index].bombAmount,
       secondsPerBomb,
     )
-    const value = seconds * totalIncome
+    const value = seconds * totalIncome * penalty
     return {
       value,
       display: short(value, 2).toString(),
-      seconds: secondsToShortTime(seconds),
+      seconds: secondsToShortTime(seconds * penalty),
     }
   }
 
@@ -172,39 +174,30 @@ export default function MineSweeper() {
         )}
 
         {/* Game Header */}
-        {hasStarted && (
-          <div className="fixed top-0 flex w-[calc(100vw-1rem)] flex-col rounded-b-[14px] border-x-8 border-b-8 border-slate-700 bg-slate-950  text-yellow-200 lg:top-12 lg:mx-auto">
-            <div className="flex w-full items-center justify-around py-3">
-              <p>
-                ✅ {totalRevealedCells}/{totalSafeCells}
-              </p>
-              <button
-                className="white-hover absolute w-fit text-4xl active:opacity-70"
-                onClick={promptRestartGame}
-              >
-                {gameStatus === GameStatus.PLAYING && '🙂'}
-                {gameStatus === GameStatus.LOST && '💀'}
-                {gameStatus === GameStatus.WON && '😎'}
-              </button>
-              <p>
-                {totalFlaggedCells}/{totalBombs} 🚩
-              </p>
-            </div>
-          </div>
-        )}
-        <div
-          id="difficulty-selector"
-          className="flex w-full flex-col items-center px-2"
+        <GameHeader
+          bombsClicked={bombsClicked}
+          gameStatus={gameStatus}
+          promptRestartGame={promptRestartGame}
+          totalBombs={totalBombs}
+          totalFlaggedCells={totalFlaggedCells}
+          totalRevealedCells={totalRevealedCells}
+          totalSafeCells={totalSafeCells}
         >
-          <p className="text-slate-200">Choose a difficulty:</p>
-          <BluePrintBar
-            className="btn-slate bar max-w-lg"
-            index={selectedStage}
-            blueprint={bluePrintList[selectedStage]}
-            onClick={stageSelectDrawer.onOpen}
-            prizeDisplay={getPrizeDisplay()}
-          />
-        </div>
+          <div
+            id="difficulty-selector"
+            className="flex w-full flex-col items-center px-2"
+          >
+            <BluePrintBar
+              className="btn-slate bar max-w-lg"
+              index={selectedStage}
+              blueprint={bluePrintList[selectedStage]}
+              onClick={stageSelectDrawer.onOpen}
+              prizeDisplay={getPrizeDisplay(selectedStage, penalty)}
+              small
+            />
+          </div>
+        </GameHeader>
+
         {/* Absolute components */}
         <ConfirmationDialog
           isOpen={restartDialog.isOpen}

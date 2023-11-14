@@ -23,7 +23,7 @@ export default function CellBox({
     revealedAround,
     cellsAround,
   } = cell
-  const { losingCellID } = useSweeperContext()
+  const { bombsClicked } = useSweeperContext()
   const isResolved = flagsAround + revealedAround === cellsAround
   const isEven = useMemo(() => {
     return (cell.x + cell.y) % 2 === 0
@@ -32,7 +32,7 @@ export default function CellBox({
   const getClassNames = useMemo(() => {
     const base = 'flex h-7 min-w-[1.75rem] flex-col items-center justify-around'
 
-    if (cell.id === losingCellID) return `${base} bg-red-500`
+    if (bombsClicked.includes(cell.id)) return `${base} bg-red-500`
     let bg = ''
 
     if (isResolved && isRevealed) {
@@ -52,7 +52,7 @@ export default function CellBox({
       : 'bg-slate-950 hover:bg-stone-500'
 
     return `${base} ${bg}`
-  }, [isEven, losingCellID, isRevealed, isResolved])
+  }, [isEven, bombsClicked, isRevealed, isResolved])
 
   const textColor = useMemo(() => {
     switch (bombsAround) {
@@ -88,6 +88,11 @@ export default function CellBox({
     return onReveal(cell)
   }
 
+  function getFlag() {
+    if (bombsClicked.includes(cell.id)) return '💀'
+    return '🚩'
+  }
+
   return (
     <button
       className={getClassNames}
@@ -98,7 +103,7 @@ export default function CellBox({
       }}
     >
       {isRevealed && <p className={textColor}>{value || ''}</p>}
-      {isFlagged && '🚩'}
+      {isFlagged && getFlag()}
     </button>
   )
 }
