@@ -204,19 +204,6 @@ export default function MineSweeper() {
           </div>
         </GameHeader>
 
-        {/* Game Window */}
-        {hasStarted && (
-          <div className="mx-auto mb-8 mt-16 flex max-w-fit overflow-x-auto rounded-[14px] bg-slate-700 p-2 lg:mt-2">
-            <div
-              className={
-                cursorClass + ' rounded-[6px] border-2 border-slate-900'
-              }
-            >
-              {cellComponents}
-            </div>
-          </div>
-        )}
-
         {/* Absolute components */}
         <ConfirmationDialog
           isOpen={restartDialog.isOpen}
@@ -262,6 +249,16 @@ export default function MineSweeper() {
           </div>
         </Drawer>
       </div>
+      {/* Game Window */}
+      {hasStarted && (
+        <div className="mx-auto mb-8 mt-16 flex max-w-fit overflow-x-auto rounded-[14px] bg-slate-700 p-2 lg:mt-2">
+          <div
+            className={cursorClass + ' rounded-[6px] border-2 border-slate-900'}
+          >
+            {cellComponents}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
