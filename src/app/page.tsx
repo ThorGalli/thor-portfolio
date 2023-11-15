@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <NavbarLayout>
-      <main className="mt-6">
+      <main className="mb-8 mt-2">
         <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-4 lg:items-start">
           <div className="flex flex-col-reverse items-center gap-4 lg:flex-row lg:items-stretch">
             <article id="greeting" className="profile-article">
@@ -23,6 +23,13 @@ export default function Home() {
                 </p>
                 <p className="text-sm text-slate-400">
                   ({totalTime} employed + 1 year of freelancing)
+                </p>
+                <p>
+                  This is my portfolio, feel free to browse around and
+                  don&apos;t forget to check out the{' '}
+                  <span className="text-blue-400">games </span> on the{' '}
+                  <span className="text-yellow-400">other tabs</span> (👆 and
+                  💣)
                 </p>
               </section>
               <section className="profile-section">
@@ -237,6 +244,12 @@ export default function Home() {
               <p className="profile-time">2014 - 2020 (graduated)</p>
             </section>
           </article>
+          <p className="mx-4">
+            Don&apos;t forget to check out the{' '}
+            <span className="text-blue-400">games </span> on the{' '}
+            <span className="text-yellow-400">other tabs</span> (There&apos;s a
+            clicker 👆 and MineSweeper 💣)
+          </p>
         </div>
       </main>
     </NavbarLayout>
