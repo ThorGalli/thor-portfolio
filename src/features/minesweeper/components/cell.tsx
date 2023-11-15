@@ -29,8 +29,9 @@ export default function CellBox({
     return (cell.x + cell.y) % 2 === 0
   }, [cell.id])
 
-  const getClassNames = useMemo(() => {
-    const base = 'flex h-7 min-w-[1.75rem] flex-col items-center justify-around'
+  const getCellClass = useMemo(() => {
+    const base =
+      'flex h-7 w-[1.75rem] text-lg flex-col items-center justify-around overflow-clip'
 
     if (bombsClicked.includes(cell.id)) return `${base} bg-red-500`
     let bg = ''
@@ -52,9 +53,9 @@ export default function CellBox({
       : 'bg-slate-950 hover:bg-stone-500'
 
     return `${base} ${bg}`
-  }, [isEven, bombsClicked, isRevealed, isResolved])
+  }, [isEven, bombsClicked, isRevealed, isResolved, isFlagged])
 
-  const textColor = useMemo(() => {
+  const textClass = useMemo(() => {
     switch (bombsAround) {
       case 1:
         return 'text-blue-500'
@@ -93,17 +94,40 @@ export default function CellBox({
     return '🚩'
   }
 
+  const textStyle =
+    isFlagged || isRevealed
+      ? {
+          opacity: 1,
+          scale: 1,
+        }
+      : {
+          opacity: 0.5,
+          scale: 0,
+        }
+
   return (
     <button
-      className={getClassNames}
+      className={getCellClass}
       onClick={handleReveal}
       onContextMenu={(e) => {
         e.preventDefault()
         onFlag(cell)
       }}
+      style={{
+        transition: 'all 150ms',
+      }}
     >
-      {isRevealed && <p className={textColor}>{value || ''}</p>}
-      {isFlagged && getFlag()}
+      <div
+        style={{
+          ...textStyle,
+          transition: 'all 120ms cubic-bezier(1,.75,.50,2)',
+        }}
+      >
+        <p className={textClass}>
+          {isRevealed && (value || '')}
+          {isFlagged && getFlag()}
+        </p>
+      </div>
     </button>
   )
 }

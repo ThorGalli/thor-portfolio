@@ -32,10 +32,8 @@ export default function BluePrintBar({
         onClick={handleClick}
         className="btn-slate-light rounded-md px-2 transition-all duration-200 lg:h-8"
       >
-        <div className="my-auto flex gap-2">
-          <p id="stageName" className="text-yellow-200 ">
-            ⚙️{blueprint.name}
-          </p>
+        <div className="my-auto flex gap-2 text-yellow-200">
+          <p id="stageName">⚙️{blueprint.name}</p>
           <div className="price-tag">
             <p>
               <span className="text-stone-400">({prizeDisplay.seconds}) </span>+

@@ -2,11 +2,11 @@
 import React from 'react'
 import { useClickerContext } from '@/features/clicker/useClickerContext'
 import ConfirmationDialog from './confirmationDialog'
-import { useUrlDisclosure } from '@/hooks/useUrlDisclosure'
+import { useDisclosure } from '@/hooks/useDisclosure'
 
 export default function DeleteGameDataButton() {
   const { deleteGameData, loading } = useClickerContext()
-  const { isOpen, onOpen, onClose } = useUrlDisclosure('confirmDelete')
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleDelete = () => {
     deleteGameData()
