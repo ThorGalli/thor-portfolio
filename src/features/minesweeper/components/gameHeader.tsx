@@ -41,7 +41,13 @@ export default function GameHeader({
           className="white-hover absolute left-1/2 flex w-fit -translate-x-1/2 transform text-xl active:opacity-70"
           onClick={promptRestartGame}
         >
-          {gameStatus === GameStatus.WON ? '😎' : currentHealth()}
+          <div className="flex items-center gap-1">
+            {gameStatus === GameStatus.WON && <span>😎</span>}
+            {gameStatus !== GameStatus.WON && <span>{currentHealth()}</span>}
+            {gameStatus !== GameStatus.PLAYING && (
+              <span className="text-sm">Play again?</span>
+            )}
+          </div>
         </button>
         <p>
           {totalFlaggedCells}/{totalBombs} 🚩
