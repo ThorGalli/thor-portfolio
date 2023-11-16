@@ -6,34 +6,31 @@ import { Item, Upgrade } from '@/features/clicker/clickerTypes'
 import { getIncome, getIncomePerAmount } from '@/features/clicker/data/items'
 
 export default function Tooltip({
-  side,
+  ref,
   buyable,
+  style = {},
 }: {
-  side: 'left' | 'right'
+  ref?: React.RefObject<HTMLDivElement>
   buyable: Item | Upgrade
   mobile?: boolean
+  style?: React.CSSProperties
 }) {
   const { short } = useClickerCalculations()
   const { items, resourceIncome, autoIncome } = useClickerContext()
 
   const totalIncome = resourceIncome + autoIncome
 
-  const toolTipPlacement =
-    side === 'left' ? ' lg:right-full lg:mr-2' : ' lg:left-full lg:ml-2'
-
   const isItem = 'income' in buyable
   const isUpgrade = 'multiplier' in buyable
 
   return (
     <div
+      ref={ref}
       className={
-        'absolute top-full z-20 ml-10 mt-2 flex flex-col rounded-[6px] border-slate-700 bg-slate-950 p-1 text-xs shadow-md lg:top-0 lg:mt-0 lg:border-2 lg:p-1' +
-        toolTipPlacement
+        'z-10 flex w-full flex-col  overflow-clip border-t border-white border-opacity-20 pt-2 text-xs'
       }
+      style={style}
     >
-      <p className="whitespace-nowrap font-bold text-yellow-200">
-        {buyable.name}
-      </p>
       {isItem && (
         <div className="flex items-center justify-between gap-2 whitespace-nowrap text-teal-200">
           <p className="text-slate-200">

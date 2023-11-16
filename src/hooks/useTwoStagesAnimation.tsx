@@ -9,14 +9,15 @@ type TwoStageAnimationArgs = {
     }
   }
   durationInMs: number
-  transition: string
+  transition?: string
 }
 
-export default function useTwoStagesAnimation(
-  twoStageAnimationArgs: TwoStageAnimationArgs,
-) {
-  const { animStyles, durationInMs, isActive, transition } =
-    twoStageAnimationArgs
+export default function useTwoStagesAnimation({
+  animStyles,
+  durationInMs,
+  isActive,
+  transition = 'ease-in-out',
+}: TwoStageAnimationArgs) {
   const [isContentActive, setContentActive] = useState(false)
   const [styles, setStyles] = useState<{
     [key: string]: React.CSSProperties

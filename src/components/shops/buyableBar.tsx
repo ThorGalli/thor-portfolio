@@ -1,5 +1,5 @@
 import { useClickerContext } from '@/features/clicker/useClickerContext'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BaseCoin from '../coins/baseCoins'
 import { Item, Upgrade } from '@/features/clicker/clickerTypes'
 import Tooltip from './tooltip'
@@ -11,6 +11,9 @@ import {
   getTier,
 } from '@/features/clicker/data/items'
 import { BuyAmount } from './resourceList'
+import useTwoStagesAnimation from '@/hooks/useTwoStagesAnimation'
+
+const ANIMATION_DURATION = 500
 
 export default function BuyableBar({
   buyable,
@@ -29,7 +32,30 @@ export default function BuyableBar({
     buy,
   } = useClickerContext()
   const { short } = useClickerCalculations()
-  const [isHovered, setHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const [showToolTip, setShowToolTip] = useState(false)
+
+  const { animateClose, styles } = useTwoStagesAnimation({
+    isActive: showToolTip,
+    animStyles: {
+      tooltip: {
+        inactive: { opacity: 0, maxHeight: 0 },
+        active: { opacity: 1, maxHeight: 1000 },
+      },
+    },
+    durationInMs: ANIMATION_DURATION,
+  })
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isHovered) setShowToolTip(true)
+    }, ANIMATION_DURATION)
+    if (!isHovered) {
+      animateClose(() => setShowToolTip(false))
+      clearTimeout(timeout)
+    }
+    return () => clearTimeout(timeout)
+  }, [isHovered])
 
   if (!visible) {
     return null
@@ -62,57 +88,68 @@ export default function BuyableBar({
 
   return (
     <div
-      className={'relative flex flex-col items-center gap-2'}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setHovered(false)}
+      className={'relative flex flex-col items-center '}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        setShowToolTip(true)
+      }}
     >
       <button
         onClick={() => buy(buyable, getBuyAmount())}
         className={
-          'btn-yellow flex w-full justify-between rounded-[6px] p-2 text-left transition-all duration-200'
+          'btn-yellow flex w-full flex-col gap-1 rounded-[6px] p-2 text-left transition-all duration-200'
         }
         disabled={isDisabled}
+        onContextMenu={(e) => {
+          e.preventDefault()
+          setShowToolTip(true)
+        }}
       >
-        {/* left */}
-        <div className="flex flex-col justify-between leading-tight">
-          <p>
-            {buyable.name}
-            {tier > 0 && <span> [+{tier}]</span>}
-          </p>
-          <p>
-            {hasAny && <span className="text-xl">{buyable.amount}</span>}
-            {showItem && (
-              <span className="text-sm text-white text-opacity-40">
-                /{progress?.next}
-              </span>
-            )}
-          </p>
-          {showItem && (
-            <p className="text-white text-opacity-40">
-              Income: +{short(getIncome(buyable))}/s
+        <div className="flex  justify-between ">
+          {/* left */}
+          <div className="flex flex-col justify-between leading-tight">
+            <p>
+              {buyable.name}
+              {tier > 0 && <span> [+{tier}]</span>}
             </p>
-          )}
+            <p>
+              {hasAny && <span className="text-xl">{buyable.amount}</span>}
+              {showItem && (
+                <span className="text-sm text-white text-opacity-40">
+                  /{progress?.next}
+                </span>
+              )}
+            </p>
+            {showItem && (
+              <p className="text-white text-opacity-40">
+                Income: +{short(getIncome(buyable))}/s
+              </p>
+            )}
+          </div>
+
+          {/* right */}
+          <div className="flex flex-col items-end justify-between">
+            <p>Buy x{getBuyAmount()}</p>
+            <div className={'price-tag'}>
+              <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
+                {short(adjustedPrice, 2)}
+              </p>
+              <BaseCoin size={20} />
+            </div>
+            {isItem && (
+              <p className="leading-tight text-white text-opacity-40">
+                +{short(getIncomePerAmount(buyable, getBuyAmount()))}/s
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* right */}
-        <div className="flex flex-col items-end justify-between">
-          <p>Buy x{getBuyAmount()}</p>
-          <div className={'price-tag'}>
-            <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
-              {short(adjustedPrice, 2)}
-            </p>
-            <BaseCoin size={20} />
-          </div>
-          {isItem && (
-            <p className="leading-tight text-white text-opacity-40">
-              +{short(getIncomePerAmount(buyable, getBuyAmount()))}/s
-            </p>
-          )}
-        </div>
+        {showToolTip && <Tooltip buyable={buyable} style={styles.tooltip} />}
       </button>
-      {isHovered && <Tooltip side={infoSide} buyable={buyable} />}
     </div>
   )
 }
