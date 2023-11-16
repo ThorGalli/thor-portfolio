@@ -1,25 +1,85 @@
-import { ShopItems, Upgrade } from '@/features/clicker/clickerTypes'
+import {
+  ShopItems,
+  ShopUpgrades,
+  Upgrade,
+} from '@/features/clicker/clickerTypes'
 export const BASE_SECONDS_PER_BOMB = 10
-export const shopUgrades = {
+
+export const shopUgrades: {
+  [key: string]: Upgrade
+} = {
   autoClicker: {
     id: 'autoClicker',
-    name: 'Auto Clicker',
+    name: 'Clicker Bot Mk1',
     description: 'Auto clicks for you! Adds 1 click/s per upgrade.',
     price: 80,
     multiplier: 1,
     amount: 0,
-    maxAmount: 10,
+    maxAmount: 25,
     priceMultiplier: 2,
+    info: {
+      prefix: 'Clicks:',
+      operator: '+',
+      unit: '/s',
+    },
+  },
+  autoClicker2: {
+    id: 'autoClicker2',
+    name: 'Clicker Bot Mk2',
+    description: 'Auto clicks for you! Adds 10 click/s per upgrade.',
+    price: 3_000_000_000,
+    multiplier: 10,
+    amount: 0,
+    maxAmount: 25,
+    priceMultiplier: 2,
+    requires: {
+      id: 'autoClicker',
+      amount: 25,
+    },
+    info: {
+      prefix: 'Clicks:',
+      operator: '+',
+      unit: '/s',
+    },
   },
   clickMultiplier: {
     id: 'clickMultiplier',
-    name: 'Click Multiplier',
-    description: 'Multiplies click value by 2, including Auto Clicker clicks!',
+    name: 'Click Value',
+    description: 'Multiplies click value by 2, including Clicker Bots clicks!',
     price: 100,
     multiplier: 2,
     amount: 0,
-    maxAmount: 10,
+    maxAmount: 25,
     priceMultiplier: 4,
+    requires: {
+      id: 'autoClicker',
+      amount: 2,
+    },
+    info: {
+      prefix: 'Value:',
+      operator: 'x',
+      unit: '',
+    },
+  },
+  volunteerClicking: {
+    id: 'volunteerClicking',
+    name: 'Volunteer Clicking',
+    description:
+      'Volunteers will Auto Click too! Increases Auto Clicker income by 0.1% per Volunteer per upgrade.',
+    price: 1000,
+    multiplier: 0.001,
+    amount: 0,
+    maxAmount: 25,
+    priceMultiplier: 5,
+    requires: {
+      id: 'autoClicker',
+      amount: 5,
+    },
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
   },
   goldMine: {
     id: 'goldMine',
@@ -29,84 +89,53 @@ export const shopUgrades = {
     price: 120,
     multiplier: 1,
     amount: 0,
-    maxAmount: 10,
+    maxAmount: 25,
     priceMultiplier: 4,
-  },
-  volunteerClicking: {
-    id: 'volunteerClicking',
-    name: 'Volunteer Clicking',
-    description:
-      'Volunteers will Auto Click too! Increases Auto Clicker income by 0.1% per Volunteer per upgrade.',
-    price: 200,
-    multiplier: 0.001,
-    amount: 0,
-    maxAmount: 10,
-    priceMultiplier: 6,
+    requires: {
+      id: 'autoClicker',
+      amount: 5,
+    },
+    info: {
+      prefix: 'Prize/mine:',
+      operator: '+',
+      unit: 's',
+    },
   },
 }
 
-export function getUpgradeInfo(buyable: Upgrade, items: ShopItems) {
-  switch (buyable.id) {
-    case 'autoClicker':
-      return [
-        {
-          prefix: 'Current clicks/s:',
-          value: buyable.amount * buyable.multiplier,
-        },
-      ]
+export function shouldShowUpgrade(
+  upgrade: Upgrade,
+  playerUpgrades: ShopUpgrades,
+) {
+  if (upgrade.requires) {
+    const { id, amount } = upgrade.requires
+    return playerUpgrades[id].amount >= amount
+  }
+  return true
+}
+
+export function getUpgradeValue(
+  upgrade: Upgrade,
+  items?: ShopItems,
+  single = false,
+) {
+  const { info, multiplier, amount } = upgrade
+  const amountToUse = single ? 1 : amount
+
+  switch (upgrade.id) {
     case 'clickMultiplier':
-      return [
-        {
-          prefix: 'Current multiplier:',
-          value: buyable.multiplier ** buyable.amount,
-        },
-      ]
+      return multiplier ** amountToUse
     case 'volunteerClicking':
-      return [
-        {
-          prefix: 'Buff per Volunteer:',
-          value:
-            Math.round(buyable.amount * buyable.multiplier * 10000) / 100 + '%',
-        },
-        {
-          prefix: 'Volunteers Amount:',
-          value: items.volunteer.amount,
-        },
-        {
-          prefix: 'Current increase:',
-          value: `+${
-            Math.round(
-              buyable.amount *
-                buyable.multiplier *
-                items.volunteer.amount *
-                10000,
-            ) / 100
-          }%`,
-        },
-      ]
+      if (!items) return 0
+      return `${
+        Math.round(amountToUse * multiplier * items.volunteer.amount * 10000) /
+        100
+      }${info.unit}`
     case 'goldMine':
-      return [
-        {
-          prefix: 'Base prize/bomb:',
-          value: `${BASE_SECONDS_PER_BOMB}s`,
-        },
-        {
-          prefix: 'Extra prize/bomb:',
-          value: `+${buyable.amount * buyable.multiplier}s`,
-        },
-        {
-          prefix: 'Current prize/bomb:',
-          value: `${
-            BASE_SECONDS_PER_BOMB + buyable.amount * buyable.multiplier
-          }s`,
-        },
-      ]
+      return `${
+        (single ? 0 : BASE_SECONDS_PER_BOMB) + multiplier * amountToUse
+      }${info.unit}`
     default:
-      return [
-        {
-          prefix: 'Current multiplier:',
-          value: `${buyable.amount * buyable.multiplier}`,
-        },
-      ]
+      return `${multiplier * amountToUse}${info.unit}`
   }
 }

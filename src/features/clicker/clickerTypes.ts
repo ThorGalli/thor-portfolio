@@ -9,6 +9,7 @@ export type Buyable = {
 
 export type Item = {
   income: number
+  emojis: string
 } & Buyable
 
 export type ShopItems = {
@@ -18,6 +19,15 @@ export type ShopItems = {
 export type Upgrade = {
   multiplier: number
   maxAmount: number
+  requires?: {
+    id: string
+    amount: number
+  }
+  info: {
+    prefix: string
+    operator: string
+    unit: string
+  }
 } & Buyable
 
 export type ShopUpgrades = {

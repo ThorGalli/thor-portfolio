@@ -1,29 +1,33 @@
 import { Item, ShopItems } from '@/features/clicker/clickerTypes'
 
 const baseItems = [
-  { id: 'volunteer', name: 'Volunteer' },
-  { id: 'trainee', name: 'Trainee' },
-  { id: 'juniorDev', name: 'Junior Developer' },
-  { id: 'midDev', name: 'Mid-level Developer' },
-  { id: 'seniorDev', name: 'Senior Developer' },
+  { id: 'volunteer', name: 'Volunteer', emojis: '👶👆' },
+  { id: 'trainee', name: 'Trainee', emojis: '👦👆' },
+  { id: 'juniorDev', name: 'Junior Developer', emojis: '👦💻' },
+  { id: 'midDev', name: 'Mid-level Developer', emojis: '🧑💻' },
+  { id: 'seniorDev', name: 'Senior Developer', emojis: '👴💻' },
 
-  { id: 'techLeader', name: 'Tech Leader' },
-  { id: 'startup', name: 'Startup' },
-  { id: 'smallCompany', name: 'Small Company' },
-  { id: 'mediumCompany', name: 'Medium Company' },
-  { id: 'bigCompany', name: 'Big Company' },
+  { id: 'techLeader', name: 'Tech Leader', emojis: '🤵💻' },
+  { id: 'startup', name: 'Startup', emojis: '🚀💻' },
+  { id: 'smallCompany', name: 'Small Company', emojis: '🤏🏢' },
+  { id: 'mediumCompany', name: 'Medium Company', emojis: '🤝🏢' },
+  { id: 'bigCompany', name: 'Big Company', emojis: '💪🏢' },
 
-  { id: 'corporation', name: 'Corporation' },
-  { id: 'techUnicorn', name: 'Tech Unicorn' },
-  { id: 'bank', name: 'National Bank' },
-  { id: 'investBank', name: 'Investment Bank' },
-  { id: 'interBank', name: 'International Bank' },
+  { id: 'corporation', name: 'Corporation', emojis: '🏢🏢' },
+  { id: 'techUnicorn', name: 'Tech Unicorn', emojis: '🦄🏢' },
+  { id: 'bank', name: 'National Bank', emojis: '🏠💰' },
+  { id: 'investBank', name: 'Investment Bank', emojis: '📈💰' },
+  { id: 'interBank', name: 'International Bank', emojis: '✈️💰' },
 
-  { id: 'ventureCapital', name: 'Global Conglomerate' },
-  { id: 'terraformingcorp', name: 'Terraforming Corp' },
-  { id: 'spaceTravelCorp', name: 'Space Travel Corp' },
-  { id: 'spaceMiningCorp', name: 'Space Mining Corp' },
-  { id: 'interGalacticBank', name: 'Inter-Planetary Bank' },
+  { id: 'ventureCapital', name: 'Global Conglomerate', emojis: '🌎💰' },
+  { id: 'terraformingcorp', name: 'Terraforming Corp', emojis: '🏗️🪐' },
+  { id: 'spaceTravelCorp', name: 'Space Travel Corp', emojis: '🚀🪐' },
+  { id: 'spaceMiningCorp', name: 'Space Mining Corp', emojis: '⛏️🪐' },
+  {
+    id: 'interGalacticBank',
+    name: 'Inter-Planetary Bank',
+    emojis: '💰🪐',
+  },
 ]
 
 function generateItemBasePrice(index: number) {
@@ -54,8 +58,9 @@ export function generateItems() {
     const price = index === 0 ? rawPrice : prettyRound(rawPrice)
     const income = index === 0 ? rawIncome : prettyRound(rawIncome)
 
-    const newItem = {
+    const newItem: Item = {
       id: item.id,
+      emojis: item.emojis,
       name: item.name,
       price,
       description: 'Lorem Ipsum',
@@ -83,11 +88,11 @@ export function generateItems() {
 
 export const shopItems: ShopItems = generateItems()
 
-export function getTier(item: Item) {
-  if (item.amount < 10) return 0
-  if (item.amount < 25) return 1
-  if (item.amount < 50) return 2
-  return 2 + Math.floor(item.amount / 50)
+export function getTier(item: Item, extraAmount = 0) {
+  if (item.amount + extraAmount < 10) return 0
+  if (item.amount + extraAmount < 25) return 1
+  if (item.amount + extraAmount < 50) return 2
+  return 2 + Math.floor((item.amount + extraAmount) / 50)
 }
 
 export function getIncome(item: Item) {
@@ -95,7 +100,11 @@ export function getIncome(item: Item) {
 }
 
 export function getIncomePerAmount(item: Item, amount = 1) {
-  return amount * item.income * 2 ** getTier(item)
+  const currentTier = getTier(item)
+  const nextTier = getTier(item, amount)
+  const currentIncome = item.income * item.amount * 2 ** currentTier
+  const nextIncome = item.income * (item.amount + amount) * 2 ** nextTier
+  return nextIncome - currentIncome
 }
 
 export function getAmountAndProgress(item: Item) {

@@ -1,8 +1,8 @@
-import { Buyable, Item, LoopControl } from '@/features/clicker/clickerTypes'
-import { getTier } from '../data/items'
+import { Buyable, LoopControl } from '@/features/clicker/clickerTypes'
 
 export default function useClickerCalculations() {
-  function short(num: number, decimals = 1) {
+  function short(num: number | string, decimals = 1) {
+    if (typeof num === 'string') return num
     if (num < 1) return num.toFixed(2)
     if (num < 1000) return num.toFixed(0)
     const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']

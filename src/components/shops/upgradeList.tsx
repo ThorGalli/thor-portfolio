@@ -3,17 +3,14 @@ import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useMemo } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
+import { shouldShowUpgrade } from '@/features/clicker/data/upgrades'
 
 export default function UpgradeList({ mobile }: { mobile?: boolean }) {
   const { upgrades } = useClickerContext()
 
-  const upgradeList = useMemo(() => {
-    return Object.values(upgrades).map((upgrade) => upgrade)
-  }, [upgrades])
-
   const upgradeBars = useMemo(() => {
-    return upgradeList.map((upgrade, index, list) => {
-      const isVisible = index === 0 || list[index - 1]?.amount > 0
+    return Object.values(upgrades).map((upgrade) => {
+      const isVisible = shouldShowUpgrade(upgrade, upgrades)
       return (
         <BuyableBar
           key={upgrade.id}
@@ -23,7 +20,7 @@ export default function UpgradeList({ mobile }: { mobile?: boolean }) {
         />
       )
     })
-  }, [upgradeList])
+  }, [upgrades])
 
   return <BuyableList title="Upgrades" list={upgradeBars} mobile={mobile} />
 }

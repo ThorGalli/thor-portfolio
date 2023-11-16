@@ -12,6 +12,7 @@ import {
 } from '@/features/clicker/data/items'
 import { BuyAmount } from './resourceList'
 import useTwoStagesAnimation from '@/hooks/useTwoStagesAnimation'
+import { getUpgradeValue } from '@/features/clicker/data/upgrades'
 
 const ANIMATION_DURATION = 500
 
@@ -34,6 +35,8 @@ export default function BuyableBar({
   const { short } = useClickerCalculations()
   const [isHovered, setIsHovered] = useState(false)
   const [showToolTip, setShowToolTip] = useState(false)
+  const { items, resourceIncome, autoIncome } = useClickerContext()
+  const totalIncome = resourceIncome + autoIncome
 
   const { animateClose, styles } = useTwoStagesAnimation({
     isActive: showToolTip,
@@ -63,8 +66,10 @@ export default function BuyableBar({
 
   const isItem = 'income' in buyable
   const isUpgrade = 'multiplier' in buyable
+
   const hasAny = buyable.amount > 0
   const showItem = hasAny && isItem
+  const showUpgrade = hasAny && isUpgrade
 
   const progress = showItem ? getAmountAndProgress(buyable) : null
   const adjustedPrice = getAdjustedItemPrice(buyable, getBuyAmount())
@@ -124,11 +129,13 @@ export default function BuyableBar({
                 </span>
               )}
             </p>
-            {showItem && (
-              <p className="text-white text-opacity-40">
-                Income: +{short(getIncome(buyable))}/s
-              </p>
-            )}
+            <p className="text-white text-opacity-40">
+              {showItem && `Income: ${short(getIncome(buyable))}/s`}
+              {showUpgrade &&
+                buyable.info.prefix +
+                  ' ' +
+                  short(getUpgradeValue(buyable, items))}
+            </p>
           </div>
 
           {/* right */}
@@ -140,15 +147,18 @@ export default function BuyableBar({
               </p>
               <BaseCoin size={20} />
             </div>
-            {isItem && (
-              <p className="leading-tight text-white text-opacity-40">
-                +{short(getIncomePerAmount(buyable, getBuyAmount()))}/s
-              </p>
-            )}
+            <p className="leading-tight text-white text-opacity-40">
+              {isItem &&
+                `+${short(getIncomePerAmount(buyable, getBuyAmount()))}/s`}
+              {isUpgrade &&
+                buyable.info.operator + getUpgradeValue(buyable, items, true)}
+            </p>
           </div>
         </div>
 
-        {showToolTip && <Tooltip buyable={buyable} style={styles.tooltip} />}
+        {showToolTip && isUpgrade && (
+          <Tooltip upgrade={buyable} style={styles.tooltip} />
+        )}
       </button>
     </div>
   )

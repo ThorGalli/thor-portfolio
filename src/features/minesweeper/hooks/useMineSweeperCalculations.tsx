@@ -202,6 +202,56 @@ export default function useMineSweeperCalculations() {
     return stage
   }
 
+  function isSolvable(stage: Stage, firstCellClicked: Cell) {
+    // use Backtracking algorithm to check if stage is solvable
+    console.log('isSolvable?')
+    const size = stage.length
+
+    const visited: boolean[][] = []
+    for (let i = 0; i < size; i++) {
+      visited.push([])
+      for (let j = 0; j < size; j++) {
+        visited[i].push(false)
+      }
+    }
+
+    const queue: Cell[] = []
+    queue.push(firstCellClicked)
+    visited[firstCellClicked.x][firstCellClicked.y] = true
+    while (queue.length > 0) {
+      const cell = queue.shift()
+      console.log('checking cell', cell)
+      if (cell?.bombsAround === 0) {
+        for (
+          let rowAround = Math.max(0, cell.x - 1);
+          rowAround < Math.min(size, cell.x + 2);
+          rowAround++
+        ) {
+          for (
+            let colAround = Math.max(0, cell.y - 1);
+            colAround < Math.min(size, cell.y + 2);
+            colAround++
+          ) {
+            const currentCell = stage[rowAround][colAround]
+            if (!visited[currentCell.x][currentCell.y]) {
+              visited[currentCell.x][currentCell.y] = true
+              queue.push(currentCell)
+            }
+          }
+        }
+      }
+    }
+    for (let x = 0; x < size; x++) {
+      for (let y = 0; y < size; y++) {
+        const cell = stage[x][y]
+        if (!visited[cell.x][cell.y] && !cell.isBomb) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   return {
     flagCell,
     revealCell,
@@ -211,5 +261,6 @@ export default function useMineSweeperCalculations() {
     placeBombs,
     createBlankStage,
     calculateSurroundingBombs,
+    isSolvable,
   }
 }
