@@ -27,7 +27,6 @@ export default function Leaderboards() {
       const { data } = await response.json()
       if (!data) return
       setLeaderboards(data)
-      console.log(data)
     } catch (error) {
       console.log(error)
     } finally {

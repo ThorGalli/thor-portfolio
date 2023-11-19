@@ -5,10 +5,8 @@ import {
 } from '@/features/clicker/clickerTypes'
 export const BASE_SECONDS_PER_BOMB = 10
 
-export const shopUgrades: {
-  [key: string]: Upgrade
-} = {
-  autoClicker: {
+const baseItems = [
+  {
     id: 'autoClicker',
     name: 'Clicker Bot Mk1',
     description: 'Auto clicks for you! Adds 1 click/s per upgrade.',
@@ -23,7 +21,7 @@ export const shopUgrades: {
       unit: '/s',
     },
   },
-  autoClicker2: {
+  {
     id: 'autoClicker2',
     name: 'Clicker Bot Mk2',
     description: 'Auto clicks for you! Adds 10 click/s per upgrade.',
@@ -42,14 +40,14 @@ export const shopUgrades: {
       unit: '/s',
     },
   },
-  clickMultiplier: {
+  {
     id: 'clickMultiplier',
     name: 'Click Value',
     description: 'Multiplies click value by 2, including Clicker Bots clicks!',
     price: 100,
     multiplier: 2,
     amount: 0,
-    maxAmount: 25,
+    maxAmount: 50,
     priceMultiplier: 4,
     requires: {
       id: 'autoClicker',
@@ -61,7 +59,7 @@ export const shopUgrades: {
       unit: '',
     },
   },
-  volunteerClicking: {
+  {
     id: 'volunteerClicking',
     name: 'Volunteer Clicking',
     description:
@@ -69,7 +67,7 @@ export const shopUgrades: {
     price: 1000,
     multiplier: 0.001,
     amount: 0,
-    maxAmount: 25,
+    maxAmount: 20,
     priceMultiplier: 5,
     requires: {
       id: 'autoClicker',
@@ -81,7 +79,7 @@ export const shopUgrades: {
       unit: '%',
     },
   },
-  goldMine: {
+  {
     id: 'goldMine',
     name: 'Gold mine',
     description:
@@ -89,7 +87,7 @@ export const shopUgrades: {
     price: 120,
     multiplier: 1,
     amount: 0,
-    maxAmount: 25,
+    maxAmount: 20,
     priceMultiplier: 4,
     requires: {
       id: 'autoClicker',
@@ -101,6 +99,27 @@ export const shopUgrades: {
       unit: 's',
     },
   },
+]
+
+export function generateUpgrades() {
+  const upgrades: ShopUpgrades = {}
+  baseItems.forEach((item) => {
+    const newUpgrade: Upgrade = {
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      multiplier: item.multiplier,
+      amount: item.amount,
+      maxAmount: item.maxAmount,
+      priceMultiplier: item.priceMultiplier,
+      info: item.info,
+      requires: item.requires,
+    }
+    upgrades[item.id] = newUpgrade
+  })
+
+  return upgrades
 }
 
 export function shouldShowUpgrade(
@@ -139,3 +158,5 @@ export function getUpgradeValue(
       return `${multiplier * amountToUse}${info.unit}`
   }
 }
+
+export const shopUgrades = generateUpgrades()

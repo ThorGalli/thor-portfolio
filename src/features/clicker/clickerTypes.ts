@@ -1,3 +1,5 @@
+import { Achievement, ShopAchievements } from './data/achievements'
+
 export type Buyable = {
   id: string
   name: string
@@ -73,6 +75,8 @@ export type ClickerState = {
   items: ShopItems
   upgrades: ShopUpgrades
   coins: Coins
+  clicks: number
+  achievements: ShopAchievements
   offlineTime: number
   shouldReset?: boolean
 }

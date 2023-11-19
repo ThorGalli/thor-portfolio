@@ -3,6 +3,7 @@ import { ClickerState } from '@/features/clicker/clickerTypes'
 import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
+import { Achievement, ShopAchievements } from '../data/achievements'
 
 const COOKIE_LABEL = 'thorClickerSaveData'
 export default function useClickerProgress() {
@@ -51,6 +52,12 @@ export default function useClickerProgress() {
         { id: value.id, amount: value.amount },
       ]),
     )
+    const compactAchievements = Object.fromEntries(
+      Object.entries(gameState.achievements).map(([key, value]) => [
+        key,
+        { id: value.id, unlocked: value.unlocked },
+      ]),
+    )
 
     try {
       const saveData = {
@@ -59,6 +66,8 @@ export default function useClickerProgress() {
         coins: gameState.coins,
         saveTime: currentDateTimeInMS,
         income: totalIncome,
+        clicks: gameState.clicks,
+        achievements: compactAchievements,
       }
       if (status === 'unauthenticated') saveToCookies(JSON.stringify(saveData))
       if (status === 'authenticated')
@@ -109,7 +118,8 @@ export default function useClickerProgress() {
     }
 
     const parsedData = JSON.parse(loadedData)
-    const { items, upgrades, coins, saveTime } = parsedData
+    const { items, upgrades, coins, saveTime, clicks, achievements } =
+      parsedData
 
     if (!items || !upgrades || !coins || !saveTime) {
       setLoading(false)
@@ -124,6 +134,8 @@ export default function useClickerProgress() {
       upgrades,
       coins,
       offlineTime,
+      clicks: clicks || 0,
+      achievements: achievements || {},
     })
 
     setTimeout(() => {

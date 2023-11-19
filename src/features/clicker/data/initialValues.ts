@@ -1,6 +1,7 @@
 import { LoopControl, ClickerState } from '@/features/clicker/clickerTypes'
 import { shopItems } from './items'
 import { shopUgrades } from './upgrades'
+import { baseAchievements, shopAchievements } from './achievements'
 
 export function getInitialControl(): LoopControl {
   return {
@@ -23,7 +24,9 @@ export function getInitialClicker(): ClickerState {
       fromSweeper: 0,
       spent: 0,
     },
+    clicks: 0,
     offlineTime: 0,
+    achievements: shopAchievements,
   }
 }
 

@@ -29,6 +29,8 @@ import { useSession } from 'next-auth/react'
 import { useToast } from '@/contexts/useToast'
 import { usePathname } from 'next/navigation'
 import { getIncome } from './data/items'
+import useAchievements from './hooks/useAchievements'
+import { ShopAchievements } from './data/achievements'
 
 const MINUTE = 1000 * 60
 const BASE_COIN_VALUE = 1
@@ -42,6 +44,8 @@ export const ClickerProvider = ({
   children: React.ReactNode
 }) => {
   // Custom utility hooks
+  const { status } = useSession()
+
   const {
     getAdjustedPrice,
     calculateOfflineIncome,
@@ -49,8 +53,6 @@ export const ClickerProvider = ({
     calculateAutoCoins,
     estimateClicksIncome,
   } = useClickerCalculations()
-
-  const { status } = useSession()
 
   const {
     loading,
@@ -62,6 +64,8 @@ export const ClickerProvider = ({
     cacheGameData,
     lastSaveTime,
   } = useClickerProgress()
+
+  const { checkForAchievements } = useAchievements()
 
   // Loop Control state variables
   const [loopControl, setLoopControl] = useReducer(
@@ -87,8 +91,10 @@ export const ClickerProvider = ({
       next: {
         items?: ShopItems
         upgrades?: ShopUpgrades
+        achievements?: ShopAchievements
         coins?: Partial<Coins>
         offlineTime?: number
+        clicks?: number
       },
     ) => {
       const { coins: prevcoins } = prev
@@ -103,6 +109,7 @@ export const ClickerProvider = ({
   )
 
   const { toast } = useToast()
+
   const coinsPerClick: number = useMemo(() => {
     const clickMultiplier =
       gameState.upgrades.clickMultiplier.multiplier **
@@ -141,6 +148,7 @@ export const ClickerProvider = ({
         })
       }
       if ('multiplier' in buyable) {
+        if (buyable.amount + amount > buyable.maxAmount) return
         const newUpgrades = { ...gameState.upgrades }
         newUpgrades[buyable.id].amount += amount
         setGameState({
@@ -161,7 +169,7 @@ export const ClickerProvider = ({
     const currentTime = performance.now()
     updateIncome(currentTime)
     checkForSave(currentTime)
-
+    checkForAchievements(gameState, setGameState)
     setTimeout(() => {
       setFrameSwitch(!frameSwitch)
     }, adjustedFrameTime)
@@ -213,8 +221,12 @@ export const ClickerProvider = ({
     const { fromClicks, fromResources, fromAuto, fromSweeper, spent } = copy(
       cacheGameData.coins,
     )
-    const newItems = getInitialClicker().items
-    const newUpgrades = getInitialClicker().upgrades
+
+    const initialClicker = getInitialClicker()
+    const newItems = initialClicker.items
+    const newUpgrades = initialClicker.upgrades
+    const newAchievements = initialClicker.achievements
+
     Object.entries(cacheGameData.items).forEach(([key, value]) => {
       if (!newItems[key]) return
       newItems[key].amount = value.amount
@@ -223,6 +235,11 @@ export const ClickerProvider = ({
       if (!newUpgrades[key]) return
       newUpgrades[key].amount = value.amount
     })
+    Object.entries(cacheGameData.achievements).forEach(([key, value]) => {
+      if (!newAchievements[key]) return
+      newAchievements[key].unlocked = value.unlocked
+    })
+
     setGameState({
       items: newItems,
       upgrades: newUpgrades,
@@ -234,6 +251,8 @@ export const ClickerProvider = ({
         fromSweeper: fromSweeper || 0,
         spent: spent || 0,
       },
+      clicks: cacheGameData.clicks,
+      achievements: newAchievements,
     })
     setCacheGameData({ ...cacheGameData, shouldReset: false })
     setFrameSwitch(!frameSwitch)
@@ -248,6 +267,7 @@ export const ClickerProvider = ({
     setLoopControl({ lastClickTime: currentTime, last5Clicks: next5Clicks })
     setGameState({
       coins: { fromClicks: gameState.coins.fromClicks + coinsPerClick },
+      clicks: gameState.clicks + 1,
     })
   }, [gameState.coins])
 

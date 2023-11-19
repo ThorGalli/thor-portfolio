@@ -38,7 +38,6 @@ export const MineSweeperProvider = ({
     revealCell,
     revealAllBombs,
     flagCell,
-    isSolvable,
   } = useMineSweeperCalculations()
 
   const isPlaying = useMemo(() => {
@@ -61,14 +60,8 @@ export const MineSweeperProvider = ({
   )
 
   function generateGameBombs(clickedCell: Cell, stage: Stage) {
-    console.log('\ngenerateGameBombs Called:')
-    console.log('stage', stage)
     const bombedStage = placeBombs(clickedCell, stage, blueprint.bombAmount)
-    console.log('bombedStage', bombedStage)
     const completeStage = calculateSurroundingBombs(bombedStage)
-    console.log('completeStage', completeStage)
-    const isBoardSolvable = isSolvable(completeStage, clickedCell)
-    console.log('isSolvable', isBoardSolvable)
 
     setSweeperState({ stage: completeStage, firstClick: false })
   }
