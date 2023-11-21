@@ -29,7 +29,14 @@ export default function BuyableList({ title, list, mobile }: BuyableListProps) {
         }
         style={{ maxHeight: listHeight }}
       >
-        {list}
+        {list.length > 0 ? (
+          list
+        ) : (
+          <div className="flex flex-col items-center">
+            <p>Nothing here 😵</p>
+            <p>Try clicking something else</p>
+          </div>
+        )}
       </div>
     </div>
   )

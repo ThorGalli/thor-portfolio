@@ -12,20 +12,16 @@ import {
 } from '@/features/clicker/data/items'
 import { BuyAmount } from './resourceList'
 import useTwoStagesAnimation from '@/hooks/useTwoStagesAnimation'
-import { getUpgradeValue } from '@/features/clicker/data/upgrades'
+import { getUpgradeValue, isCompleted } from '@/features/clicker/data/upgrades'
 
 const ANIMATION_DURATION = 500
 
 export default function BuyableBar({
   buyable,
-  amountSelected = BuyAmount.One,
-  infoSide = 'left',
-  visible,
+  selectedAmount = BuyAmount.ONE,
 }: {
   buyable: Item | Upgrade
-  amountSelected?: BuyAmount
-  infoSide?: 'left' | 'right'
-  visible?: boolean
+  selectedAmount?: BuyAmount
 }) {
   const {
     getAdjustedPrice: getAdjustedItemPrice,
@@ -35,8 +31,7 @@ export default function BuyableBar({
   const { short } = useClickerCalculations()
   const [isHovered, setIsHovered] = useState(false)
   const [showToolTip, setShowToolTip] = useState(false)
-  const { items, resourceIncome, autoIncome } = useClickerContext()
-  const totalIncome = resourceIncome + autoIncome
+  const { items, resourceIncomeMultiplier } = useClickerContext()
 
   const { animateClose, styles } = useTwoStagesAnimation({
     isActive: showToolTip,
@@ -60,10 +55,6 @@ export default function BuyableBar({
     return () => clearTimeout(timeout)
   }, [isHovered])
 
-  if (!visible) {
-    return null
-  }
-
   const isItem = 'income' in buyable
   const isUpgrade = 'multiplier' in buyable
 
@@ -75,17 +66,18 @@ export default function BuyableBar({
   const adjustedPrice = getAdjustedItemPrice(buyable, getBuyAmount())
   const tier = showItem && buyable.amount > 0 ? getTier(buyable) : 0
 
-  const isDisabled = totalCoins < adjustedPrice
+  const isDisabled =
+    totalCoins < adjustedPrice || (isUpgrade && isCompleted(buyable))
 
   function getBuyAmount(): number {
-    switch (amountSelected) {
-      case BuyAmount.One:
+    switch (selectedAmount) {
+      case BuyAmount.ONE:
         return 1
-      case BuyAmount.Ten:
+      case BuyAmount.TEN:
         return 10
-      case BuyAmount.Quarter:
+      case BuyAmount.QUARTER:
         return 25
-      case BuyAmount.Next:
+      case BuyAmount.NEXT:
         if (!progress) return 1
         return progress?.next - progress?.current
     }
@@ -123,14 +115,16 @@ export default function BuyableBar({
             </p>
             <p>
               {hasAny && <span className="text-xl">{buyable.amount}</span>}
-              {showItem && (
-                <span className="text-sm text-white text-opacity-40">
-                  /{progress?.next}
-                </span>
-              )}
+              <span className="text-sm text-white text-opacity-40">
+                {showItem && `/${progress?.next}`}
+                {showUpgrade && `/${buyable.maxAmount}`}
+              </span>
             </p>
             <p className="text-white text-opacity-40">
-              {showItem && `Income: ${short(getIncome(buyable))}/s`}
+              {showItem &&
+                `Income: ${short(
+                  getIncome(buyable, resourceIncomeMultiplier),
+                )}/s`}
               {showUpgrade &&
                 buyable.info.prefix +
                   ' ' +
@@ -139,21 +133,33 @@ export default function BuyableBar({
           </div>
 
           {/* right */}
-          <div className="flex flex-col items-end justify-between">
-            <p>Buy x{getBuyAmount()}</p>
-            <div className={'price-tag'}>
-              <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
-                {short(adjustedPrice, 2)}
-              </p>
-              <BaseCoin size={20} />
+          {isUpgrade && isCompleted(buyable) ? (
+            <div className="flex flex-col items-end justify-around text-xl text-green-400 text-opacity-60">
+              ✔ Completed
             </div>
-            <p className="leading-tight text-white text-opacity-40">
-              {isItem &&
-                `+${short(getIncomePerAmount(buyable, getBuyAmount()))}/s`}
-              {isUpgrade &&
-                buyable.info.operator + getUpgradeValue(buyable, items, true)}
-            </p>
-          </div>
+          ) : (
+            <div className="flex flex-col items-end justify-between">
+              <p>Buy x{getBuyAmount()}</p>
+              <div className={'price-tag'}>
+                <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
+                  {short(adjustedPrice, 2)}
+                </p>
+                <BaseCoin size={20} />
+              </div>
+              <p className="leading-tight text-white text-opacity-40">
+                {isItem &&
+                  `+${short(
+                    getIncomePerAmount(
+                      buyable,
+                      getBuyAmount(),
+                      resourceIncomeMultiplier,
+                    ),
+                  )}/s`}
+                {isUpgrade &&
+                  buyable.info.operator + getUpgradeValue(buyable, items, true)}
+              </p>
+            </div>
+          )}
         </div>
 
         {showToolTip && isUpgrade && (

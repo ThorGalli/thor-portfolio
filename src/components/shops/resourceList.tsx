@@ -3,41 +3,43 @@ import { useClickerContext } from '@/features/clicker/useClickerContext'
 import { useMemo, useState } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
+import { hasAllRequirements } from '@/features/clicker/utils'
 
 export enum BuyAmount {
-  One = 'x1',
-  Ten = 'x10',
-  Quarter = 'x25',
-  Next = 'Next Tier',
+  ONE = 'x1',
+  TEN = 'x10',
+  QUARTER = 'x25',
+  NEXT = 'Next Tier',
 }
 
 export default function ResourceList({ mobile }: { mobile?: boolean }) {
-  const { items } = useClickerContext()
+  const { items, achievements, upgrades } = useClickerContext()
 
-  const [amountSelected, setAmountSelected] = useState(BuyAmount.One)
+  const [selectedAmount, setSelectedAmount] = useState(BuyAmount.ONE)
 
   const itemBars = useMemo(() => {
     return Object.values(items)
-      .map((item, index, list) => {
-        const isVisible = index === 0 || list[index - 1]?.amount > 0
+      .filter((item) =>
+        hasAllRequirements(item, { items, achievements, upgrades }),
+      )
+      .map((item) => {
         return (
           <BuyableBar
             key={item.id}
             buyable={item}
-            visible={isVisible}
-            amountSelected={amountSelected}
+            selectedAmount={selectedAmount}
           />
         )
       })
       .toReversed()
-  }, [items, amountSelected])
+  }, [items, selectedAmount, achievements, upgrades])
 
   return (
     <BuyableList
       title={
         <BuyAmountSelector
-          buyAmount={amountSelected}
-          setBuyAmount={setAmountSelected}
+          buyAmount={selectedAmount}
+          setBuyAmount={setSelectedAmount}
         />
       }
       list={itemBars}
