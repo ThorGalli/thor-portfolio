@@ -30,7 +30,7 @@ import { useToast } from '@/contexts/useToast'
 import { usePathname } from 'next/navigation'
 import { getIncome } from './data/items'
 import useAchievements from './hooks/useAchievements'
-import { ShopAchievements } from './data/achievements'
+import { ShopAchievements, generateAchievements } from './data/achievements'
 import { getTotalTiersMultiplier } from './data/upgrades'
 
 const MINUTE = 1000 * 60
@@ -235,7 +235,8 @@ export const ClickerProvider = ({
     const initialClicker = getInitialClicker()
     const newItems = initialClicker.items
     const newUpgrades = initialClicker.upgrades
-    const newAchievements = initialClicker.achievements
+    const newAchievements = generateAchievements()
+    console.log(newAchievements)
 
     Object.entries(cacheGameData.items).forEach(([key, value]) => {
       if (!newItems[key]) return

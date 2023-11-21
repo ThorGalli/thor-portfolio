@@ -1,7 +1,7 @@
 import { LoopControl, ClickerState } from '@/features/clicker/clickerTypes'
 import { shopItems } from './items'
 import { shopUgrades } from './upgrades'
-import { shopAchievements } from './achievements'
+import { generateAchievements } from './achievements'
 
 export function getInitialControl(): LoopControl {
   return {
@@ -15,8 +15,8 @@ export function getInitialControl(): LoopControl {
 }
 export function getInitialClicker(): ClickerState {
   return {
-    items: copy(shopItems),
-    upgrades: copy(shopUgrades),
+    items: structuredClone(shopItems),
+    upgrades: structuredClone(shopUgrades),
     coins: {
       fromClicks: 0,
       fromAuto: 0,
@@ -26,7 +26,7 @@ export function getInitialClicker(): ClickerState {
     },
     clicks: 0,
     offlineTime: 0,
-    achievements: shopAchievements,
+    achievements: generateAchievements(),
   }
 }
 

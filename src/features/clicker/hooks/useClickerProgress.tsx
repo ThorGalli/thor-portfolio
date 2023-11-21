@@ -3,7 +3,6 @@ import { ClickerState } from '@/features/clicker/clickerTypes'
 import { parseCookies, setCookie } from 'nookies'
 import { useState } from 'react'
 import { setTimeout } from 'timers'
-import { Achievement, ShopAchievements } from '../data/achievements'
 
 const COOKIE_LABEL = 'thorClickerSaveData'
 export default function useClickerProgress() {
@@ -29,6 +28,7 @@ export default function useClickerProgress() {
       }
     })
 
+    console.log('initialClicker', getInitialClicker())
     setCacheGameData({
       shouldReset: true,
       ...getInitialClicker(),

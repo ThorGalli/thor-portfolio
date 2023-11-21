@@ -332,7 +332,7 @@ export const baseAchievements: Achievement[] = [
 export function generateAchievements() {
   const achievements: ShopAchievements = {}
   baseAchievements.forEach((achievement) => {
-    achievements[achievement.id] = achievement
+    achievements[achievement.id] = { ...achievement }
   })
 
   return achievements
