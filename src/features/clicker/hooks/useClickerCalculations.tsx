@@ -5,7 +5,20 @@ export default function useClickerCalculations() {
     if (typeof num === 'string') return num
     if (num < 1) return num.toFixed(2)
     if (num < 1000) return num.toFixed(0)
-    const units = ['', 'K', 'M', 'B', 'T', 'Q', 'QQ', 'S', 'SS', 'O', 'N']
+    const units = [
+      '',
+      'K',
+      'M',
+      'B',
+      'T',
+      'Qa',
+      'Qi',
+      'Sx',
+      'Sp',
+      'Oc',
+      'No',
+      'Dc',
+    ]
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
     const numShort = num / 1000 ** unit
     const rounded = numShort.toFixed(decimals)
