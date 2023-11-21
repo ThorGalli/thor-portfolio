@@ -31,7 +31,7 @@ export default function GameHeader({
   }
 
   return (
-    <div className="fixed top-0 flex w-full max-w-screen-2xl flex-col border-b-2 border-slate-950 bg-slate-800 px-2 pt-2 text-yellow-200 lg:top-12 lg:mx-auto">
+    <div className="fixed top-0 z-10 flex w-full max-w-screen-2xl flex-col border-b-2 border-slate-950 bg-slate-800 px-2 pt-2 text-yellow-200 lg:top-12 lg:mx-auto">
       <div>{children}</div>
       <div className="flex h-8 w-full items-center justify-between leading-none lg:justify-around">
         <p>
