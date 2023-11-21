@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import BuyableList from './buyableList'
 import BuyableBar from './buyableBar'
 import { hasAllRequirements } from '@/features/clicker/utils'
+import { getTotalTiers } from '@/features/clicker/data/items'
 
 export enum BuyAmount {
   ONE = 'x1',
@@ -37,7 +38,8 @@ export default function ResourceList({ mobile }: { mobile?: boolean }) {
   return (
     <BuyableList
       title={
-        <BuyAmountSelector
+        <ResourcesHeader
+          totalTiers={getTotalTiers(items)}
           buyAmount={selectedAmount}
           setBuyAmount={setSelectedAmount}
         />
@@ -48,10 +50,12 @@ export default function ResourceList({ mobile }: { mobile?: boolean }) {
   )
 }
 
-function BuyAmountSelector({
+function ResourcesHeader({
+  totalTiers,
   buyAmount,
   setBuyAmount,
 }: {
+  totalTiers: number
   buyAmount: BuyAmount
   setBuyAmount: (amount: BuyAmount) => void
 }) {
@@ -59,7 +63,9 @@ function BuyAmountSelector({
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="leading-none ">Resources</p>
+      <p className="leading-none ">
+        Resources{totalTiers > 0 && ' ' + totalTiers + '⭐'}
+      </p>
       <div className="flex justify-center gap-2">
         {options.map((amount) => (
           <button

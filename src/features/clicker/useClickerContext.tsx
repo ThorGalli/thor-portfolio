@@ -322,13 +322,15 @@ export const ClickerProvider = ({
   //
   // ====================================================================
   const autoIncome = useMemo(() => {
-    const { autoClicker, autoClicker2, volunteerClicking } = gameState.upgrades
+    const { autoClicker, autoClicker2, autoClicker3, volunteerClicking } =
+      gameState.upgrades
     const { volunteer } = gameState.items
 
     // Auto Clicker base income
     const autoClickerCoins =
       (autoClicker.amount * autoClicker.multiplier +
-        autoClicker2.amount * autoClicker2.multiplier) *
+        autoClicker2.amount * autoClicker2.multiplier +
+        autoClicker3.amount * autoClicker3.multiplier) *
       coinsPerClick
 
     // Volunteer Clicker income multiplier

@@ -111,7 +111,7 @@ export default function BuyableBar({
           <div className="flex flex-col justify-between leading-tight">
             <p>
               {buyable.name}
-              {tier > 0 && <span> [+{tier}]</span>}
+              {tier > 0 && <span> {tier < 2 ? '⭐' : tier + '⭐'}</span>}
             </p>
             <p>
               {hasAny && <span className="text-xl">{buyable.amount}</span>}
