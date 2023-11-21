@@ -21,8 +21,10 @@ export default function useClickerCalculations() {
     ]
     const unit = Math.floor((num.toFixed(0).length - 1) / 3)
     const numShort = num / 1000 ** unit
-    const rounded = numShort.toFixed(decimals)
-    return `${rounded} ${units[unit]}`
+
+    if (numShort < 10) return `${numShort.toFixed(2)} ${units[unit]}`
+    if (numShort < 100) return `${numShort.toFixed(1)} ${units[unit]}`
+    return `${numShort.toFixed(0)} ${units[unit]}`
   }
 
   function getAdjustedPrice(buyable: Buyable, amount: number) {

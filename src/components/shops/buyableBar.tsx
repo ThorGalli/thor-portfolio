@@ -142,7 +142,7 @@ export default function BuyableBar({
               <p>Buy x{getBuyAmount()}</p>
               <div className={'price-tag'}>
                 <p className={isDisabled ? 'text-red-700' : 'text-green-500'}>
-                  {short(adjustedPrice, 2)}
+                  {short(adjustedPrice)}
                 </p>
                 <BaseCoin size={20} />
               </div>

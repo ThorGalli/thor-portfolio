@@ -4,6 +4,7 @@ import { isCompleted } from './upgrades'
 
 export type Achievement = {
   id: string
+  emoji: string
   name: string
   description: string
   unlocked: boolean
@@ -16,6 +17,7 @@ export type ShopAchievements = {
 export const baseAchievements: Achievement[] = [
   {
     id: 'clicker1',
+    emoji: '👆',
     name: 'Hello Clicker',
     description: 'Click the Coin',
     unlocked: false,
@@ -24,6 +26,7 @@ export const baseAchievements: Achievement[] = [
 
   {
     id: 'clicker10',
+    emoji: '👆',
     name: 'Those are rookie numbers',
     description: 'Click the coin 10 times',
     unlocked: false,
@@ -31,6 +34,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'clicker100',
+    emoji: '👆',
     name: 'Are you clicking me?',
     description: 'Click the coin 100 times',
     unlocked: false,
@@ -38,6 +42,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'clicker1000',
+    emoji: '👆',
     name: 'Let the finger rest',
     description: 'Click the coin 1000 times',
     unlocked: false,
@@ -45,6 +50,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'clickerbot_1',
+    emoji: '🤖',
     name: 'Are you botting?',
     description: 'Buy your first bot!',
     unlocked: false,
@@ -52,6 +58,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'complete_clickerbot_1',
+    emoji: '🤖',
     name: 'You ARE botting!',
     description: 'Buy all the Clicker Bots (Mk1)!',
     unlocked: false,
@@ -59,6 +66,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'complete_clickerbot_2',
+    emoji: '🤖',
     name: "I'll report you for botting!",
     description: 'Buy all the Clicker Bots (Mk2)!',
     unlocked: false,
@@ -66,6 +74,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'complete_clickerbot_3',
+    emoji: '🤖',
     name: '01000010 01001111 01010100',
     description: 'Buy all the Clicker Bots (Mk3)!',
     unlocked: false,
@@ -73,6 +82,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'volunteer_1',
+    emoji: '🏢',
     name: 'Free Labor',
     description: "Hire your first Volunteer! Wait... shouldn't they be free?",
     unlocked: false,
@@ -80,6 +90,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'trainee_1',
+    emoji: '🏢',
     name: 'How to train your dev',
     description: 'Hire your first Trainee!',
     unlocked: false,
@@ -87,6 +98,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'juniorDev_1',
+    emoji: '🏢',
     name: 'It works on my machine!',
     description: 'Hire your first Junior Dev!',
     unlocked: false,
@@ -94,6 +106,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'midDev_1',
+    emoji: '🏢',
     name: 'Coffee => Code',
     description: 'Hire your first Mid-Level Dev!',
     unlocked: false,
@@ -101,6 +114,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'seniorDev_1',
+    emoji: '🏢',
     name: 'Well, it depends...',
     description: 'Hire your first Senior Dev!',
     unlocked: false,
@@ -108,6 +122,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'techLeader_1',
+    emoji: '🏢',
     name: "I'm the captain now!",
     description: 'Hire your first Tech Leader!',
     unlocked: false,
@@ -115,6 +130,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'unlock_startup',
+    emoji: '🏢',
     name: 'Start it up!',
     description:
       'Have at least 1 Tech Lead, 5 Senior Dev, 10 Mid-level Devs and 10 Junior Devs',
@@ -131,6 +147,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'startup_1',
+    emoji: '🏢',
     name: 'It all starts with an idea',
     description: 'Acquire your first Startup!',
     unlocked: false,
@@ -138,6 +155,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'smallCompany_1',
+    emoji: '🏢',
     name: "It's not much, but it's honest work",
     description: 'Acquire your first Small Company!',
     unlocked: false,
@@ -145,6 +163,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'mediumCompany_1',
+    emoji: '🏢',
     name: "It's average, ok?",
     description: 'Acquire your first Medium Company!',
     unlocked: false,
@@ -152,6 +171,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'bigCompany_1',
+    emoji: '🏢',
     name: 'Size matters',
     description: 'Acquire your first Big Company!',
     unlocked: false,
@@ -159,6 +179,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'corporation_1',
+    emoji: '🏢',
     name: 'Hello Capitalism',
     description: 'Acquire your first Corporation!',
     unlocked: false,
@@ -166,6 +187,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'techUnicorn_1',
+    emoji: '🏢',
     name: 'Unicorn Hunter',
     description: 'Acquire your first Tech Unicorn!',
     unlocked: false,
@@ -173,6 +195,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'bank_1',
+    emoji: '🏢',
     name: 'Money is power',
     description: 'Acquire your first Natinal Bank!',
     unlocked: false,
@@ -180,6 +203,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'investBank_1',
+    emoji: '🏢',
     name: 'Money = More Money',
     description: 'Acquire your first Investment Bank!',
     unlocked: false,
@@ -187,6 +211,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'interBank_1',
+    emoji: '🏢',
     name: 'Expanding the business',
     description: 'Acquire your first International Bank!',
     unlocked: false,
@@ -194,6 +219,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'ventureCapital_1',
+    emoji: '🏢',
     name: 'Going Global',
     description: 'Acquire your first Global Conglomerate!',
     unlocked: false,
@@ -201,6 +227,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'terraformingcorp_1',
+    emoji: '🏢',
     name: 'This world is not enough',
     description: 'Acquire your first Terraforming Corp!',
     unlocked: false,
@@ -208,6 +235,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'spaceTravelCorp_1',
+    emoji: '🏢',
     name: 'You gotta sell the dream',
     description: 'Acquire your first Space Travel Corp!',
     unlocked: false,
@@ -215,6 +243,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'spaceMiningCorp_1',
+    emoji: '🏢',
     name: 'Rock and Stone!',
     description: 'Acquire your first Space Mining Corp!',
     unlocked: false,
@@ -222,6 +251,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'interGalacticBank_1',
+    emoji: '🏢',
     name: 'Banking the Universe',
     description: 'Acquire your first Space Mining Corp!',
     unlocked: false,
@@ -229,6 +259,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'tier_1',
+    emoji: '✨',
     name: 'Quality++',
     description: 'Get a resource to Tier +1',
     unlocked: false,
@@ -239,6 +270,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'tier_5',
+    emoji: '✨',
     name: 'Quality+++++',
     description: 'Get a single resource to Tier +5',
     unlocked: false,
@@ -249,6 +281,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'tier_10',
+    emoji: '✨',
     name: 'Quality+++++++++',
     description: 'Get a single resource to Tier +10',
     unlocked: false,
@@ -259,6 +292,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier1',
+    emoji: '⭐',
     name: 'Tiered-Up I: The Tier Menace',
     description: 'Accumulate 10 Tiers levels over all resources',
     unlocked: false,
@@ -269,6 +303,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier2',
+    emoji: '⭐',
     name: 'Tiered-Up II: The Tier Wars',
     description: 'Accumulate 20 Tiers levels over all resources',
     unlocked: false,
@@ -279,6 +314,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier3',
+    emoji: '⭐',
     name: 'Tiered-Up III: Revenge of the Tier',
     description: 'Accumulate 30 Tiers levels over all resources',
     unlocked: false,
@@ -289,6 +325,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier4',
+    emoji: '⭐',
     name: 'Tiered-Up IV: A New Tier',
     description: 'Accumulate 40 Tiers levels over all resources',
     unlocked: false,
@@ -299,6 +336,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier5',
+    emoji: '⭐',
     name: 'Tiered-Up V: The Tier Strikes Back',
     description: 'Accumulate 50 Tiers levels over all resources',
     unlocked: false,
@@ -309,6 +347,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'totalTier6',
+    emoji: '⭐',
     name: 'Tiered-Up VI: Return of the Tier',
     description: 'Accumulate 60 Tiers levels over all resources',
     unlocked: false,
@@ -319,6 +358,7 @@ export const baseAchievements: Achievement[] = [
   },
   {
     id: 'spelunker1',
+    emoji: '⛏️',
     name: 'Spelunker',
     description: 'Max out the Gold Mine upgrade',
     unlocked: false,

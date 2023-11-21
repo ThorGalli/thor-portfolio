@@ -87,7 +87,7 @@ function AchievementBlock({
       onClick={() => onClick(achievement)}
     >
       <p className="overflow-hidden text-ellipsis whitespace-nowrap">
-        {achievement.name}
+        {achievement.emoji} {achievement.name}
       </p>
     </button>
   )

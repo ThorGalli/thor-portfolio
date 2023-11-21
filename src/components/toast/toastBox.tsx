@@ -69,7 +69,7 @@ export default function ToastBox({ toast }: { toast: Omit<Toast, 'id'> }) {
         closeToast()
       }}
     >
-      <div className="my-auto p-1 lg:text-lg">{message}</div>
+      <div className="my-auto lg:text-lg">{message}</div>
       <div
         className="h-8 min-w-[2rem] cursor-pointer text-center text-orange-950"
         onClick={closeToast}

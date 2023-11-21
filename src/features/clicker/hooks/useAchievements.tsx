@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ClickerState } from '../clickerTypes'
 
 import { useToast } from '@/contexts/useToast'
+import { Achievement } from '../data/achievements'
 
 const CHECK_ACHIEVEMENTS_INTERVAL = 1000
 
@@ -22,18 +23,11 @@ export default function useAchievements() {
     const newAchievements = { ...gameState.achievements }
     let newAchievementsUnlocked = false
 
-    Object.entries(newAchievements).forEach(([_key, achievement]) => {
+    Object.values(newAchievements).forEach((achievement) => {
       if (!achievement.unlocked && achievement.criteria(gameState)) {
         toast({
           id: achievement.id,
-          message: (
-            <p className="flex flex-col">
-              <span className="text-yellow-200">🏆 {achievement.name}</span>
-              <span className="wrap text-xs leading-tight">
-                {achievement.description}
-              </span>
-            </p>
-          ),
+          message: <AchievementBox achievement={achievement} />,
           duration: 8000,
         })
         achievement.unlocked = true
@@ -53,4 +47,22 @@ export default function useAchievements() {
   return {
     checkForAchievements,
   }
+}
+
+function AchievementBox({
+  achievement,
+}: {
+  achievement: Readonly<Achievement>
+}) {
+  return (
+    <div className="flex items-center gap-2 text-yellow-200">
+      <p className="text-2xl">{achievement.emoji}</p>
+      <p className="flex flex-col">
+        <span className="text-yellow-200">{achievement.name}</span>
+        <span className="wrap mb-1 text-xs leading-tight">
+          {achievement.description}
+        </span>
+      </p>
+    </div>
+  )
 }
