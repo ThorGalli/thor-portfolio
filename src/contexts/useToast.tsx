@@ -7,13 +7,14 @@ import React, {
 } from 'react'
 
 export type ToastData = {
+  id?: string
   message: string | React.ReactNode
   variant?: 'success' | 'info' | 'warning' | 'error'
   duration?: number
 }
 
 export type Toast = {
-  id: number
+  id: string
   onClose: () => void
 } & ToastData
 
@@ -26,20 +27,20 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toastList, setToastList] = useState<Toast[]>([])
 
   const toast = useCallback((toastData: ToastData) => {
-    const { message, variant, duration } = toastData
-    const id = new Date().getTime()
+    const { message, variant, duration, id } = toastData
+    const toastID = new Date().getTime() + (id ?? '-key')
     const newToast: Toast = {
-      id,
+      id: toastID,
       message,
       variant: variant ?? 'success',
-      onClose: () => removeToast(id),
+      onClose: () => removeToast(toastID),
       duration: duration ?? 5000,
     }
     setToastList((prev) => [...prev, newToast])
   }, [])
 
   const removeToast = useCallback(
-    (id: number) => {
+    (id: string) => {
       setToastList((prev) => prev.filter((toast) => toast.id !== id))
     },
     [setToastList],

@@ -13,9 +13,9 @@ export default function ToastBox({ toast }: { toast: Omit<Toast, 'id'> }) {
       case 'success':
         return ' bg-yellow-700 border-yellow-900 text-yellow-200 '
       case 'info':
-        return ' bg-stone-600 border-stone-500 text-white '
+        return ' bg-slate-600 border-slate-500 text-white '
       case 'warning':
-        return ' bg-yellow-400  border-yellow-500 text-white '
+        return ' bg-yellow-400 border-yellow-500 text-white '
       case 'error':
         return ' bg-red-400 text-white '
     }
