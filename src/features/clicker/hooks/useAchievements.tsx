@@ -25,14 +25,16 @@ export default function useAchievements() {
     Object.entries(newAchievements).forEach(([_key, achievement]) => {
       if (!achievement.unlocked && achievement.criteria(gameState)) {
         toast({
+          id: achievement.id,
           message: (
-            <p>
-              Achievement Unlocked: {achievement.name}
-              <br />
-              {achievement.description}
+            <p className="flex flex-col">
+              <span className="text-yellow-200">🏆 {achievement.name}</span>
+              <span className="wrap text-xs leading-tight">
+                {achievement.description}
+              </span>
             </p>
           ),
-          variant: 'info',
+          duration: 8000,
         })
         achievement.unlocked = true
         newAchievementsUnlocked = true

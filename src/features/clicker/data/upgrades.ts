@@ -2,10 +2,17 @@ import {
   ShopItems,
   ShopUpgrades,
   Upgrade,
+  UpgradeStatus,
 } from '@/features/clicker/clickerTypes'
+import { getTotalTiers } from './items'
 export const BASE_SECONDS_PER_BOMB = 10
 
-const baseItems = [
+const M = 1_000_000
+const B = 1_000_000_000
+const T = 1_000_000_000_000
+const Qa = 1_000_000_000_000_000
+
+const baseUpgrades: Upgrade[] = [
   {
     id: 'autoClicker',
     name: 'Clicker Bot Mk1',
@@ -20,20 +27,57 @@ const baseItems = [
       operator: '+',
       unit: '/s',
     },
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'clicker10',
+      },
+    ],
   },
   {
     id: 'autoClicker2',
     name: 'Clicker Bot Mk2',
     description: 'Auto clicks for you! Adds 10 click/s per upgrade.',
-    price: 3_000_000_000,
+    price: 3 * M,
     multiplier: 10,
     amount: 0,
     maxAmount: 25,
     priceMultiplier: 2,
-    requires: {
-      id: 'autoClicker',
-      amount: 25,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'complete_clickerbot_1',
+      },
+      {
+        source: 'achievement',
+        id: 'clicker100',
+      },
+    ],
+    info: {
+      prefix: 'Clicks:',
+      operator: '+',
+      unit: '/s',
     },
+  },
+  {
+    id: 'autoClicker3',
+    name: 'Clicker Bot Mk3',
+    description: 'Auto clicks for you! Adds 100 click/s per upgrade.',
+    price: 120 * T,
+    multiplier: 100,
+    amount: 0,
+    maxAmount: 25,
+    priceMultiplier: 2.5,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'complete_clickerbot_2',
+      },
+      {
+        source: 'achievement',
+        id: 'clicker1000',
+      },
+    ],
     info: {
       prefix: 'Clicks:',
       operator: '+',
@@ -49,10 +93,12 @@ const baseItems = [
     amount: 0,
     maxAmount: 50,
     priceMultiplier: 4,
-    requires: {
-      id: 'autoClicker',
-      amount: 2,
-    },
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'clicker100',
+      },
+    ],
     info: {
       prefix: 'Value:',
       operator: 'x',
@@ -69,10 +115,138 @@ const baseItems = [
     amount: 0,
     maxAmount: 20,
     priceMultiplier: 5,
-    requires: {
-      id: 'autoClicker',
-      amount: 5,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'clicker1000',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
     },
+  },
+  {
+    id: 'totalTier1',
+    name: 'Tiered-Up I',
+    description: 'Increases income by +0,1% per Tier Level accumulated.',
+    price: 2 * M,
+    multiplier: 0.001,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier1',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'totalTier2',
+    name: 'Tiered-Up II',
+    description: 'Increases income by +0,1% per Tier Level accumulated.',
+    price: 100 * M,
+    multiplier: 0.001,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier2',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'totalTier3',
+    name: 'Tiered-Up III',
+    description: 'Increases income by +0,2% per Tier Level accumulated.',
+    price: 5 * T,
+    multiplier: 0.002,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier3',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'totalTier4',
+    name: 'Tiered-Up IV',
+    description: 'Increases income by +0,2% per Tier Level accumulated.',
+    price: 250 * T,
+    multiplier: 0.002,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier4',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'totalTier5',
+    name: 'Tiered-Up V',
+    description: 'Increases income by +0,3% per Tier Level accumulated.',
+    price: 75 * Qa,
+    multiplier: 0.003,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier5',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'totalTier6',
+    name: 'Tiered-Up VI',
+    description: 'Increases income by +0,3% per Tier Level accumulated.',
+    price: 400 * Qa,
+    multiplier: 0.003,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'totalTier6',
+      },
+    ],
     info: {
       prefix: 'Buff:',
       operator: '+',
@@ -89,10 +263,13 @@ const baseItems = [
     amount: 0,
     maxAmount: 20,
     priceMultiplier: 4,
-    requires: {
-      id: 'autoClicker',
-      amount: 5,
-    },
+    requirements: [
+      {
+        source: 'upgrade',
+        id: 'autoClicker',
+        amount: 5,
+      },
+    ],
     info: {
       prefix: 'Prize/mine:',
       operator: '+',
@@ -101,9 +278,32 @@ const baseItems = [
   },
 ]
 
+export const getTotalTiersMultiplier = (
+  items: ShopItems,
+  upgrades: ShopUpgrades,
+) => {
+  const {
+    totalTier1,
+    totalTier2,
+    totalTier3,
+    totalTier4,
+    totalTier5,
+    totalTier6,
+  } = upgrades
+  const bonuses =
+    totalTier1.amount * totalTier1.multiplier +
+    totalTier2.amount * totalTier2.multiplier +
+    totalTier3.amount * totalTier3.multiplier +
+    totalTier4.amount * totalTier4.multiplier +
+    totalTier5.amount * totalTier5.multiplier +
+    totalTier6.amount * totalTier6.multiplier
+
+  return 1 + bonuses * getTotalTiers(items)
+}
+
 export function generateUpgrades() {
   const upgrades: ShopUpgrades = {}
-  baseItems.forEach((item) => {
+  baseUpgrades.forEach((item) => {
     const newUpgrade: Upgrade = {
       id: item.id,
       name: item.name,
@@ -114,7 +314,7 @@ export function generateUpgrades() {
       maxAmount: item.maxAmount,
       priceMultiplier: item.priceMultiplier,
       info: item.info,
-      requires: item.requires,
+      requirements: item.requirements,
     }
     upgrades[item.id] = newUpgrade
   })
@@ -122,15 +322,22 @@ export function generateUpgrades() {
   return upgrades
 }
 
-export function shouldShowUpgrade(
+export function filterByUpgradeStatus(
   upgrade: Upgrade,
-  playerUpgrades: ShopUpgrades,
+  selecedStatus: UpgradeStatus,
 ) {
-  if (upgrade.requires) {
-    const { id, amount } = upgrade.requires
-    return playerUpgrades[id].amount >= amount
+  switch (selecedStatus) {
+    case UpgradeStatus.COMPLETED:
+      return isCompleted(upgrade)
+    case UpgradeStatus.AVAILABLE:
+      return !isCompleted(upgrade)
+    default:
+      return true
   }
-  return true
+}
+
+export function isCompleted(upgrade: Upgrade) {
+  return upgrade.amount >= upgrade.maxAmount
 }
 
 export function getUpgradeValue(
@@ -140,6 +347,10 @@ export function getUpgradeValue(
 ) {
   const { info, multiplier, amount } = upgrade
   const amountToUse = single ? 1 : amount
+
+  if (upgrade.id.includes('totalTier') && items) {
+    return `${(getTotalTiers(items) * multiplier * 100).toFixed(2)}${info.unit}`
+  }
 
   switch (upgrade.id) {
     case 'clickMultiplier':

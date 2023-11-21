@@ -1,7 +1,7 @@
 import { LoopControl, ClickerState } from '@/features/clicker/clickerTypes'
 import { shopItems } from './items'
 import { shopUgrades } from './upgrades'
-import { baseAchievements, shopAchievements } from './achievements'
+import { shopAchievements } from './achievements'
 
 export function getInitialControl(): LoopControl {
   return {

@@ -1,12 +1,11 @@
 import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react'
 import Leaderboards from './tabs/leaderboards'
-import { useSession } from 'next-auth/react'
 import Options from './tabs/options'
 import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
 import { clsx } from 'clsx'
 import useWindowDimensions from '@/hooks/useWindowsDimensions'
-import { useClickerContext } from '../useClickerContext'
+import AchievementList from '@/components/shops/achievementList'
 
 type Tab = {
   label: string
@@ -17,8 +16,7 @@ type Tab = {
 
 export default function ClickerNavBar() {
   const { width } = useWindowDimensions()
-  const { status } = useSession()
-  const { items, upgrades } = useClickerContext()
+
   const tabs: Tab[] = [
     {
       label: 'Resources',
@@ -33,6 +31,12 @@ export default function ClickerNavBar() {
       extraClass: 'lg:hidden',
     },
     {
+      label: 'Achievements',
+      emoji: '🏆',
+      component: <AchievementList />,
+      extraClass: '',
+    },
+    {
       label: 'Leaderboards',
       emoji: '📈',
       component: <Leaderboards />,
@@ -40,26 +44,15 @@ export default function ClickerNavBar() {
     },
     {
       label: 'config',
-      emoji: getOptionsLabel(),
+      emoji: '💾',
       component: <Options />,
       extraClass: '',
     },
   ]
 
-  const [selectedTab, setSelectedTab] = useState<number | null>(null)
+  const [selectedTab, setSelectedTab] = useState<number | null>(0)
   const [tabHeight, setTabHeight] = useState<number | null>(null)
   const refs = useRef<{ [key: string]: HTMLDivElement | null }>({})
-
-  function getOptionsLabel() {
-    switch (status) {
-      case 'authenticated':
-        return '⚙️'
-      case 'loading':
-        return <span className="animate-spin">⚙️</span>
-      default:
-        return <span className="text-yellow-200">Sign in</span>
-    }
-  }
 
   function handleClickTab(index: number) {
     if (selectedTab === index) {
@@ -86,7 +79,7 @@ export default function ClickerNavBar() {
         setTabHeight(tabElement.offsetHeight)
       }
     }
-  }, [width, items, upgrades])
+  }, [width, tabs])
 
   return (
     <div className="relative flex w-full flex-col">

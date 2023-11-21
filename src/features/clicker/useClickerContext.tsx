@@ -31,6 +31,7 @@ import { usePathname } from 'next/navigation'
 import { getIncome } from './data/items'
 import useAchievements from './hooks/useAchievements'
 import { ShopAchievements } from './data/achievements'
+import { getTotalTiersMultiplier } from './data/upgrades'
 
 const MINUTE = 1000 * 60
 const BASE_COIN_VALUE = 1
@@ -127,11 +128,20 @@ export const ClickerProvider = ({
       gameState.coins.spent,
   )
 
+  const resourceIncomeMultiplier = useMemo(() => {
+    return getTotalTiersMultiplier(gameState.items, gameState.upgrades)
+  }, [gameState.upgrades, gameState.items])
+
   const resourceIncome = useMemo(() => {
-    return Object.values(gameState.items).reduce((total, item: Item) => {
-      return total + getIncome(item)
-    }, 0)
-  }, [gameState.items])
+    const baseResourceIncome = Object.values(gameState.items).reduce(
+      (total, item: Item) => {
+        return total + getIncome(item)
+      },
+      0,
+    )
+
+    return baseResourceIncome * resourceIncomeMultiplier
+  }, [gameState.items, resourceIncomeMultiplier])
 
   const buy = useCallback(
     (buyable: Item | Upgrade, amount = 1) => {
@@ -275,7 +285,7 @@ export const ClickerProvider = ({
     if (loading || saving) return
     const totalIncome = resourceIncome + autoIncome
     const { success } = await saveGameProgress(gameState, status, totalIncome)
-    if (success) toast({ message: 'Game Saved Successfully!' })
+    if (success) toast({ message: 'Game Saved!', variant: 'info' })
     else toast({ message: 'Failed to save game.', variant: 'error' })
   }, [gameState, status])
 
@@ -345,9 +355,12 @@ export const ClickerProvider = ({
 
   const contextValues = useMemo(
     () => ({
+      resourceIncomeMultiplier,
+      clicks: gameState.clicks,
       clicksIncome: displayClicksIncome,
       items: gameState.items,
       upgrades: gameState.upgrades,
+      achievements: gameState.achievements,
       resourceIncome: displayResourceIncome,
       autoIncome: displayAutoIncome,
       totalCoins,
@@ -362,9 +375,12 @@ export const ClickerProvider = ({
       deleteGameData: deleteCookies,
     }),
     [
+      resourceIncomeMultiplier,
+      gameState.clicks,
       displayClicksIncome,
       gameState.items,
       gameState.upgrades,
+      gameState.achievements,
       displayResourceIncome,
       displayAutoIncome,
       totalCoins,
@@ -388,8 +404,11 @@ export const ClickerProvider = ({
 }
 
 const ClickerContext = createContext<ClickerContextProps>({
+  resourceIncomeMultiplier: 0,
+  clicks: 0,
   items: {},
   upgrades: {},
+  achievements: {},
   buy: () => null,
   getAdjustedPrice: () => 0,
   totalCoins: 0,

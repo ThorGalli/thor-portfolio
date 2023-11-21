@@ -1,4 +1,30 @@
-import { Achievement, ShopAchievements } from './data/achievements'
+import { ShopAchievements } from './data/achievements'
+
+export enum UpgradeStatus {
+  AVAILABLE = 'Available',
+  ALL = 'All',
+  COMPLETED = 'Completed',
+}
+
+type AchievementRequirement = {
+  id: string
+  source: 'achievement'
+}
+
+type BuyableRequirement = {
+  id: string
+  source: 'item' | 'upgrade'
+  amount: number
+}
+
+export type Requirement = BuyableRequirement | AchievementRequirement
+
+export type BaseItem = {
+  id: string
+  name: string
+  emojis: string
+  requirements: Requirement[]
+}
 
 export type Buyable = {
   id: string
@@ -7,6 +33,7 @@ export type Buyable = {
   priceMultiplier: number
   description: string
   amount: number
+  requirements?: Requirement[]
 }
 
 export type Item = {
@@ -21,10 +48,7 @@ export type ShopItems = {
 export type Upgrade = {
   multiplier: number
   maxAmount: number
-  requires?: {
-    id: string
-    amount: number
-  }
+
   info: {
     prefix: string
     operator: string
@@ -45,8 +69,11 @@ export type Coins = {
 }
 
 export type ClickerContextProps = {
+  resourceIncomeMultiplier: number
+  clicks: number
   items: ShopItems
   upgrades: ShopUpgrades
+  achievements: ShopAchievements
   buy: (buyable: Item | Upgrade, amount: number) => void
   getAdjustedPrice: (buyable: Item | Upgrade, amount: number) => number
   totalCoins: number
