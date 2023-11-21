@@ -253,7 +253,7 @@ export const baseAchievements: Achievement[] = [
     id: 'interGalacticBank_1',
     emoji: '🏢',
     name: 'Banking the Universe',
-    description: 'Acquire your first Space Mining Corp!',
+    description: 'Acquire your first Inter-Planetary Bank!',
     unlocked: false,
     criteria: (gameState) => gameState.items.interGalacticBank.amount >= 1,
   },
