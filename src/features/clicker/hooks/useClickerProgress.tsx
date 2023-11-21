@@ -17,11 +17,18 @@ export default function useClickerProgress() {
 
   function deleteCookies() {
     setLoading(true)
-    setCookie(null, COOKIE_LABEL, '', {
-      maxAge: 0,
-      path: '/',
-      sameSite: 'Strict',
+
+    const cookies = parseCookies(null)
+    Object.keys(cookies).forEach((key) => {
+      if (key.startsWith(COOKIE_LABEL)) {
+        setCookie(null, key, '', {
+          maxAge: 0,
+          path: '/',
+          sameSite: 'Strict',
+        })
+      }
     })
+
     setCacheGameData({
       shouldReset: true,
       ...getInitialClicker(),
@@ -69,7 +76,7 @@ export default function useClickerProgress() {
         clicks: gameState.clicks,
         achievements: compactAchievements,
       }
-      if (status === 'unauthenticated') saveToCookies(JSON.stringify(saveData))
+      if (status === 'unauthenticated') saveToCookies(saveData)
       if (status === 'authenticated')
         await saveToServer(JSON.stringify(saveData))
     } catch (error) {
@@ -82,11 +89,20 @@ export default function useClickerProgress() {
     return { success: true }
   }
 
-  function saveToCookies(stringfiedJSON: string) {
-    setCookie(null, 'thor-cookie-saveData', stringfiedJSON, {
+  function saveToCookies(saveData: object) {
+    const keys = JSON.stringify(Object.keys(saveData))
+    setCookie(null, `${COOKIE_LABEL}-keys`, keys, {
       maxAge: 2147483647,
       path: '/',
       sameSite: 'Strict',
+    })
+
+    Object.entries(saveData).forEach(([key, value]) => {
+      setCookie(null, `${COOKIE_LABEL}-${key}`, JSON.stringify(value), {
+        maxAge: 2147483647,
+        path: '/',
+        sameSite: 'Strict',
+      })
     })
   }
 
@@ -146,9 +162,16 @@ export default function useClickerProgress() {
   function loadFromCookies() {
     try {
       const cookies = parseCookies(null)
-      const saveData = cookies[COOKIE_LABEL]
+      const keys = cookies[`${COOKIE_LABEL}-keys`]
+      if (!keys) return null
+      const parsedKeys: string[] = JSON.parse(keys)
+      const saveData = parsedKeys.reduce((acc, key) => {
+        const value = cookies[`${COOKIE_LABEL}-${key}`]
+        if (!value) return acc
+        return { ...acc, [key]: JSON.parse(value) }
+      }, {})
       if (!saveData) return null
-      return saveData
+      return JSON.stringify(saveData)
     } catch (error) {
       console.log(error)
     }
