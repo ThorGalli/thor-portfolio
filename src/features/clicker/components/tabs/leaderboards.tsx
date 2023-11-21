@@ -49,12 +49,15 @@ export default function Leaderboards() {
 
   if (unauthenticated)
     return (
-      <button
-        className="cursor-pointer text-yellow-200 hover:underline"
-        onClick={() => signIn()}
-      >
-        Sign in to see leaderboards
-      </button>
+      <div className="flex flex-col items-center gap-2">
+        <h1 className="header-slate w-full">Leaderboards</h1>
+        <p className="text-yellow-200">
+          You need to be signed in to see leaderboards
+        </p>
+        <button className="btn-yellow rounded-md p-2" onClick={() => signIn()}>
+          Sign in
+        </button>
+      </div>
     )
 
   function getColor(i: number) {
@@ -63,12 +66,11 @@ export default function Leaderboards() {
     if (i === 2) return 'text-orange-300'
     return 'text-slate-300'
   }
+
   if (isLeaderboardsReady)
     return (
       <div className="flex flex-col items-center gap-2 overflow-hidden">
-        <h1 className="header-slate w-full">
-          Top {leaderboards.length} players
-        </h1>
+        <h1 className="header-slate w-full">Leaderboards</h1>
         <table className="w-full table-auto">
           <thead className="text-yellow-200">
             <tr>
