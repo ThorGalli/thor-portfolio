@@ -106,7 +106,7 @@ export default function BuyableBar({
           setShowToolTip(true)
         }}
       >
-        <div className="flex  justify-between ">
+        <div className="flex w-full justify-between">
           {/* left */}
           <div className="flex flex-col justify-between leading-tight">
             <p>
