@@ -258,6 +258,17 @@ export const baseAchievements: Achievement[] = [
     criteria: (gameState) => gameState.items.interGalacticBank.amount >= 1,
   },
   {
+    id: 'achievement_25',
+    emoji: '🏆',
+    name: "You can't have 25",
+    description: 'Unlock 25 Achievements',
+    unlocked: false,
+    criteria: (gameState) => {
+      const { achievements } = gameState
+      return getProgress(achievements).completed >= 25
+    },
+  },
+  {
     id: 'tier_1',
     emoji: '✨',
     name: 'Quality++',

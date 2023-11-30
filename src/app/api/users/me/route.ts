@@ -5,12 +5,17 @@ export async function GET(req: NextRequest) {
   const sessionToken = req.cookies.get(
     process.env.NEXT_PUBLIC_COOKIE_NAME ?? '__Secure-next-auth.session-token',
   )
-  if (!sessionToken?.value)
+
+  console.log('sessionToken:', sessionToken)
+
+  if (!sessionToken?.value) {
+    console.log('sessionToken not found', sessionToken)
     return NextResponse.json({
       data: null,
       error: 'Session not found',
       status: 401,
     })
+  }
 
   const userId = await supabase
     .from('sessions')

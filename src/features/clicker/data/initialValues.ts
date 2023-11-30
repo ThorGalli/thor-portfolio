@@ -1,6 +1,6 @@
 import { LoopControl, ClickerState } from '@/features/clicker/clickerTypes'
-import { shopItems } from './items'
-import { shopUgrades } from './upgrades'
+import { generateItems, shopItems } from './items'
+import { generateUpgrades, shopUgrades } from './upgrades'
 import { generateAchievements } from './achievements'
 
 export function getInitialControl(): LoopControl {
@@ -15,8 +15,8 @@ export function getInitialControl(): LoopControl {
 }
 export function getInitialClicker(): ClickerState {
   return {
-    items: structuredClone(shopItems),
-    upgrades: structuredClone(shopUgrades),
+    items: generateItems(),
+    upgrades: generateUpgrades(),
     coins: {
       fromClicks: 0,
       fromAuto: 0,

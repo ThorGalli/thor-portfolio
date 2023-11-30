@@ -24,20 +24,14 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
   async function fetchPermission() {
     setLoading(true)
     try {
-      const response = await (
-        await fetch('/api/users/me', { method: 'GET', cache: 'no-store' })
-      ).json()
-      if (response?.data) {
-        setShowAdmin(response.data.admin)
-        setMe(response.data)
-      } else {
-        console.log('no data')
-        setTimeout(() => {
-          setCheckAgain(true)
-        }, 5000)
-        setShowAdmin(false)
-        setMe(null)
-      }
+      const jsonResponse = await fetch('/api/users/me', {
+        method: 'GET',
+        cache: 'no-cache',
+      })
+      const response = await jsonResponse.json()
+      console.log('user:', response)
+      if (response?.data?.admin) setShowAdmin(true)
+      else setShowAdmin(false)
     } catch (error) {
       console.error(error)
     } finally {
@@ -55,7 +49,9 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      fetchPermission()
+      setTimeout(() => {
+        fetchPermission()
+      }, 1000)
     }
   }, [status])
 
