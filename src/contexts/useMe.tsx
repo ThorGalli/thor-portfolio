@@ -34,7 +34,9 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      fetchPermission()
+      setTimeout(() => {
+        fetchPermission()
+      }, 1000)
     }
   }, [status])
 
