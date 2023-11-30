@@ -19,10 +19,14 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
 
   async function fetchPermission() {
     try {
-      const response = await (
-        await fetch('/api/users/me', { method: 'GET' })
-      ).json()
+      const jsonResponse = await fetch('/api/users/me', {
+        method: 'GET',
+        cache: 'no-cache',
+      })
+      const response = await jsonResponse.json()
+      console.log('user:', response)
       if (response?.data?.admin) setShowAdmin(true)
+      else setShowAdmin(false)
     } catch (error) {
       console.error(error)
     }
