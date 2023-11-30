@@ -31,7 +31,7 @@ export default function BuyableBar({
   const { short } = useClickerCalculations()
   const [isHovered, setIsHovered] = useState(false)
   const [showToolTip, setShowToolTip] = useState(false)
-  const { items, resourceIncomeMultiplier } = useClickerContext()
+  const { items, achievements, resourceIncomeMultiplier } = useClickerContext()
 
   const { animateClose, styles } = useTwoStagesAnimation({
     isActive: showToolTip,
@@ -156,7 +156,8 @@ export default function BuyableBar({
                     ),
                   )}/s`}
                 {isUpgrade &&
-                  buyable.info.operator + getUpgradeValue(buyable, items, true)}
+                  buyable.info.operator +
+                    getUpgradeValue(buyable, items, achievements, true)}
               </p>
             </div>
           )}

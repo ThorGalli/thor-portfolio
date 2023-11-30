@@ -5,6 +5,7 @@ import {
   UpgradeStatus,
 } from '@/features/clicker/clickerTypes'
 import { getTotalTiers } from './items'
+import { ShopAchievements, getProgress } from './achievements'
 export const BASE_SECONDS_PER_BOMB = 10
 
 const M = 1_000_000
@@ -119,6 +120,27 @@ const baseUpgrades: Upgrade[] = [
       {
         source: 'achievement',
         id: 'clicker1000',
+      },
+    ],
+    info: {
+      prefix: 'Buff:',
+      operator: '+',
+      unit: '%',
+    },
+  },
+  {
+    id: 'achievement_25',
+    name: 'Trophy Buff',
+    description: 'Increases ALL income by +1% per Achievement unlocked.',
+    price: 500 * T,
+    multiplier: 0.01,
+    amount: 0,
+    maxAmount: 1,
+    priceMultiplier: 1,
+    requirements: [
+      {
+        source: 'achievement',
+        id: 'achievement_25',
       },
     ],
     info: {
@@ -301,6 +323,16 @@ export const getTotalTiersMultiplier = (
   return 1 + bonuses * getTotalTiers(items)
 }
 
+export const getAchievementsMultiplier = (
+  achievements: ShopAchievements,
+  upgrades: ShopUpgrades,
+) => {
+  const { achievement_25: achievment25 } = upgrades
+  const { completed } = getProgress(achievements)
+  console.log(1 + achievment25.multiplier * completed)
+  return 1 + achievment25.amount * achievment25.multiplier * completed
+}
+
 export function generateUpgrades() {
   const upgrades: ShopUpgrades = {}
   baseUpgrades.forEach((item) => {
@@ -343,6 +375,7 @@ export function isCompleted(upgrade: Upgrade) {
 export function getUpgradeValue(
   upgrade: Upgrade,
   items?: ShopItems,
+  achievements?: ShopAchievements,
   single = false,
 ) {
   const { info, multiplier, amount } = upgrade
@@ -353,6 +386,11 @@ export function getUpgradeValue(
   }
 
   switch (upgrade.id) {
+    case 'achievement_25':
+      if (!achievements) return 0
+      return `${getProgress(achievements).completed * multiplier * 100}${
+        info.unit
+      }`
     case 'clickMultiplier':
       return multiplier ** amountToUse
     case 'volunteerClicking':

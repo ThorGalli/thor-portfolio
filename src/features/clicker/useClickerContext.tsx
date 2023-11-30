@@ -31,7 +31,10 @@ import { usePathname } from 'next/navigation'
 import { getIncome } from './data/items'
 import useAchievements from './hooks/useAchievements'
 import { ShopAchievements, generateAchievements } from './data/achievements'
-import { getTotalTiersMultiplier } from './data/upgrades'
+import {
+  getAchievementsMultiplier,
+  getTotalTiersMultiplier,
+} from './data/upgrades'
 
 const MINUTE = 1000 * 60
 const BASE_COIN_VALUE = 1
@@ -128,7 +131,11 @@ export const ClickerProvider = ({
       gameState.coins.spent,
   )
 
-  const resourceIncomeMultiplier = useMemo(() => {
+  const achievementMultiplier = useMemo(() => {
+    return getAchievementsMultiplier(gameState.achievements, gameState.upgrades)
+  }, [gameState.upgrades, gameState.achievements])
+
+  const tierMultiplier = useMemo(() => {
     return getTotalTiersMultiplier(gameState.items, gameState.upgrades)
   }, [gameState.upgrades, gameState.items])
 
@@ -139,9 +146,8 @@ export const ClickerProvider = ({
       },
       0,
     )
-
-    return baseResourceIncome * resourceIncomeMultiplier
-  }, [gameState.items, resourceIncomeMultiplier])
+    return baseResourceIncome * tierMultiplier * achievementMultiplier
+  }, [gameState.items, tierMultiplier, achievementMultiplier])
 
   const buy = useCallback(
     (buyable: Item | Upgrade, amount = 1) => {
@@ -337,9 +343,14 @@ export const ClickerProvider = ({
       1 +
       volunteer.amount * volunteerClicking.multiplier * volunteerClicking.amount
 
-    return autoClickerCoins * volunteerMultiplier
+    return autoClickerCoins * volunteerMultiplier * achievementMultiplier
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coinsPerClick, gameState.upgrades, gameState.items])
+  }, [
+    coinsPerClick,
+    gameState.upgrades,
+    gameState.items,
+    achievementMultiplier,
+  ])
 
   const displayClicksIncome = useMemo(() => {
     return loopControl.estimatedClicksIncome
@@ -357,7 +368,7 @@ export const ClickerProvider = ({
 
   const contextValues = useMemo(
     () => ({
-      resourceIncomeMultiplier,
+      resourceIncomeMultiplier: tierMultiplier,
       clicks: gameState.clicks,
       clicksIncome: displayClicksIncome,
       items: gameState.items,
@@ -377,7 +388,7 @@ export const ClickerProvider = ({
       deleteGameData: deleteCookies,
     }),
     [
-      resourceIncomeMultiplier,
+      tierMultiplier,
       gameState.clicks,
       displayClicksIncome,
       gameState.items,
