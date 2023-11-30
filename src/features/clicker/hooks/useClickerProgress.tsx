@@ -28,7 +28,6 @@ export default function useClickerProgress() {
       }
     })
 
-    console.log('initialClicker', getInitialClicker())
     setCacheGameData({
       shouldReset: true,
       ...getInitialClicker(),

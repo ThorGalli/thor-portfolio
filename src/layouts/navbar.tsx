@@ -1,6 +1,7 @@
 'use client'
 import ClickerButton from '@/components/navigation/clickerButton'
 import NavButton from '@/components/navigation/navButton'
+import { useMe } from '@/contexts/useMe'
 import { usePathname, useRouter } from 'next/navigation'
 
 export default function NavbarLayout({
@@ -10,6 +11,7 @@ export default function NavbarLayout({
 }) {
   const router = useRouter()
   const path = usePathname()
+  const { showAdmin } = useMe()
 
   return (
     <div className="relative mb-[3rem] w-full bg-gray-900 lg:mb-0 lg:mt-[3rem]">
@@ -33,6 +35,13 @@ export default function NavbarLayout({
             isCurrent={path === '/minesweeper'}
             onClick={() => router.push('/minesweeper')}
           />
+          {showAdmin && (
+            <NavButton
+              label={<p className="text-2xl">👽</p>}
+              isCurrent={path === '/admin'}
+              onClick={() => router.push('/admin')}
+            />
+          )}
         </div>
       </div>
       <div

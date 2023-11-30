@@ -236,7 +236,6 @@ export const ClickerProvider = ({
     const newItems = initialClicker.items
     const newUpgrades = initialClicker.upgrades
     const newAchievements = generateAchievements()
-    console.log(newAchievements)
 
     Object.entries(cacheGameData.items).forEach(([key, value]) => {
       if (!newItems[key]) return

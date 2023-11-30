@@ -9,7 +9,7 @@ type ConfirmationDialogProps = Readonly<{
   onConfirm: () => void
   onCancel: () => void
   hideCancel?: boolean
-  variant?: 'default' | 'prize'
+  variant?: 'default' | 'prize' | 'danger'
   duration?: number
 }>
 
@@ -32,9 +32,15 @@ export default function ConfirmationDialog({
     },
     prize: {
       modal: 'rounded-md bg-yellow-800 p-4',
-      cancel: 'btn-slate',
+      cancel: 'btn-slate rounded-md p-2',
       confirm: 'btn-yellow rounded-md p-2',
       transition: 'cubic-bezier(.96,.73,.38,1.25)',
+    },
+    danger: {
+      modal: 'rounded-md bg-red-950 p-4',
+      cancel: 'btn-slate rounded-md p-2',
+      confirm: 'btn-orange rounded-md p-2',
+      transition: 'ease-in-out',
     },
   }
 
