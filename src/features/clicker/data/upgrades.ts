@@ -329,7 +329,6 @@ export const getAchievementsMultiplier = (
 ) => {
   const { achievement_25: achievment25 } = upgrades
   const { completed } = getProgress(achievements)
-  console.log(1 + achievment25.multiplier * completed)
   return 1 + achievment25.amount * achievment25.multiplier * completed
 }
 

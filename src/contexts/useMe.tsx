@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react'
+
 import React, {
   createContext,
   useContext,
@@ -17,24 +18,22 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
   const [showAdmin, setShowAdmin] = useState(false)
   const [me, setMe] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [checkAgain, setCheckAgain] = useState(false)
 
-  const { data, status } = useSession()
+  const { status } = useSession()
 
   async function fetchPermission() {
     setLoading(true)
     try {
-      const response = await (
-        await fetch('/api/users/me', { method: 'GET', cache: 'no-store' })
-      ).json()
+      const jsonResponse = await fetch('/api/users/me', {
+        method: 'GET',
+        cache: 'no-store',
+      })
+      const response = await jsonResponse.json()
+
       if (response?.data) {
         setShowAdmin(response.data.admin)
         setMe(response.data)
       } else {
-        console.log('no data')
-        setTimeout(() => {
-          setCheckAgain(true)
-        }, 5000)
         setShowAdmin(false)
         setMe(null)
       }
@@ -46,18 +45,8 @@ export function MeProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    if (checkAgain) {
-      console.log('check again')
-      setCheckAgain(false)
-      fetchPermission()
-    }
-  }, [checkAgain])
-
-  useEffect(() => {
     if (status === 'authenticated') {
-      setTimeout(() => {
-        fetchPermission()
-      }, 1000)
+      fetchPermission()
     }
   }, [status])
 

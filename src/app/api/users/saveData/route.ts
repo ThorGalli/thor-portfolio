@@ -5,6 +5,9 @@ export async function GET(req: NextRequest) {
   const sessionToken = req.cookies.get(
     process.env.NEXT_PUBLIC_COOKIE_NAME ?? '__Secure-next-auth.session-token',
   )
+
+  console.log('sessionToken:', sessionToken)
+
   if (!sessionToken?.value)
     return NextResponse.json({
       data: null,
