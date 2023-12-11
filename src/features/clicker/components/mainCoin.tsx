@@ -48,6 +48,9 @@ export default function MainCoin() {
   const totalIncome =
     Math.round((resourceIncome + autoIncome + clicksIncome) * 100) / 100
 
+  const commadTotalCoins = totalCoins
+    .toFixed(0)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   return (
     <div className="flex w-full flex-col items-center gap-2 rounded-t-[14px] bg-slate-800 p-2">
       <div className="flex w-full flex-col items-center justify-start gap-2 rounded-md bg-slate-950 pb-2 lg:w-full">
@@ -106,7 +109,9 @@ export default function MainCoin() {
           </span>
         </p>
         {isOpen && (
-          <p className="text-xs text-orange-300">({totalCoins.toFixed(0)})</p>
+          <p className="text-sm text-orange-400">
+            (<span className="text-yellow-200">{commadTotalCoins}</span>)
+          </p>
         )}
       </div>
     </div>
