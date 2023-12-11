@@ -105,6 +105,9 @@ export default function MainCoin() {
             {short(totalCoins, 2)}
           </span>
         </p>
+        {isOpen && (
+          <p className="text-xs text-orange-300">({totalCoins.toFixed(0)})</p>
+        )}
       </div>
     </div>
   )
