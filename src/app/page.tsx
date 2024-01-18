@@ -1,28 +1,41 @@
+import ArticleSection from '@/components/navigation/articleSection'
+import ArticleWindow from '@/components/navigation/articleWindow'
 import NavbarLayout from '@/layouts/navbar'
 import Image from 'next/image'
 
 export default function Home() {
-  const totalTime = totalTimeSince(new Date('2022-06-01'))
+  const freelanceTime = 12
+  const brainnyTime = totalMonthsIn(new Date('2022-06-01'))
+
+  const totalTime = freelanceTime + brainnyTime
 
   return (
     <NavbarLayout>
       <main className="mb-8 mt-2">
         <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-4 lg:items-start">
           <div className="flex flex-col-reverse items-center gap-4 lg:flex-row lg:items-stretch">
-            <article id="greeting" className="profile-article">
-              <h2 className="text-3xl font-bold">
-                Hello there, my name is{' '}
-                <span className="text-yellow-400">Thor Galli</span>!
-              </h2>
-              <section className="profile-section flex flex-col gap-2 text-xl">
+            <ArticleWindow
+              id="greeting"
+              title={
+                <>
+                  Hello there, my name is{' '}
+                  <span className="text-yellow-400">Thor Galli</span>!
+                </>
+              }
+            >
+              <ArticleSection className="flex flex-col gap-2 text-xl">
                 <p>
                   I&apos;m a{' '}
                   <span className="text-blue-400">Full Stack Developer</span>{' '}
-                  with <span className="text-yellow-400">{totalTime}</span> of
-                  professional experience in Web Development.
+                  with{' '}
+                  <span className="text-yellow-400">
+                    {formatMonthsWorked(totalTime)}
+                  </span>{' '}
+                  of professional experience in Web Development.
                 </p>
                 <p className="text-sm text-slate-400">
-                  ({totalTime} employed + 1 year of freelancing)
+                  ({formatMonthsWorked(brainnyTime)} employed + 1 year of
+                  freelancing)
                 </p>
                 <p>
                   This is my portfolio, feel free to browse around and
@@ -31,9 +44,8 @@ export default function Home() {
                   <span className="text-yellow-400">other tabs</span> (👆 and
                   💣)
                 </p>
-              </section>
-              <section className="profile-section">
-                <h3 className="profile-subtitle">Contact</h3>
+              </ArticleSection>
+              <ArticleSection subtitle="Contact">
                 <div className="flex flex-col gap-3 lg:flex-row">
                   <ul className="ml-6 list-disc">
                     <li>
@@ -41,7 +53,7 @@ export default function Home() {
                       <a
                         href="mailto:gallithor@gmail.com"
                         target="_blank"
-                        className="text-blue-400"
+                        className="text-blue-400 underline"
                         rel="noreferrer"
                       >
                         gallithor@gmail.com
@@ -49,13 +61,25 @@ export default function Home() {
                     </li>
                     <li>
                       Phone:{' '}
-                      <span className="text-green-400">+55 53 9 8144 1755</span>
+                      <a
+                        href="https://wa.me/5553981441755?text=Hello%20Thor!%20I%20saw%20your%20portfolio%20and%20I%20would%20like%20to%20talk%20to%20you!"
+                        target="_blank"
+                        className="text-green-400 underline"
+                        rel="noreferrer"
+                      >
+                        +55 53 9 8144 1755
+                      </a>
                     </li>
                     <li>
                       Location:{' '}
-                      <span className="text-yellow-400">
+                      <a
+                        href="https://maps.app.goo.gl/oE7qoeR6NbqymMeH9"
+                        target="_blank"
+                        className="text-yellow-400 underline"
+                        rel="noreferrer"
+                      >
                         Pelotas, RS - Brasil
-                      </span>
+                      </a>
                     </li>
                   </ul>
                   <div className="h-[2px] w-full rounded bg-slate-800 lg:hidden" />
@@ -64,7 +88,7 @@ export default function Home() {
                       Linkedin:{' '}
                       <a
                         href="https://linkedin.com/in/thor-galli/"
-                        className="text-blue-400"
+                        className="text-blue-400 underline"
                       >
                         /in/thor-galli
                       </a>
@@ -73,15 +97,15 @@ export default function Home() {
                       Github:{' '}
                       <a
                         href="https://github.com/ThorGalli"
-                        className="text-green-400"
+                        className="text-green-400 underline"
                       >
                         github.com/ThorGalli
                       </a>
                     </li>
                   </ul>
                 </div>
-              </section>
-            </article>
+              </ArticleSection>
+            </ArticleWindow>
             <div className="flex rounded-[14px] bg-slate-800 p-2">
               <Image
                 className="rounded-lg object-cover"
@@ -95,9 +119,8 @@ export default function Home() {
             </div>
           </div>
 
-          <article id="about-me" className="profile-article">
-            <h2 className="text-3xl font-bold">About me</h2>
-            <section className="profile-section flex flex-col gap-4">
+          <ArticleWindow id="about-me" title="About me">
+            <ArticleSection className="flex flex-col gap-4">
               <p>
                 I&apos;m most experienced in{' '}
                 <span className="text-blue-400">TypeScript</span>,{' '}
@@ -134,19 +157,14 @@ export default function Home() {
                 computer science and programming as a hobby for more than 15
                 years, which for the most part was self-taught.
               </p>
-            </section>
-          </article>
+            </ArticleSection>
+          </ArticleWindow>
 
-          <article id="experience" className="profile-article">
-            <h2 className="text-3xl font-bold">Experience</h2>
-
-            <section className="profile-section">
-              <h3 className="profile-subtitle">
-                <span className="text-yellow-200">
-                  Full Stack Developer at Brainny Smart Solutions{' {'}
-                </span>
-              </h3>
-              <p className="profile-time">June 2022 - Present</p>
+          <ArticleWindow id="experience" title="Experience">
+            <ArticleSection
+              subtitle="Full Stack Developer at Brainny Smart Solutions {"
+              time="June 2022 - present"
+            >
               <ul className="ml-6 list-disc">
                 <li>
                   Development, bug fixing, and maintenance of multiple full
@@ -203,16 +221,10 @@ export default function Home() {
                 <p className="profile-subtitle text-pink-400">{'}'}</p>
               </div>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
-            </section>
+            </ArticleSection>
 
-            <section className="profile-section">
-              <h3 className="profile-subtitle">
-                <span className="text-yellow-200">
-                  Freelance Developer{' {'}
-                </span>
-              </h3>
+            <ArticleSection subtitle="Freelance Developer {">
               <p className="profile-time">Mar 2021 - May 2022</p>
-
               <ul className="ml-6 list-disc">
                 <li>
                   Development of Responsive Landing Pages built with Bootstrap
@@ -222,28 +234,20 @@ export default function Home() {
                 <li>Top Skills: React, Bootstrap, Git, Python</li>
               </ul>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
-            </section>
-          </article>
+            </ArticleSection>
+          </ArticleWindow>
 
-          <article id="education" className="profile-article">
-            <h2 className="text-3xl font-bold">Education</h2>
-            <section className="profile-section">
-              <h3 className="profile-subtitle text-yellow-200">
-                Bachelor of Technology - BTech, Computer Systems Analysis at
-                SenacRS
-              </h3>
-              <p className="profile-time">
-                2021 - present (graduation in 2024){' '}
-              </p>
-            </section>
-            <section className="profile-section">
-              <h3 className="profile-subtitle text-yellow-200">
-                Bachelor&apos;s in Civil Engineering at Universidade Federal do
-                Rio Grande
-              </h3>
-              <p className="profile-time">2014 - 2020 (graduated)</p>
-            </section>
-          </article>
+          <ArticleWindow id="education" title="Education">
+            <ArticleSection
+              subtitle="Bachelor of Technology - BTech, Computer Systems Analysis at SenacRS"
+              time="2021 - present (graduation in 2024)"
+            />
+            <ArticleSection
+              subtitle="Bachelor's in Civil Engineering at Universidade Federal do Rio Grande"
+              time="2014 - 2020 (graduated)"
+            />
+          </ArticleWindow>
+
           <p className="mx-4">
             Don&apos;t forget to check out the{' '}
             <span className="text-blue-400">games </span> on the{' '}
@@ -256,17 +260,20 @@ export default function Home() {
   )
 }
 
-function totalTimeSince(date: Date) {
-  const now = new Date()
-  const timeWorked = now.getTime() - date.getTime()
+function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
+  const timeWorked = dateEnd.getTime() - dateStart.getTime()
   const totalMonthsWorked = timeWorked / (1000 * 3600 * 24 * 30)
-  const yearsWorked = Math.floor(totalMonthsWorked / 12)
-  const monthsWorked = Math.floor(totalMonthsWorked % 12)
+  return totalMonthsWorked
+}
+
+function formatMonthsWorked(months: number) {
+  const yearsWorked = Math.floor(months / 12)
+  const monthsWorked = Math.floor(months % 12)
 
   const month = monthsWorked === 1 ? 'month' : 'months'
   const year = yearsWorked === 1 ? 'year' : 'years'
-  const time =
+  const timeWorked =
     `${yearsWorked} ${year} ` +
     (monthsWorked > 0 ? `and ${monthsWorked} ${month}` : '')
-  return time
+  return timeWorked
 }
