@@ -2,7 +2,7 @@ This is my Portfolio built with [Next.js](https://nextjs.org/) project bootstrap
 
 It includes some information about me and my career as a developer, as well as some games to showcase my skills and have some fun!
 
-It may or may not be hosted at: [thor-portfolio.vercel.app](https://thor-portfolio.vercel.app)
+It may or may not be hosted at: [gallithor.tech](https://www.gallithor.tech)
 
 ## Getting Started
 
