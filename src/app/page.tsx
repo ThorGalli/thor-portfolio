@@ -4,11 +4,6 @@ import NavbarLayout from '@/layouts/navbar'
 import Image from 'next/image'
 
 export default function Home() {
-  const freelanceTime = 12
-  const brainnyTime = totalMonthsIn(new Date('2022-06-01'))
-
-  const totalTime = freelanceTime + brainnyTime
-
   return (
     <NavbarLayout>
       <main className="mb-8 mt-2">
@@ -34,8 +29,8 @@ export default function Home() {
                   of professional experience in Web Development.
                 </p>
                 <p className="text-sm text-slate-400">
-                  ({formatMonthsWorked(brainnyTime)} employed + 1 year of
-                  freelancing)
+                  ({formatMonthsWorked(brainnyTime)} employed +{' '}
+                  {formatMonthsWorked(freelanceTime)} of freelancing)
                 </p>
                 <p>
                   This is my portfolio, feel free to browse around and
@@ -122,14 +117,9 @@ export default function Home() {
           <ArticleWindow id="about-me" title="About me">
             <ArticleSection className="flex flex-col gap-4">
               <p>
-                I&apos;m most experienced in{' '}
-                <span className="text-blue-400">TypeScript</span>,{' '}
-                <span className="text-green-400">Node.js</span> and{' '}
-                <span className="text-cyan-400">React</span>, with strong
-                foundations in the basics:{' '}
-                <span className="text-yellow-400">
-                  HTML, CSS, JavaScript, SQL, Git and Linux.
-                </span>
+                I&apos;m most experienced in {java}, {typescript}, {react} and{' '}
+                {next}, with strong foundations in the basics: {html}, {css},
+                {javascript}, {sql}, {git} and {linux}.
               </p>
               <p>
                 My goals are to hone my skills and keep pushing to become an
@@ -161,23 +151,28 @@ export default function Home() {
           </ArticleWindow>
 
           <ArticleWindow id="experience" title="Experience">
-            <ArticleSection
-              subtitle="Full Stack Developer at Brainny Smart Solutions {"
-              time="June 2022 - present"
-            >
+            <ArticleSection subtitle="Full Stack Developer at Brainny Smart Solutions {">
+              <p className="profile-time">
+                June 2022 - present{' '}
+                <span className="text-slate-400">
+                  ({formatMonthsWorked(brainnyTime)} so far)
+                </span>{' '}
+              </p>
               <ul className="ml-6 list-disc">
+                <li>
+                  Worked in internal projects for 1 year , then moved to the{' '}
+                  <span className="text-pink-400">outsourcing</span> team.
+                </li>
                 <li>
                   Development, bug fixing, and maintenance of multiple full
                   stack web applications.
                 </li>
                 <li>
-                  Testing and reports for completed tasks, code reviewing,{' '}
-                  <span className="text-pink-400">outsourcing</span> to
-                  different projects on demand.
+                  Testing and reports for completed tasks, code reviewing.
                 </li>
                 <li>
-                  Top Skills: React, Next.js, NestJS, GraphQL, TypeScript,
-                  PostgreSQL.
+                  Top Skills: {react}, {next}, {nest}, {graphql}, {typescript},{' '}
+                  {postgres}.
                 </li>
               </ul>
 
@@ -191,14 +186,20 @@ export default function Home() {
                       BRIDGE Management Technologies
                     </span>
                   </h3>
-                  <p className="profile-time">August 2023 - Present</p>
+                  <p className="profile-time">
+                    August 2023 - Present{' '}
+                    <span className="text-slate-400">
+                      ({formatMonthsWorked(bridgeTime)} so far)
+                    </span>
+                  </p>
                   <ul className="ml-6 list-disc">
                     <li>
                       Bug fixing, maintenance, and development of a full stack
                       web application.
                     </li>
                     <li>
-                      Top skills: Java, Spring, PostgreSQL, JavaScript, HTML.
+                      Top skills: {java}, {spring}, {postgres}, {hibernate},{' '}
+                      {javascript}.
                     </li>
                   </ul>
                 </section>
@@ -209,13 +210,18 @@ export default function Home() {
                     </span>
                   </h3>
                   <p className="profile-time">
-                    May 2023 - July 2023 (3 months)
+                    May 2023 - August 2023{' '}
+                    <span className="text-slate-400">
+                      ({formatMonthsWorked(wttTime)})
+                    </span>
                   </p>
                   <ul className="ml-6 list-disc">
                     <li>
                       Bug fixing and maintenance of a front end web application.
                     </li>
-                    <li>Top skills: React, Redux, TypeScript, Git, Scrum.</li>
+                    <li>
+                      Top skills: {react}, {redux}, {typescript}, {javascript}.
+                    </li>
                   </ul>
                 </section>
                 <p className="profile-subtitle text-pink-400">{'}'}</p>
@@ -224,14 +230,21 @@ export default function Home() {
             </ArticleSection>
 
             <ArticleSection subtitle="Freelance Developer {">
-              <p className="profile-time">Mar 2021 - May 2022</p>
+              <p className="profile-time">
+                Mar 2021 - May 2022{' '}
+                <span className="text-slate-400">
+                  ({formatMonthsWorked(freelanceTime)})
+                </span>
+              </p>
               <ul className="ml-6 list-disc">
                 <li>
                   Development of Responsive Landing Pages built with Bootstrap
                   and React
                 </li>
                 <li>Data Cleaning and formating with Python</li>
-                <li>Top Skills: React, Bootstrap, Git, Python</li>
+                <li>
+                  Top Skills: {react}, {bootstrap}, {git}, {python}
+                </li>
               </ul>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
@@ -260,6 +273,16 @@ export default function Home() {
   )
 }
 
+const freelanceTime = totalMonthsIn(
+  new Date('2021-03-01'),
+  new Date('2022-05-31'),
+)
+const brainnyTime = totalMonthsIn(new Date('2022-06-01'))
+const wttTime = totalMonthsIn(new Date('2023-05-01'), new Date('2023-08-05'))
+const bridgeTime = totalMonthsIn(new Date('2023-08-01'))
+
+const totalTime = freelanceTime + brainnyTime
+
 function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
   const timeWorked = dateEnd.getTime() - dateStart.getTime()
   const totalMonthsWorked = timeWorked / (1000 * 3600 * 24 * 30)
@@ -267,13 +290,37 @@ function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
 }
 
 function formatMonthsWorked(months: number) {
-  const yearsWorked = Math.floor(months / 12)
-  const monthsWorked = Math.floor(months % 12)
+  const roundedMonths = Math.round(months)
+  const yearsWorked = Math.floor(roundedMonths / 12)
+  const monthsWorked = Math.round(roundedMonths % 12)
 
   const month = monthsWorked === 1 ? 'month' : 'months'
   const year = yearsWorked === 1 ? 'year' : 'years'
+
+  if (yearsWorked === 0) return `${monthsWorked} ${month}`
+
   const timeWorked =
-    `${yearsWorked} ${year} ` +
-    (monthsWorked > 0 ? `and ${monthsWorked} ${month}` : '')
+    `${yearsWorked} ${year}` +
+    (monthsWorked > 0 ? ` and ${monthsWorked} ${month}` : '')
   return timeWorked
 }
+
+const react = <span className="text-cyan-400">React</span>
+const next = <span className="font-bold text-white">Next.js</span>
+const node = <span className="text-green-400">Node.js</span>
+const nest = <span className="text-yellow-400">NestJS</span>
+const graphql = <span className="text-pink-400">GraphQL</span>
+const typescript = <span className="text-blue-400">TypeScript</span>
+const postgres = <span className="text-yellow-400">PostgreSQL</span>
+const java = <span className="text-orange-400">Java</span>
+const spring = <span className="text-green-400">Spring</span>
+const python = <span className="text-yellow-400">Python</span>
+const bootstrap = <span className="text-purple-400">Bootstrap</span>
+const git = <span className="text-red-400">Git</span>
+const linux = <span className="text-teal-300">Linux</span>
+const css = <span className="text-blue-400">CSS</span>
+const javascript = <span className="text-yellow-400">JavaScript</span>
+const sql = <span className="text-pink-400">SQL</span>
+const hibernate = <span className="text-green-400">Hibernate</span>
+const redux = <span className="text-purple-400">Redux</span>
+const html = <span className="text-red-400">HTML</span>
