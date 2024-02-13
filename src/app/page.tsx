@@ -73,7 +73,7 @@ export default function Home() {
                         className="text-yellow-400 underline"
                         rel="noreferrer"
                       >
-                        Pelotas, RS - Brasil
+                        Curitiba, PR - Brasil
                       </a>
                     </li>
                   </ul>
