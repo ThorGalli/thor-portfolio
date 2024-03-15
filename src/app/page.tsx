@@ -68,7 +68,7 @@ export default function Home() {
                     <li>
                       Location:{' '}
                       <a
-                        href="https://maps.app.goo.gl/oE7qoeR6NbqymMeH9"
+                        href="https://maps.app.goo.gl/Nr6AWcDR1VKgLBzG7"
                         target="_blank"
                         className="text-yellow-400 underline"
                         rel="noreferrer"
@@ -118,7 +118,7 @@ export default function Home() {
             <ArticleSection className="flex flex-col gap-4">
               <p>
                 I&apos;m most experienced in {java}, {typescript}, {react} and{' '}
-                {next}, with strong foundations in the basics: {html}, {css},
+                {next}, with strong foundations in the basics: {html}, {css},{' '}
                 {javascript}, {sql}, {git} and {linux}.
               </p>
               <p>
@@ -160,7 +160,7 @@ export default function Home() {
               </p>
               <ul className="ml-6 list-disc">
                 <li>
-                  Worked in internal projects for 1 year , then moved to the{' '}
+                  Worked in internal projects for 1 year, then moved to the{' '}
                   <span className="text-pink-400">outsourcing</span> team.
                 </li>
                 <li>
