@@ -151,6 +151,25 @@ export default function Home() {
           </ArticleWindow>
 
           <ArticleWindow id="experience" title="Experience">
+            <ArticleSection subtitle='Front End Developer at Wipro {'>
+              <p className="profile-time">
+                March 2024 - present{' '}
+                <span className="text-slate-400">
+                  ({formatMonthsWorked(wiproTime)} so far)
+                </span>
+              </p>
+              <ul className="ml-6 list-disc">
+                <li>
+                  Development, bug fixing, and maintenance of a front end web
+                  application.
+                </li>
+                <li>
+                  Top Skills: {react}, {redux}, {typescript}, {javascript}.
+                </li>
+              </ul>
+              <p className="profile-subtitle text-yellow-200">{'}'}</p>
+            </ArticleSection>
+
             <ArticleSection subtitle="Full Stack Developer at Brainny Smart Solutions {">
               <p className="profile-time">
                 June 2022 - present{' '}
@@ -280,8 +299,9 @@ const freelanceTime = totalMonthsIn(
 const brainnyTime = totalMonthsIn(new Date('2022-06-01'))
 const wttTime = totalMonthsIn(new Date('2023-05-01'), new Date('2023-08-05'))
 const bridgeTime = totalMonthsIn(new Date('2023-08-01'))
+const wiproTime = totalMonthsIn(new Date('2024-03-25'))
 
-const totalTime = freelanceTime + brainnyTime
+const totalTime = freelanceTime + brainnyTime + wiproTime
 
 function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
   const timeWorked = dateEnd.getTime() - dateStart.getTime()
