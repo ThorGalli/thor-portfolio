@@ -151,7 +151,7 @@ export default function Home() {
           </ArticleWindow>
 
           <ArticleWindow id="experience" title="Experience">
-            <ArticleSection subtitle='Front End Developer at Wipro {'>
+            <ArticleSection subtitle="Front End Developer at Wipro {">
               <p className="profile-time">
                 March 2024 - present{' '}
                 <span className="text-slate-400">
