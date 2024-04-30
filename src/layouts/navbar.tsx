@@ -5,8 +5,10 @@ import { useMe } from '@/contexts/useMe'
 import { usePathname, useRouter } from 'next/navigation'
 
 export default function NavbarLayout({
+  childrenWrapperClass,
   children,
 }: {
+  childrenWrapperClass?: string
   children: React.ReactNode
 }) {
   const router = useRouter()
@@ -44,11 +46,15 @@ export default function NavbarLayout({
           )}
         </div>
       </div>
-      <div
-        id="content-wrapper"
-        className="mx-auto min-h-[calc(100vh-3rem)] max-w-screen-2xl bg-slate-900 p-2 shadow-[0_0_30px_10px] shadow-slate-950"
-      >
-        {children}
+      <div className={childrenWrapperClass}>
+        <div
+          id="content-wrapper"
+          className={
+            'mx-auto min-h-[calc(100vh-3rem)] max-w-screen-2xl bg-slate-900 p-2 shadow-[0_0_30px_10px] shadow-slate-950 '
+          }
+        >
+          {children}
+        </div>
       </div>
     </div>
   )

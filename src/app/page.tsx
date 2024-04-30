@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <NavbarLayout>
-      <main className="mb-8 mt-2">
+    <NavbarLayout childrenWrapperClass="max-h-[calc(100vh-3rem)] min-h-[calc(100vh-3rem)] overflow-auto">
+      <main className="pb-8 pt-2">
         <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-4 lg:items-start">
           <div className="flex flex-col-reverse items-center gap-4 lg:flex-row lg:items-stretch">
             <ArticleWindow
