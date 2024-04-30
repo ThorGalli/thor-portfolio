@@ -26,7 +26,8 @@ export default function Home() {
                   <span className="text-yellow-400">
                     {formatMonthsWorked(totalTime)}
                   </span>{' '}
-                  of professional experience in Web Development and <span className='text-cyan-400'>C1 English</span> proficiency.
+                  of professional experience in Web Development and{' '}
+                  <span className="text-cyan-400">C1 English</span> proficiency.
                 </p>
                 <p>
                   This is my portfolio, feel free to browse around and
@@ -156,7 +157,8 @@ export default function Home() {
               </p>
               <ul className="ml-6 list-disc">
                 <li>
-                  IT consulting and contract working (<span className="text-pink-400">outsourcing</span>).
+                  IT consulting and contract working (
+                  <span className="text-pink-400">outsourcing</span>).
                 </li>
               </ul>
               <div className="ml-4 mt-4 flex flex-col">
@@ -165,9 +167,7 @@ export default function Home() {
                 </h3>
                 <section className="profile-section ml-4">
                   <h3 className="profile-subtitle">
-                    <span className="text-blue-400">
-                      Hewlett-Packard (HP)
-                    </span>
+                    <span className="text-blue-400">Hewlett-Packard (HP)</span>
                   </h3>
                   <p className="profile-time">
                     March 2024 - present{' '}
@@ -177,10 +177,11 @@ export default function Home() {
                   </p>
                   <ul className="ml-6 list-disc">
                     <li>
-                      Bug fixing, maintenance, and development of a multi-platform web application.
+                      Bug fixing, maintenance, and development of a
+                      multi-platform web application.
                     </li>
                     <li>
-                      Top Skills: {react}, {redux}, {typescript}, {graphql}. 
+                      Top Skills: {react}, {redux}, {typescript}, {graphql}.
                     </li>
                   </ul>
                 </section>
@@ -209,8 +210,8 @@ export default function Home() {
                   Testing and reports for completed tasks, code reviewing.
                 </li>
                 <li>
-                  Top Skills: {java}, {spring}, {react}, {next}, {nest}, {graphql}, {typescript},{' '}
-                  {postgres}.
+                  Top Skills: {java}, {spring}, {react}, {next}, {nest},{' '}
+                  {graphql}, {typescript}, {postgres}.
                 </li>
               </ul>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
@@ -264,9 +265,11 @@ const freelanceTime = totalMonthsIn(
   new Date('2021-03-01'),
   new Date('2022-05-31'),
 )
-const brainnyTime = totalMonthsIn(new Date('2022-06-01'), new Date('2024-04-26'))
-const wttTime = totalMonthsIn(new Date('2023-05-01'), new Date('2023-08-05'))
-const bridgeTime = totalMonthsIn(new Date('2023-08-01'), new Date('2024-04-26'))
+const brainnyTime = totalMonthsIn(
+  new Date('2022-06-01'),
+  new Date('2024-04-26'),
+)
+
 const wiproTime = totalMonthsIn(new Date('2024-03-25'))
 
 const totalTime = freelanceTime + brainnyTime + wiproTime
