@@ -119,6 +119,10 @@ body {
   @apply flex w-full flex-col bg-slate-800 rounded-[14px] p-2 gap-2
 }
 
+.profile-div {
+  @apply flex w-full flex-col bg-slate-800 rounded-[14px] gap-2
+}
+
 .profile-section {
   @apply rounded-md bg-slate-950 p-2
 }

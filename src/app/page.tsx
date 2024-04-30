@@ -26,11 +26,7 @@ export default function Home() {
                   <span className="text-yellow-400">
                     {formatMonthsWorked(totalTime)}
                   </span>{' '}
-                  of professional experience in Web Development.
-                </p>
-                <p className="text-sm text-slate-400">
-                  ({formatMonthsWorked(brainnyTime)} employed +{' '}
-                  {formatMonthsWorked(freelanceTime)} of freelancing)
+                  of professional experience in Web Development and <span className='text-cyan-400'>C1 English</span> proficiency.
                 </p>
                 <p>
                   This is my portfolio, feel free to browse around and
@@ -114,7 +110,7 @@ export default function Home() {
             </div>
           </div>
 
-          <ArticleWindow id="about-me" title="About me">
+          <ArticleWindow id="about-me" title="About me" useDrawer>
             <ArticleSection className="flex flex-col gap-4">
               <p>
                 I&apos;m most experienced in {java}, {typescript}, {react} and{' '}
@@ -150,7 +146,7 @@ export default function Home() {
             </ArticleSection>
           </ArticleWindow>
 
-          <ArticleWindow id="experience" title="Experience">
+          <ArticleWindow id="experience" title="Experience" useDrawer>
             <ArticleSection subtitle="Front End Developer at Wipro {">
               <p className="profile-time">
                 March 2024 - present{' '}
@@ -160,21 +156,44 @@ export default function Home() {
               </p>
               <ul className="ml-6 list-disc">
                 <li>
-                  Development, bug fixing, and maintenance of a front end web
-                  application.
-                </li>
-                <li>
-                  Top Skills: {react}, {redux}, {typescript}, {javascript}.
+                  IT consulting and contract working (<span className="text-pink-400">outsourcing</span>).
                 </li>
               </ul>
+              <div className="ml-4 mt-4 flex flex-col">
+                <h3 className="profile-subtitle text-pink-400">
+                  Outsourcing contracts {' {'}
+                </h3>
+                <section className="profile-section ml-4">
+                  <h3 className="profile-subtitle">
+                    <span className="text-blue-400">
+                      Hewlett-Packard (HP)
+                    </span>
+                  </h3>
+                  <p className="profile-time">
+                    March 2024 - present{' '}
+                    <span className="text-slate-400">
+                      ({formatMonthsWorked(wiproTime)} so far)
+                    </span>
+                  </p>
+                  <ul className="ml-6 list-disc">
+                    <li>
+                      Bug fixing, maintenance, and development of a multi-platform web application.
+                    </li>
+                    <li>
+                      Top Skills: {react}, {redux}, {typescript}, {graphql}. 
+                    </li>
+                  </ul>
+                </section>
+                <p className="profile-subtitle text-pink-400">{'}'}</p>
+              </div>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
 
             <ArticleSection subtitle="Full Stack Developer at Brainny Smart Solutions {">
               <p className="profile-time">
-                June 2022 - present{' '}
+                June 2022 - April 2024{' '}
                 <span className="text-slate-400">
-                  ({formatMonthsWorked(brainnyTime)} so far)
+                  ({formatMonthsWorked(brainnyTime)})
                 </span>{' '}
               </p>
               <ul className="ml-6 list-disc">
@@ -190,61 +209,10 @@ export default function Home() {
                   Testing and reports for completed tasks, code reviewing.
                 </li>
                 <li>
-                  Top Skills: {react}, {next}, {nest}, {graphql}, {typescript},{' '}
+                  Top Skills: {java}, {spring}, {react}, {next}, {nest}, {graphql}, {typescript},{' '}
                   {postgres}.
                 </li>
               </ul>
-
-              <div className="ml-4 mt-4 flex flex-col">
-                <h3 className="profile-subtitle text-pink-400">
-                  Outsourcing contracts {' {'}
-                </h3>
-                <section className="profile-section ml-4">
-                  <h3 className="profile-subtitle">
-                    <span className="text-blue-400">
-                      BRIDGE Management Technologies
-                    </span>
-                  </h3>
-                  <p className="profile-time">
-                    August 2023 - Present{' '}
-                    <span className="text-slate-400">
-                      ({formatMonthsWorked(bridgeTime)} so far)
-                    </span>
-                  </p>
-                  <ul className="ml-6 list-disc">
-                    <li>
-                      Bug fixing, maintenance, and development of a full stack
-                      web application.
-                    </li>
-                    <li>
-                      Top skills: {java}, {spring}, {postgres}, {hibernate},{' '}
-                      {javascript}.
-                    </li>
-                  </ul>
-                </section>
-                <section className="profile-section ml-4">
-                  <h3 className="profile-subtitle">
-                    <span className="text-blue-400">
-                      Wunderman Thompson Technology Brasil
-                    </span>
-                  </h3>
-                  <p className="profile-time">
-                    May 2023 - August 2023{' '}
-                    <span className="text-slate-400">
-                      ({formatMonthsWorked(wttTime)})
-                    </span>
-                  </p>
-                  <ul className="ml-6 list-disc">
-                    <li>
-                      Bug fixing and maintenance of a front end web application.
-                    </li>
-                    <li>
-                      Top skills: {react}, {redux}, {typescript}, {javascript}.
-                    </li>
-                  </ul>
-                </section>
-                <p className="profile-subtitle text-pink-400">{'}'}</p>
-              </div>
               <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
 
@@ -269,7 +237,7 @@ export default function Home() {
             </ArticleSection>
           </ArticleWindow>
 
-          <ArticleWindow id="education" title="Education">
+          <ArticleWindow id="education" title="Education" useDrawer>
             <ArticleSection
               subtitle="Bachelor of Technology - BTech, Computer Systems Analysis at SenacRS"
               time="2021 - present (graduation in 2024)"
@@ -296,9 +264,9 @@ const freelanceTime = totalMonthsIn(
   new Date('2021-03-01'),
   new Date('2022-05-31'),
 )
-const brainnyTime = totalMonthsIn(new Date('2022-06-01'))
+const brainnyTime = totalMonthsIn(new Date('2022-06-01'), new Date('2024-04-26'))
 const wttTime = totalMonthsIn(new Date('2023-05-01'), new Date('2023-08-05'))
-const bridgeTime = totalMonthsIn(new Date('2023-08-01'))
+const bridgeTime = totalMonthsIn(new Date('2023-08-01'), new Date('2024-04-26'))
 const wiproTime = totalMonthsIn(new Date('2024-03-25'))
 
 const totalTime = freelanceTime + brainnyTime + wiproTime
