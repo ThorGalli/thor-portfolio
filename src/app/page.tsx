@@ -1,9 +1,13 @@
+'use client'
 import ArticleSection from '@/components/navigation/articleSection'
 import ArticleWindow from '@/components/navigation/articleWindow'
 import NavbarLayout from '@/layouts/navbar'
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Home() {
+  const [tabHeight, setTabHeight] = useState<number | null>(null)
+
   return (
     <NavbarLayout childrenWrapperClass="max-h-[calc(100vh-3rem)] min-h-[calc(100vh-3rem)] overflow-auto">
       <main className="pb-8 pt-2">
