@@ -23,7 +23,7 @@ export default function ArticleWindow({
     animStyles: {
       content: {
         inactive: { opacity: 0, maxHeight: 0, marginBottom: '-0.5rem' },
-        active: { opacity: 1, maxHeight: 800, marginBottom: 0 },
+        active: { opacity: 1, maxHeight: 5000, marginBottom: 0 },
       },
     },
     durationInMs: 300,
