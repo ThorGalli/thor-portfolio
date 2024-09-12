@@ -3,11 +3,8 @@ import ArticleSection from '@/components/navigation/articleSection'
 import ArticleWindow from '@/components/navigation/articleWindow'
 import NavbarLayout from '@/layouts/navbar'
 import Image from 'next/image'
-import { useState } from 'react'
 
 export default function Home() {
-  const [tabHeight, setTabHeight] = useState<number | null>(null)
-
   return (
     <NavbarLayout childrenWrapperClass="max-h-[calc(100vh-3rem)] min-h-[calc(100vh-3rem)] overflow-auto">
       <main className="pb-8 pt-2">
@@ -161,8 +158,9 @@ export default function Home() {
               </p>
               <ul className="ml-6 list-disc">
                 <li>
-                  IT consulting and contract working (
-                  <span className="text-pink-400">outsourcing</span>).
+                  Experience working in an{' '}
+                  <span className="text-pink-400">outsourcing</span> company
+                  with the following client: HP;
                 </li>
               </ul>
               <div className="ml-4 mt-4 flex flex-col">
@@ -180,9 +178,19 @@ export default function Home() {
                     </span>
                   </p>
                   <ul className="ml-6 list-disc">
+                    <li>Daily use of agile methodologies;</li>
                     <li>
-                      Bug fixing, maintenance, and development of a
-                      multi-platform web application.
+                      Development and maintenance of a cross-platform
+                      application with a large international user base;
+                    </li>
+                    <li>Providing support and guidance to the team;</li>
+                    <li>
+                      Code review for the approval of Pull Requests on GitHub;
+                    </li>
+                    <li>Creation of automated tests with Jest;</li>
+                    <li>
+                      Recording demo videos of newly developed features for
+                      presentation to teams and stakeholders.
                     </li>
                     <li>
                       Top Skills: {react}, {redux}, {typescript}, {graphql}.
@@ -202,17 +210,34 @@ export default function Home() {
                 </span>{' '}
               </p>
               <ul className="ml-6 list-disc">
+                <li>Daily use of agile methodologies;</li>
                 <li>
-                  Worked in internal projects for 1 year, then moved to the{' '}
-                  <span className="text-pink-400">outsourcing</span> team.
+                  Full Stack development for a study platform using Next.js,
+                  React and NestJS, integrated with GraphQL;
                 </li>
                 <li>
-                  Development, bug fixing, and maintenance of multiple full
-                  stack web applications.
+                  Provided support and guidance to junior developers and
+                  interns;
                 </li>
                 <li>
-                  Testing and reports for completed tasks, code reviewing.
+                  Migrated deprecated services to use the latest Firebase APIs;
                 </li>
+                <li>
+                  Developed, debugged, and maintained a web app using Java and
+                  Spring;
+                </li>
+                <li>
+                  Integrated communication between the front-end and back-end
+                  using RestAPI;
+                </li>
+                <li>
+                  Conducted automated unit testing, created informative videos
+                  for completed tasks;
+                </li>
+                <li>
+                  Code review for the approval of Pull Requests on GitLab;
+                </li>
+                <li> Created migrations for SQL databases.</li>
                 <li>
                   Top Skills: {java}, {spring}, {react}, {next}, {nest},{' '}
                   {graphql}, {typescript}, {postgres}.
@@ -230,10 +255,12 @@ export default function Home() {
               </p>
               <ul className="ml-6 list-disc">
                 <li>
-                  Development of Responsive Landing Pages built with Bootstrap
-                  and React
+                  Development of Responsive Landing Pages and Hot Sites for
+                  clients;
                 </li>
-                <li>Data Cleaning and formating with Python</li>
+                <li>Data cleaning and spreadsheet manipulation with Python;</li>
+                <li>Web scraping with Python;</li>
+                <li>Version control with Git and GitLab.</li>
                 <li>
                   Top Skills: {react}, {bootstrap}, {git}, {python}
                 </li>
