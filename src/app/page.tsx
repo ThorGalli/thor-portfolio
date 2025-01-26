@@ -153,7 +153,7 @@ export default function Home() {
               <p className="profile-time">
                 January 2025 - present{' '}
                 <span className="text-slate-400">
-                  ({formatMonthsWorked(wiproTime)} so far)
+                  ({formatMonthsWorked(howdyTime)} so far)
                 </span>
               </p>
               <ul className="ml-6 list-disc">
@@ -174,7 +174,7 @@ export default function Home() {
                   <p className="profile-time">
                     January 2025 - present{' '}
                     <span className="text-slate-400">
-                      ({formatMonthsWorked(wiproTime)} so far)
+                      ({formatMonthsWorked(howdyTime)} so far)
                     </span>
                   </p>
                   <ul className="ml-6 list-disc">
@@ -361,7 +361,7 @@ function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
 }
 
 function formatMonthsWorked(months: number) {
-  const roundedMonths = Math.round(months)
+  const roundedMonths = Math.ceil(months)
   const yearsWorked = Math.floor(roundedMonths / 12)
   const monthsWorked = Math.round(roundedMonths % 12)
 
