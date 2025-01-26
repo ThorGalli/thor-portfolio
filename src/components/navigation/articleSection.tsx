@@ -1,8 +1,12 @@
+import clsx from 'clsx'
+
 type ArticleSectionProps = {
   subtitle?: string
-  time?: string
+  time?: string | React.ReactNode
   children?: React.ReactNode
   className?: string
+  job?: boolean
+  footer?: React.ReactNode
 }
 
 export default function ArticleSection({
@@ -10,14 +14,28 @@ export default function ArticleSection({
   time,
   children,
   className,
+  job,
+  footer,
 }: ArticleSectionProps) {
   return (
-    <section className={' profile-section text-slate-300 ' + className}>
-      {!!subtitle && (
-        <h3 className="profile-subtitle text-yellow-200">{subtitle}</h3>
+    <section
+      className={clsx(
+        'profile-section overflow-clip text-slate-300',
+        className,
+        job ? 'p-0' : 'p-2',
       )}
-      {!!time && <p className="profile-time">{time}</p>}
-      {!!children && children}
+    >
+      {!!subtitle && (
+        <div className={clsx(job ? 'bg-white bg-opacity-5 p-2' : '')}>
+          <h3 className="profile-subtitle w-full text-yellow-200">
+            {subtitle}
+          </h3>
+          {!!time && <div className="profile-time">{time}</div>}
+        </div>
+      )}
+
+      <div className={clsx(job ? ' p-2' : '')}>{!!children && children}</div>
+      {!!footer && <div className="px-2 pb-2">{footer}</div>}
     </section>
   )
 }

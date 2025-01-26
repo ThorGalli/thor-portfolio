@@ -115,33 +115,40 @@ export default function Home() {
           <ArticleWindow id="about-me" title="About me" useDrawer>
             <ArticleSection className="flex flex-col gap-4">
               <p>
-                I&apos;m most experienced in {java}, {typescript}, {react} and{' '}
-                {next}, with strong foundations in the basics: {html}, {css},{' '}
-                {javascript}, {sql}, {git} and {linux}.
+                I am Thor, a Full Stack Developer with 4 years of professional
+                experience and a background in Civil Engineering. This
+                combination provides me with a unique perspective in software
+                development, allowing me to understand and approach projects
+                with a comprehensive and effective outlook.
               </p>
+              <br />
               <p>
-                My goals are to hone my skills and keep pushing to become an
-                exceptional Software Developer.
-                <br />
                 I&apos;m{' '}
                 <span className="text-yellow-400">
                   fluent in English and Portuguese
-                </span>
-                . I&apos;ve worked in both big and small teams using the Agile
-                development methodology, Scrum, CI/CD and Git flow.
+                </span>{' '}
+                and my experience includes front-end development using the
+                React.js Framework to build web apps from scratch, creating REST
+                and GraphQL APIs to serve applications or to communicate with
+                other third-party services, as well as bug fixing and
+                maintenance of legacy projects.
               </p>
+              <br />
               <p>
-                Engineering background: as a child, I was curious and interested
-                in how things worked (to be honest, I still am), this led me to
-                study and graduate in Civil Engineering, where I acquired
-                advanced knowledge of physics, calculus, algebra, geometry,
-                statistics, administration and economy. This combination of
-                knowledge and skills has proven to be very useful in my career
-                as they&apos;ve helped me quickly understand and adapt to new
-                projects.
+                I&apos;m most experienced in {typescript}, {node}, and {react}.
+                <br />
+                With strong foundations in the basics: {html}, {css},{' '}
+                {javascript}, {sql}, {git}, and {linux}.
               </p>
+              <br />
               <p>
-                Due to my affinity to computers and gaming, I&apos;ve studied
+                Whether it&apos;s creating new features, optimizing processes,
+                or ensuring code quality, my goal is always to deliver quality
+                technological solutions that add value and make a difference.
+              </p>
+              <br />
+              <p>
+                Due to my affinity for computers and gaming, I&apos;ve studied
                 computer science and programming as a hobby for more than 15
                 years, which for the most part was self-taught.
               </p>
@@ -149,27 +156,32 @@ export default function Home() {
           </ArticleWindow>
 
           <ArticleWindow id="experience" title="Experience" useDrawer>
-            <ArticleSection subtitle="Software Engineer at Howdy {">
-              <p className="profile-time">
-                January 2025 - present{' '}
-                <span className="text-slate-400">
-                  ({formatMonthsWorked(howdyTime)} so far)
-                </span>
+            <ArticleSection
+              job
+              subtitle="Software Engineer at Howdy"
+              time={
+                <p>
+                  January 2025 - present{' '}
+                  <span className="text-slate-400">
+                    ({formatMonthsWorked(howdyTime)} so far)
+                  </span>
+                </p>
+              }
+              footer={
+                <p>
+                  ⭐ Top Skills: {golang}, {typescript}, {react}, {node},{' '}
+                  {microfrontend}, {microservices}
+                </p>
+              }
+            >
+              <p>
+                Worked by <span className="text-pink-400">contracts</span> for
+                Howdy&apos;s clients, including:{' '}
               </p>
-              <ul className="ml-6 list-disc">
-                <li>
-                  Experience working in an{' '}
-                  <span className="text-pink-400">outsourcing</span> company
-                  with the following client: OrderMyGear;
-                </li>
-              </ul>
-              <div className="ml-4 mt-4 flex flex-col">
-                <h3 className="profile-subtitle text-pink-400">
-                  Outsourcing contracts {' {'}
-                </h3>
-                <section className="profile-section ml-4">
+              <div className="flex flex-col">
+                <section className="profile-section ml-6">
                   <h3 className="profile-subtitle">
-                    <span className="text-green-400">OrderMyGear (OMG)</span>
+                    <li className="text-green-400">OrderMyGear (OMG)</li>
                   </h3>
                   <p className="profile-time">
                     January 2025 - present{' '}
@@ -181,81 +193,68 @@ export default function Home() {
                     <li>Daily use of agile methodologies;</li>
                     <li>
                       Developed and maintained microservices and microfrontends
-                      for a web application with a large user base;
+                      for a web application;
                     </li>
                     <li>
                       Followed best practices like unit testing and code
                       reviews;
                     </li>
-                    <li>
-                      Top Skills: {golang}, {typescript}, {react}, {node}.
-                    </li>
                   </ul>
                 </section>
-                <p className="profile-subtitle text-pink-400">{'}'}</p>
               </div>
-              <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
-            <ArticleSection subtitle="Full Stack Developer at Wipro {">
-              <p className="profile-time">
-                March 2024 - present{' '}
-                <span className="text-slate-400">
-                  ({formatMonthsWorked(wiproTime)} so far)
-                </span>
-              </p>
+            <ArticleSection
+              job
+              subtitle="Full Stack Developer at Hewlett-Packard (HP)"
+              time={
+                <p>
+                  March 2024 - January 2025{' '}
+                  <span className="text-slate-400">
+                    ({formatMonthsWorked(wiproTime)})
+                  </span>
+                </p>
+              }
+              footer={
+                <p>
+                  ⭐ Top Skills: {react}, {redux}, {typescript}, {graphql},{' '}
+                  {node}, {microfrontend}, {microservices}
+                </p>
+              }
+            >
               <ul className="ml-6 list-disc">
+                <li>Daily use of agile methodologies;</li>
                 <li>
-                  Experience working in an{' '}
-                  <span className="text-pink-400">outsourcing</span> company
-                  with the following client: HP;
+                  Development and maintenance of a cross-platform application
+                  with a large international user base;
+                </li>
+                <li>Provided support and guidance to the team;</li>
+                <li>
+                  Followed best practices like unit testing and code reviews;
+                </li>
+                <li>
+                  Recorded demo videos of newly developed features for
+                  presentation to teams and stakeholders.
                 </li>
               </ul>
-              <div className="ml-4 mt-4 flex flex-col">
-                <h3 className="profile-subtitle text-pink-400">
-                  Outsourcing contracts {' {'}
-                </h3>
-                <section className="profile-section ml-4">
-                  <h3 className="profile-subtitle">
-                    <span className="text-blue-400">Hewlett-Packard (HP)</span>
-                  </h3>
-                  <p className="profile-time">
-                    March 2024 - present{' '}
-                    <span className="text-slate-400">
-                      ({formatMonthsWorked(wiproTime)} so far)
-                    </span>
-                  </p>
-                  <ul className="ml-6 list-disc">
-                    <li>Daily use of agile methodologies;</li>
-                    <li>
-                      Development and maintenance of a cross-platform
-                      application with a large international user base;
-                    </li>
-                    <li>Providing support and guidance to the team;</li>
-                    <li>
-                      Code review for the approval of Pull Requests on GitHub;
-                    </li>
-                    <li>Creation of automated tests with Jest;</li>
-                    <li>
-                      Recording demo videos of newly developed features for
-                      presentation to teams and stakeholders.
-                    </li>
-                    <li>
-                      Top Skills: {react}, {redux}, {typescript}, {graphql}.
-                    </li>
-                  </ul>
-                </section>
-                <p className="profile-subtitle text-pink-400">{'}'}</p>
-              </div>
-              <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
-
-            <ArticleSection subtitle="Full Stack Developer at Brainny Smart Solutions {">
-              <p className="profile-time">
-                June 2022 - April 2024{' '}
-                <span className="text-slate-400">
-                  ({formatMonthsWorked(brainnyTime)})
-                </span>{' '}
-              </p>
+            <ArticleSection
+              job
+              subtitle="Full Stack Developer at Brainny Smart Solutions"
+              time={
+                <p>
+                  June 2022 - April 2024{' '}
+                  <span className="text-slate-400">
+                    ({formatMonthsWorked(brainnyTime)})
+                  </span>
+                </p>
+              }
+              footer={
+                <p>
+                  ⭐ Top Skills: {react}, {next}, {nest}, {graphql},{' '}
+                  {typescript}, {postgres}
+                </p>
+              }
+            >
               <ul className="ml-6 list-disc">
                 <li>Daily use of agile methodologies;</li>
                 <li>
@@ -285,21 +284,25 @@ export default function Home() {
                   Code review for the approval of Pull Requests on GitLab;
                 </li>
                 <li> Created migrations for SQL databases.</li>
-                <li>
-                  Top Skills: {java}, {spring}, {react}, {next}, {nest},{' '}
-                  {graphql}, {typescript}, {postgres}.
-                </li>
               </ul>
-              <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
-
-            <ArticleSection subtitle="Freelance Developer {">
-              <p className="profile-time">
-                Mar 2021 - May 2022{' '}
-                <span className="text-slate-400">
-                  ({formatMonthsWorked(freelanceTime)})
-                </span>
-              </p>
+            <ArticleSection
+              job
+              subtitle="Freelance Developer"
+              time={
+                <p>
+                  March 2021 - May 2022{' '}
+                  <span className="text-slate-400">
+                    ({formatMonthsWorked(freelanceTime)})
+                  </span>
+                </p>
+              }
+              footer={
+                <p>
+                  ⭐ Top Skills: {react}, {bootstrap}, {git}, {python}
+                </p>
+              }
+            >
               <ul className="ml-6 list-disc">
                 <li>
                   Development of Responsive Landing Pages and Hot Sites for
@@ -308,18 +311,14 @@ export default function Home() {
                 <li>Data cleaning and spreadsheet manipulation with Python;</li>
                 <li>Web scraping with Python;</li>
                 <li>Version control with Git and GitLab.</li>
-                <li>
-                  Top Skills: {react}, {bootstrap}, {git}, {python}
-                </li>
               </ul>
-              <p className="profile-subtitle text-yellow-200">{'}'}</p>
             </ArticleSection>
           </ArticleWindow>
 
           <ArticleWindow id="education" title="Education" useDrawer>
             <ArticleSection
               subtitle="Bachelor of Technology - BTech, Computer Systems Analysis at SenacRS"
-              time="2021 - present (graduation in 2024)"
+              time="2021 - 2024 (graduated)"
             />
             <ArticleSection
               subtitle="Bachelor's in Civil Engineering at Universidade Federal do Rio Grande"
@@ -348,9 +347,9 @@ const brainnyTime = totalMonthsIn(
   new Date('2024-04-26'),
 )
 
-const wiproTime = totalMonthsIn(new Date('2024-03-25'), new Date('2025-01-07'))
+const wiproTime = totalMonthsIn(new Date('2024-03-01'), new Date('2025-01-31'))
 
-const howdyTime = totalMonthsIn(new Date('2025-01-08'))
+const howdyTime = totalMonthsIn(new Date('2025-01-01'))
 
 const totalTime = freelanceTime + brainnyTime + wiproTime + howdyTime
 
@@ -361,7 +360,7 @@ function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
 }
 
 function formatMonthsWorked(months: number) {
-  const roundedMonths = Math.ceil(months)
+  const roundedMonths = Math.round(months)
   const yearsWorked = Math.floor(roundedMonths / 12)
   const monthsWorked = Math.round(roundedMonths % 12)
 
@@ -376,7 +375,7 @@ function formatMonthsWorked(months: number) {
   return timeWorked
 }
 
-const golang = <span className="text-blue-400">Go (Golang)</span>
+const golang = <span className="text-blue-300">Go (Golang)</span>
 const react = <span className="text-cyan-400">React</span>
 const next = <span className="font-bold text-white">Next.js</span>
 const node = <span className="text-green-400">Node.js</span>
@@ -393,6 +392,7 @@ const linux = <span className="text-teal-300">Linux</span>
 const css = <span className="text-blue-400">CSS</span>
 const javascript = <span className="text-yellow-400">JavaScript</span>
 const sql = <span className="text-pink-400">SQL</span>
-const hibernate = <span className="text-green-400">Hibernate</span>
 const redux = <span className="text-purple-400">Redux</span>
 const html = <span className="text-red-400">HTML</span>
+const microservices = <span className="text-green-400">Microservices</span>
+const microfrontend = <span className="text-yellow-400">Microfrontends</span>

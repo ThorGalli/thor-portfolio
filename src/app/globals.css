@@ -24,12 +24,9 @@
 
 body {
   color: white;
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -38,7 +35,7 @@ body {
 }
 
 .btn {
-  @apply flex h-fit cursor-pointer select-none disabled:cursor-default disabled:border-black disabled:bg-slate-950 disabled:text-slate-500 disabled:hover:bg-slate-900 disabled:hover:border-black;   
+  @apply flex h-fit cursor-pointer select-none disabled:cursor-default disabled:border-black disabled:bg-slate-950 disabled:text-slate-500 disabled:hover:bg-slate-900 disabled:hover:border-black;
 }
 
 .btn-slate {
@@ -84,7 +81,7 @@ body {
 }
 
 .toast-box {
-  @apply opacity-0 transition-all duration-300 
+  @apply opacity-0 transition-all duration-300
 }
 
 .toast-box.entering {
@@ -124,7 +121,7 @@ body {
 }
 
 .profile-section {
-  @apply rounded-md bg-slate-950 p-2
+  @apply rounded-md bg-slate-950
 }
 
 .profile-section ul {
@@ -135,6 +132,6 @@ body {
   @apply text-xl font-semibold opacity-80 inline
 }
 
-.profile-article > h2 {
+.profile-article>h2 {
   @apply text-slate-300
 }
