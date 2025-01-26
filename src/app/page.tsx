@@ -149,7 +149,54 @@ export default function Home() {
           </ArticleWindow>
 
           <ArticleWindow id="experience" title="Experience" useDrawer>
-            <ArticleSection subtitle="Front End Developer at Wipro {">
+            <ArticleSection subtitle="Software Engineer at Howdy {">
+              <p className="profile-time">
+                January 2025 - present{' '}
+                <span className="text-slate-400">
+                  ({formatMonthsWorked(wiproTime)} so far)
+                </span>
+              </p>
+              <ul className="ml-6 list-disc">
+                <li>
+                  Experience working in an{' '}
+                  <span className="text-pink-400">outsourcing</span> company
+                  with the following client: OrderMyGear;
+                </li>
+              </ul>
+              <div className="ml-4 mt-4 flex flex-col">
+                <h3 className="profile-subtitle text-pink-400">
+                  Outsourcing contracts {' {'}
+                </h3>
+                <section className="profile-section ml-4">
+                  <h3 className="profile-subtitle">
+                    <span className="text-green-400">OrderMyGear (OMG)</span>
+                  </h3>
+                  <p className="profile-time">
+                    January 2025 - present{' '}
+                    <span className="text-slate-400">
+                      ({formatMonthsWorked(wiproTime)} so far)
+                    </span>
+                  </p>
+                  <ul className="ml-6 list-disc">
+                    <li>Daily use of agile methodologies;</li>
+                    <li>
+                      Developed and maintained microservices and microfrontends
+                      for a web application with a large user base;
+                    </li>
+                    <li>
+                      Followed best practices like unit testing and code
+                      reviews;
+                    </li>
+                    <li>
+                      Top Skills: {golang}, {typescript}, {react}, {node}.
+                    </li>
+                  </ul>
+                </section>
+                <p className="profile-subtitle text-pink-400">{'}'}</p>
+              </div>
+              <p className="profile-subtitle text-yellow-200">{'}'}</p>
+            </ArticleSection>
+            <ArticleSection subtitle="Full Stack Developer at Wipro {">
               <p className="profile-time">
                 March 2024 - present{' '}
                 <span className="text-slate-400">
@@ -301,9 +348,11 @@ const brainnyTime = totalMonthsIn(
   new Date('2024-04-26'),
 )
 
-const wiproTime = totalMonthsIn(new Date('2024-03-25'))
+const wiproTime = totalMonthsIn(new Date('2024-03-25'), new Date('2025-01-07'))
 
-const totalTime = freelanceTime + brainnyTime + wiproTime
+const howdyTime = totalMonthsIn(new Date('2025-01-08'))
+
+const totalTime = freelanceTime + brainnyTime + wiproTime + howdyTime
 
 function totalMonthsIn(dateStart: Date, dateEnd = new Date()) {
   const timeWorked = dateEnd.getTime() - dateStart.getTime()
@@ -327,6 +376,7 @@ function formatMonthsWorked(months: number) {
   return timeWorked
 }
 
+const golang = <span className="text-blue-400">Go (Golang)</span>
 const react = <span className="text-cyan-400">React</span>
 const next = <span className="font-bold text-white">Next.js</span>
 const node = <span className="text-green-400">Node.js</span>
