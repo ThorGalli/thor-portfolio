@@ -1,5 +1,4 @@
 import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react'
-import Leaderboards from './tabs/leaderboards'
 import Options from './tabs/options'
 import ResourceList from '@/components/shops/resourceList'
 import UpgradeList from '@/components/shops/upgradeList'
@@ -34,12 +33,6 @@ export default function ClickerNavBar() {
       label: 'Achievements',
       emoji: '🏆',
       component: <AchievementList />,
-      extraClass: '',
-    },
-    {
-      label: 'Leaderboards',
-      emoji: '📈',
-      component: <Leaderboards />,
       extraClass: '',
     },
     {
