@@ -55,12 +55,12 @@ export default function Home() {
                     <li>
                       Phone:{' '}
                       <a
-                        href="https://wa.me/5553981441755?text=Hello%20Thor!%20I%20saw%20your%20portfolio%20and%20I%20would%20like%20to%20talk%20to%20you!"
+                        href="https://wa.me/5553999793999?text=Hello%20Thor!%20I%20saw%20your%20portfolio%20and%20I%20would%20like%20to%20talk%20to%20you!"
                         target="_blank"
                         className="text-green-400 underline"
                         rel="noreferrer"
                       >
-                        +55 53 9 8144 1755
+                        +55 53 999 793 999
                       </a>
                     </li>
                     <li>
