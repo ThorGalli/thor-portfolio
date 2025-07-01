@@ -34,4 +34,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+![image](https://github.com/user-attachments/assets/54853a39-728e-4d36-bad4-9964bfa1e338)
+
+![image](https://github.com/user-attachments/assets/e1b55df8-acab-496a-9e42-72fa070d1e7a)
+
+
 
