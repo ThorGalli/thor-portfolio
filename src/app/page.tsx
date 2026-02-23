@@ -114,7 +114,7 @@ export default function Home() {
 
           <ArticleWindow id="about-me" title="About me" useDrawer>
             <ArticleSection className="flex flex-col gap-4">
-               <p>
+              <p>
                 I’m a Full Stack Software Engineer with 5+ years of experience building scalable SaaS systems.
               </p>
               <p>
@@ -210,26 +210,26 @@ export default function Home() {
                 </p>
               }
             >
-            <ul className="ml-6 list-disc">
-              <li>
-                Collaborated with international teams in English (Design, QA, Engineering, Management);
-              </li>
-              <li>
-                Developed and maintained a cross-platform application with a large international user base;
-              </li>
-              <li>
-                Built {microfrontend} projects and {microservices} APIs;
-              </li>
-              <li>
-                Integrated APIs and services across micro frontends;
-              </li>
-              <li>
-                Conducted code reviews and implemented automated testing (Jest);
-              </li>
-              <li>
-                Delivered stakeholder demo presentations for new features.
-              </li>
-            </ul>
+              <ul className="ml-6 list-disc">
+                <li>
+                  Collaborated with international teams in English (Design, QA, Engineering, Management);
+                </li>
+                <li>
+                  Developed and maintained a cross-platform application with a large international user base;
+                </li>
+                <li>
+                  Built {microfrontend} projects and {microservices} APIs;
+                </li>
+                <li>
+                  Integrated APIs and services across micro frontends;
+                </li>
+                <li>
+                  Conducted code reviews and implemented automated testing (Jest);
+                </li>
+                <li>
+                  Delivered stakeholder demo presentations for new features.
+                </li>
+              </ul>
             </ArticleSection>
             <ArticleSection
               job
@@ -249,26 +249,26 @@ export default function Home() {
                 </p>
               }
             >
-            <ul className="ml-6 list-disc">
-              <li>
-                Assigned to outsourcing contracts including Azul Brazilian Airlines;
-              </li>
-              <li>
-                Full Stack development using {next}, {react}, {nest}, and {graphql};
-              </li>
-              <li>
-                Developed and maintained applications with {java} and {spring};
-              </li>
-              <li>
-                Integrated front-end and back-end systems via REST APIs;
-              </li>
-              <li>
-                Reviewed Pull Requests and mentored junior developers;
-              </li>
-              <li>
-                Created SQL migrations and maintained relational databases.
-              </li>
-            </ul>
+              <ul className="ml-6 list-disc">
+                <li>
+                  Assigned to outsourcing contracts including Azul Brazilian Airlines;
+                </li>
+                <li>
+                  Full Stack development using {next}, {react}, {nest}, and {graphql};
+                </li>
+                <li>
+                  Developed and maintained applications with {java} and {spring};
+                </li>
+                <li>
+                  Integrated front-end and back-end systems via REST APIs;
+                </li>
+                <li>
+                  Reviewed Pull Requests and mentored junior developers;
+                </li>
+                <li>
+                  Created SQL migrations and maintained relational databases.
+                </li>
+              </ul>
             </ArticleSection>
             <ArticleSection
               job
@@ -287,17 +287,17 @@ export default function Home() {
                 </p>
               }
             >
-            <ul className="ml-6 list-disc">
-              <li>
-                Built responsive Landing Pages and marketing websites for clients;
-              </li>
-              <li>
-                Developed data cleaning and web scraping solutions with {python};
-              </li>
-              <li>
-                Managed version control using {git}.
-              </li>
-            </ul>
+              <ul className="ml-6 list-disc">
+                <li>
+                  Built responsive Landing Pages and marketing websites for clients;
+                </li>
+                <li>
+                  Developed data cleaning and web scraping solutions with {python};
+                </li>
+                <li>
+                  Managed version control using {git}.
+                </li>
+              </ul>
             </ArticleSection>
           </ArticleWindow>
 
