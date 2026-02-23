@@ -115,19 +115,29 @@ export default function Home() {
           <ArticleWindow id="about-me" title="About me" useDrawer>
             <ArticleSection className="flex flex-col gap-4">
               <p>
-                I’m a Full Stack Software Engineer with 5+ years of experience building scalable SaaS systems.
+                I’m a Full Stack Software Engineer with 5+ years of experience
+                building scalable SaaS systems.
               </p>
               <p>
-                I’ve contributed to core platforms used daily by thousands of users, working with companies like Azul Brazilian Airlines, HP, and OrderMyGear. My work spans modern web applications, API design, data integration, and cloud-based production environments.
+                I’ve contributed to core platforms used daily by thousands of
+                users, working with companies like Azul Brazilian Airlines, HP,
+                and OrderMyGear. My work spans modern web applications, API
+                design, data integration, and cloud-based production
+                environments.
               </p>
               <p>
-                I build with {react} and {next} on the front end, design REST and {graphql} APIs, and focus on performance, reliability, and maintainable architecture. Comfortable working in both legacy systems and new product builds.
+                I build with {react} and {next} on the front end, design REST
+                and {graphql} APIs, and focus on performance, reliability, and
+                maintainable architecture. Comfortable working in both legacy
+                systems and new product builds.
               </p>
               <p>
-                Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}, and GCP.
+                Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}
+                , and GCP.
               </p>
               <p>
-                I care about pragmatic engineering decisions, transparent communication, and building clean systems that scale.
+                I care about pragmatic engineering decisions, transparent
+                communication, and building clean systems that scale.
               </p>
             </ArticleSection>
           </ArticleWindow>
@@ -168,25 +178,32 @@ export default function Home() {
                   </p>
                   <ul className="ml-6 list-disc">
                     <li>
-                      Core engineer in a lean team building a product discovery and search platform (~12K searches/day);
+                      Core engineer in a lean team building a product discovery
+                      and search platform (~12K searches/day);
                     </li>
                     <li>
-                      Built and optimized {next} (SSR) front-end experiences integrated with high-scale REST APIs;
+                      Built and optimized {next} (SSR) front-end experiences
+                      integrated with high-scale REST APIs;
                     </li>
                     <li>
-                      Developed and maintained APIs powering search, product data, and internal platform services;
+                      Developed and maintained APIs powering search, product
+                      data, and internal platform services;
                     </li>
                     <li>
-                      Integrated services across {microfrontend} and consolidated product data flows;
+                      Integrated services across {microfrontend} and
+                      consolidated product data flows;
                     </li>
                     <li>
-                      Improved delivery reliability with automated testing and CI/CD pipelines;
+                      Improved delivery reliability with automated testing and
+                      CI/CD pipelines;
                     </li>
                     <li>
-                      Worked with GCP (Cloud Run, Kubernetes, Buckets, Secrets, Load Balancers) in production;
+                      Worked with GCP (Cloud Run, Kubernetes, Buckets, Secrets,
+                      Load Balancers) in production;
                     </li>
                     <li>
-                      Resolved monorepo vulnerabilities, upgraded dependencies, and authored technical documentation.
+                      Resolved monorepo vulnerabilities, upgraded dependencies,
+                      and authored technical documentation.
                     </li>
                   </ul>
                 </section>
@@ -212,19 +229,20 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Collaborated with international teams in English (Design, QA, Engineering, Management);
+                  Collaborated with international teams in English (Design, QA,
+                  Engineering, Management);
                 </li>
                 <li>
-                  Developed and maintained a cross-platform application with a large international user base;
+                  Developed and maintained a cross-platform application with a
+                  large international user base;
                 </li>
                 <li>
                   Built {microfrontend} projects and {microservices} APIs;
                 </li>
+                <li>Integrated APIs and services across micro frontends;</li>
                 <li>
-                  Integrated APIs and services across micro frontends;
-                </li>
-                <li>
-                  Conducted code reviews and implemented automated testing (Jest);
+                  Conducted code reviews and implemented automated testing
+                  (Jest);
                 </li>
                 <li>
                   Delivered stakeholder demo presentations for new features.
@@ -251,20 +269,21 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Assigned to outsourcing contracts including Azul Brazilian Airlines;
+                  Assigned to outsourcing contracts including Azul Brazilian
+                  Airlines;
                 </li>
                 <li>
-                  Full Stack development using {next}, {react}, {nest}, and {graphql};
+                  Full Stack development using {next}, {react}, {nest}, and{' '}
+                  {graphql};
                 </li>
                 <li>
-                  Developed and maintained applications with {java} and {spring};
+                  Developed and maintained applications with {java} and {spring}
+                  ;
                 </li>
                 <li>
                   Integrated front-end and back-end systems via REST APIs;
                 </li>
-                <li>
-                  Reviewed Pull Requests and mentored junior developers;
-                </li>
+                <li>Reviewed Pull Requests and mentored junior developers;</li>
                 <li>
                   Created SQL migrations and maintained relational databases.
                 </li>
@@ -289,14 +308,14 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Built responsive Landing Pages and marketing websites for clients;
+                  Built responsive Landing Pages and marketing websites for
+                  clients;
                 </li>
                 <li>
-                  Developed data cleaning and web scraping solutions with {python};
+                  Developed data cleaning and web scraping solutions with{' '}
+                  {python};
                 </li>
-                <li>
-                  Managed version control using {git}.
-                </li>
+                <li>Managed version control using {git}.</li>
               </ul>
             </ArticleSection>
           </ArticleWindow>
@@ -374,11 +393,7 @@ const spring = <span className="text-green-400">Spring</span>
 const python = <span className="text-yellow-400">Python</span>
 const bootstrap = <span className="text-purple-400">Bootstrap</span>
 const git = <span className="text-red-400">Git</span>
-const linux = <span className="text-teal-300">Linux</span>
-const css = <span className="text-blue-400">CSS</span>
-const javascript = <span className="text-yellow-400">JavaScript</span>
 const sql = <span className="text-pink-400">SQL</span>
 const redux = <span className="text-purple-400">Redux</span>
-const html = <span className="text-red-400">HTML</span>
 const microservices = <span className="text-green-400">Microservices</span>
 const microfrontend = <span className="text-yellow-400">Microfrontends</span>
