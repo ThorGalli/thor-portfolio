@@ -2,7 +2,7 @@ This is my Portfolio built with [Next.js](https://nextjs.org/) project bootstrap
 
 It includes some information about me and my career as a developer, as well as some games to showcase my skills and have some fun!
 
-It may or may not be hosted at: [thorgali.site](https://www.thorgalli.site/)
+It may or may not be hosted at: [thorgali.com](https://www.thorgalli.com/)
 
 ## Getting Started
 
