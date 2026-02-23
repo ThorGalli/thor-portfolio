@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "24.x"
+  }
   "dependencies": {
     "@auth/supabase-adapter": "^0.1.5",
     "@supabase/supabase-js": "^2.38.2",
