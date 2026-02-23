@@ -114,43 +114,20 @@ export default function Home() {
 
           <ArticleWindow id="about-me" title="About me" useDrawer>
             <ArticleSection className="flex flex-col gap-4">
-              <p>
-                I am Thor, a Full Stack Developer with 4 years of professional
-                experience and a background in Civil Engineering. This
-                combination provides me with a unique perspective in software
-                development, allowing me to understand and approach projects
-                with a comprehensive and effective outlook.
+               <p>
+                I’m a Full Stack Software Engineer with 5+ years of experience building scalable SaaS systems.
               </p>
-              <br />
               <p>
-                I&apos;m{' '}
-                <span className="text-yellow-400">
-                  fluent in English and Portuguese
-                </span>{' '}
-                and my experience includes front-end development using the
-                React.js Framework to build web apps from scratch, creating REST
-                and GraphQL APIs to serve applications or to communicate with
-                other third-party services, as well as bug fixing and
-                maintenance of legacy projects.
+                I’ve contributed to core platforms used daily by thousands of users, working with companies like Azul Brazilian Airlines, HP, and OrderMyGear. My work spans modern web applications, API design, data integration, and cloud-based production environments.
               </p>
-              <br />
               <p>
-                I&apos;m most experienced in {typescript}, {node}, and {react}.
-                <br />
-                With strong foundations in the basics: {html}, {css},{' '}
-                {javascript}, {sql}, {git}, and {linux}.
+                I build with {react} and {next} on the front end, design REST and {graphql} APIs, and focus on performance, reliability, and maintainable architecture. Comfortable working in both legacy systems and new product builds.
               </p>
-              <br />
               <p>
-                Whether it&apos;s creating new features, optimizing processes,
-                or ensuring code quality, my goal is always to deliver quality
-                technological solutions that add value and make a difference.
+                Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}, and GCP.
               </p>
-              <br />
               <p>
-                Due to my affinity for computers and gaming, I&apos;ve studied
-                computer science and programming as a hobby for more than 15
-                years, which for the most part was self-taught.
+                I care about pragmatic engineering decisions, transparent communication, and building clean systems that scale.
               </p>
             </ArticleSection>
           </ArticleWindow>
@@ -190,14 +167,26 @@ export default function Home() {
                     </span>
                   </p>
                   <ul className="ml-6 list-disc">
-                    <li>Daily use of agile methodologies;</li>
                     <li>
-                      Developed and maintained microservices and microfrontends
-                      for a web application;
+                      Core engineer in a lean team building a product discovery and search platform (~12K searches/day);
                     </li>
                     <li>
-                      Followed best practices like unit testing and code
-                      reviews;
+                      Built and optimized {next} (SSR) front-end experiences integrated with high-scale REST APIs;
+                    </li>
+                    <li>
+                      Developed and maintained APIs powering search, product data, and internal platform services;
+                    </li>
+                    <li>
+                      Integrated services across {microfrontend} and consolidated product data flows;
+                    </li>
+                    <li>
+                      Improved delivery reliability with automated testing and CI/CD pipelines;
+                    </li>
+                    <li>
+                      Worked with GCP (Cloud Run, Kubernetes, Buckets, Secrets, Load Balancers) in production;
+                    </li>
+                    <li>
+                      Resolved monorepo vulnerabilities, upgraded dependencies, and authored technical documentation.
                     </li>
                   </ul>
                 </section>
@@ -221,21 +210,26 @@ export default function Home() {
                 </p>
               }
             >
-              <ul className="ml-6 list-disc">
-                <li>Daily use of agile methodologies;</li>
-                <li>
-                  Development and maintenance of a cross-platform application
-                  with a large international user base;
-                </li>
-                <li>Provided support and guidance to the team;</li>
-                <li>
-                  Followed best practices like unit testing and code reviews;
-                </li>
-                <li>
-                  Recorded demo videos of newly developed features for
-                  presentation to teams and stakeholders.
-                </li>
-              </ul>
+            <ul className="ml-6 list-disc">
+              <li>
+                Collaborated with international teams in English (Design, QA, Engineering, Management);
+              </li>
+              <li>
+                Developed and maintained a cross-platform application with a large international user base;
+              </li>
+              <li>
+                Built {microfrontend} projects and {microservices} APIs;
+              </li>
+              <li>
+                Integrated APIs and services across micro frontends;
+              </li>
+              <li>
+                Conducted code reviews and implemented automated testing (Jest);
+              </li>
+              <li>
+                Delivered stakeholder demo presentations for new features.
+              </li>
+            </ul>
             </ArticleSection>
             <ArticleSection
               job
@@ -255,36 +249,26 @@ export default function Home() {
                 </p>
               }
             >
-              <ul className="ml-6 list-disc">
-                <li>Daily use of agile methodologies;</li>
-                <li>
-                  Full Stack development for a study platform using Next.js,
-                  React and NestJS, integrated with GraphQL;
-                </li>
-                <li>
-                  Provided support and guidance to junior developers and
-                  interns;
-                </li>
-                <li>
-                  Migrated deprecated services to use the latest Firebase APIs;
-                </li>
-                <li>
-                  Developed, debugged, and maintained a web app using Java and
-                  Spring;
-                </li>
-                <li>
-                  Integrated communication between the front-end and back-end
-                  using RestAPI;
-                </li>
-                <li>
-                  Conducted automated unit testing, created informative videos
-                  for completed tasks;
-                </li>
-                <li>
-                  Code review for the approval of Pull Requests on GitLab;
-                </li>
-                <li> Created migrations for SQL databases.</li>
-              </ul>
+            <ul className="ml-6 list-disc">
+              <li>
+                Assigned to outsourcing contracts including Azul Brazilian Airlines;
+              </li>
+              <li>
+                Full Stack development using {next}, {react}, {nest}, and {graphql};
+              </li>
+              <li>
+                Developed and maintained applications with {java} and {spring};
+              </li>
+              <li>
+                Integrated front-end and back-end systems via REST APIs;
+              </li>
+              <li>
+                Reviewed Pull Requests and mentored junior developers;
+              </li>
+              <li>
+                Created SQL migrations and maintained relational databases.
+              </li>
+            </ul>
             </ArticleSection>
             <ArticleSection
               job
@@ -303,15 +287,17 @@ export default function Home() {
                 </p>
               }
             >
-              <ul className="ml-6 list-disc">
-                <li>
-                  Development of Responsive Landing Pages and Hot Sites for
-                  clients;
-                </li>
-                <li>Data cleaning and spreadsheet manipulation with Python;</li>
-                <li>Web scraping with Python;</li>
-                <li>Version control with Git and GitLab.</li>
-              </ul>
+            <ul className="ml-6 list-disc">
+              <li>
+                Built responsive Landing Pages and marketing websites for clients;
+              </li>
+              <li>
+                Developed data cleaning and web scraping solutions with {python};
+              </li>
+              <li>
+                Managed version control using {git}.
+              </li>
+            </ul>
             </ArticleSection>
           </ArticleWindow>
 
