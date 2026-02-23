@@ -118,7 +118,7 @@ export default function Home() {
                 I’m a Full Stack Software Engineer with 5+ years of experience
                 building scalable SaaS systems.
               </p>
-
+              <br />
               <p>
                 I’ve contributed to core platforms used daily by thousands of
                 users, working with companies like Azul Brazilian Airlines, HP,
@@ -126,19 +126,19 @@ export default function Home() {
                 design, data integration, and cloud-based production
                 environments.
               </p>
-
+              <br />
               <p>
                 I build with {react} and {next} on the front end, design REST
                 and {graphql} APIs, and focus on performance, reliability, and
                 maintainable architecture. Comfortable working in both legacy
                 systems and new product builds.
               </p>
-
+              <br />
               <p>
                 Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}
                 , and GCP.
               </p>
-
+              <br />
               <p>
                 I care about pragmatic engineering decisions, transparent
                 communication, and building clean systems that scale.
