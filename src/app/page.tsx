@@ -103,7 +103,7 @@ export default function Home() {
               <Image
                 className="rounded-lg object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                src="/assets/images/profile-pic.png"
+                src="/assets/images/profile-pic.jpg"
                 width={250}
                 height={250}
                 alt="profile-picture"
@@ -120,28 +120,39 @@ export default function Home() {
               </p>
               <br />
               <p>
-                I’ve contributed to core platforms used daily by thousands of
-                users, working with companies like Azul Brazilian Airlines, HP,
-                and OrderMyGear. My work spans modern web applications, API
+                I’ve worked with companies like Azul Brazilian Airlines, HP, and
+                OrderMyGear, contributing to core platforms used daily by
+                thousands of users. My work spans modern web applications, API
                 design, data integration, and cloud-based production
                 environments.
               </p>
               <br />
               <p>
+                I regularly use AI-assisted development tools to accelerate
+                coding, explore unfamiliar codebases, and speed up iteration
+                cycles. I use them to support day-to-day software development,
+                helping with implementation and navigating large codebases,
+                while curating, reviewing, and validating the outputs they
+                produce. I&apos;m an early adopter of AI tools such as {copilot}
+                ,{chatgpt}, {cody}, {claude}, and {cursor}. I&apos;ve been
+                integrating these into my workflows for over 4 years as part of
+                my daily development workflow.
+              </p>
+              <p>
                 I build with {react} and {next} on the front end, design REST
                 and {graphql} APIs, and focus on performance, reliability, and
-                maintainable architecture. Comfortable working in both legacy
-                systems and new product builds.
+                maintainable architecture. Comfortable in both legacy systems
+                and new product builds.
               </p>
               <br />
               <p>
                 Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}
-                , and GCP.
+                , and {gcp}.
               </p>
               <br />
               <p>
                 I care about pragmatic engineering decisions, transparent
-                communication, and building clean systems that scale.
+                communication, and clean systems that scale.
               </p>
             </ArticleSection>
           </ArticleWindow>
@@ -401,3 +412,10 @@ const sql = <span className="text-pink-400">SQL</span>
 const redux = <span className="text-purple-400">Redux</span>
 const microservices = <span className="text-green-400">Microservices</span>
 const microfrontend = <span className="text-yellow-400">Microfrontends</span>
+
+const copilot = <span className="text-sky-400">Copilot</span> // GitHub Copilot (blue/cyan)
+const chatgpt = <span className="text-green-300">ChatGPT</span> // OpenAI ChatGPT (green)
+const cody = <span className="text-violet-400">Cody</span> // Cody (Approx purple)
+const claude = <span className="text-amber-300">Claude</span> // Anthropic Claude (warm/amber)
+const cursor = <span className="text-indigo-400">Cursor</span> // Cursor (indigo-ish)
+const gcp = <span className="text-blue-500">GCP</span> // Google Cloud Platform (blue)
