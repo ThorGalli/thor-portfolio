@@ -134,9 +134,9 @@ export default function Home() {
                 helping with implementation and navigating large codebases,
                 while curating, reviewing, and validating the outputs they
                 produce. I&apos;m an early adopter of AI tools such as {copilot}
-                ,{chatgpt}, {cody}, {claude}, and {cursor}. I&apos;ve been
-                integrating these into my workflows for over 4 years as part of
-                my daily development workflow.
+                , {cody}, {claude}, and {cursor}. I&apos;ve been integrating
+                these into my workflows for over 4 years as part of my daily
+                development workflow.
               </p>
               <p>
                 I build with {react} and {next} on the front end, design REST
@@ -177,10 +177,27 @@ export default function Home() {
               }
             >
               <p>
-                Worked by <span className="text-pink-400">contracts</span> for
-                Howdy&apos;s clients, including:{' '}
+                Full-time contractor placed on long-term SaaS engagements (for
+                example, {<span className="text-green-400">OrderMyGear</span>}).
+                Participate in structured engineering mentorship, ongoing
+                professional development (language and tooling training), and
+                contribute to a distributed engineering community focused on
+                high standards and continuous improvement.
               </p>
-              <div className="flex flex-col">
+
+              <ul className="ml-6 list-disc">
+                <li>
+                  Contract work across multiple client products, focusing on
+                  reliability, architecture, and developer experience.
+                </li>
+                <li>
+                  Regular mentorship, technical guidance, and performance
+                  feedback routines.
+                </li>
+                <li>Active participation in tooling and AI workshops.</li>
+              </ul>
+
+              <div className="mt-4 flex flex-col">
                 <section className="profile-section ml-6">
                   <h3 className="profile-subtitle">
                     <li className="text-green-400">OrderMyGear (OMG)</li>
@@ -191,10 +208,17 @@ export default function Home() {
                       ({formatMonthsWorked(howdyTime)} so far)
                     </span>
                   </p>
+
                   <ul className="ml-6 list-disc">
                     <li>
-                      Core engineer in a lean team building a product discovery
-                      and search platform (~12K searches/day);
+                      Core engineer in a lean team building a new product
+                      discovery and search platform (~12K searches/day) used
+                      across legacy and active products;
+                    </li>
+                    <li>
+                      Leveraged AI-assisted prototyping and tooling ({cursor},{' '}
+                      {cody}, v0, Unblocked) to accelerate development cycles
+                      and reduce rework;
                     </li>
                     <li>
                       Built and optimized {next} (SSR) front-end experiences
@@ -205,20 +229,26 @@ export default function Home() {
                       data, and internal platform services;
                     </li>
                     <li>
+                      Contributed to data quality and standards adoption
+                      (PromoStandards-aligned) across ~800K SKUs and 500+
+                      suppliers;
+                    </li>
+                    <li>
                       Integrated services across {microfrontend} and
                       consolidated product data flows;
                     </li>
                     <li>
-                      Improved delivery reliability with automated testing and
-                      CI/CD pipelines;
+                      Improved delivery reliability through automated testing
+                      (Vitest) and CI/CD pipelines (GitHub Actions);
                     </li>
                     <li>
-                      Worked with GCP (Cloud Run, Kubernetes, Buckets, Secrets,
-                      Load Balancers) in production;
+                      Worked with {gcp} in production (Cloud Run, Kubernetes,
+                      Storage Buckets, Secrets, Load Balancers);
                     </li>
                     <li>
                       Resolved monorepo vulnerabilities, upgraded dependencies,
-                      and authored technical documentation.
+                      and authored technical documentation and solution
+                      blueprints.
                     </li>
                   </ul>
                 </section>
@@ -244,24 +274,25 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Collaborated with international teams in English (Design, QA,
-                  Engineering, Management);
+                  Collaborated with international teams, communicating in
+                  English with Designers, Developers, QA and Managers;
                 </li>
                 <li>
-                  Developed and maintained a cross-platform application with a
-                  large international user base;
+                  Leveraged Microsoft&apos;s {copilot} to accelerate feature
+                  development and workflows (reported productivity improvements
+                  in the team);
                 </li>
                 <li>
-                  Built {microfrontend} projects and {microservices} APIs;
+                  Built and maintained cross-platform applications with a large
+                  international user base, using micro frontends and
+                  microservices architecture;
                 </li>
                 <li>Integrated APIs and services across micro frontends;</li>
                 <li>
-                  Conducted code reviews and implemented automated testing
-                  (Jest);
+                  Conducted code reviews, approved PRs on GitHub and implemented
+                  automated testing with Jest;
                 </li>
-                <li>
-                  Delivered stakeholder demo presentations for new features.
-                </li>
+                <li>Recorded demo videos of new features for stakeholders.</li>
               </ul>
             </ArticleSection>
             <ArticleSection
@@ -284,21 +315,31 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Assigned to outsourcing contracts including Azul Brazilian
-                  Airlines;
+                  Assigned to outsourcing contracts with clients such as{' '}
+                  {
+                    <span className="text-yellow-400">
+                      Azul Brazilian Airlines
+                    </span>
+                  }{' '}
+                  and Bridge MT;
                 </li>
                 <li>
-                  Full Stack development using {next}, {react}, {nest}, and{' '}
-                  {graphql};
+                  Full Stack development for a study platform using {next},{' '}
+                  {react} and {nest}, integrated with {graphql};
                 </li>
                 <li>
-                  Developed and maintained applications with {java} and {spring}
-                  ;
+                  Leveraged {copilot} to accelerate documentation and code
+                  writing; migrated deprecated services to the latest Firebase
+                  APIs;
                 </li>
                 <li>
-                  Integrated front-end and back-end systems via REST APIs;
+                  Developed, debugged and maintained backend services with{' '}
+                  {java} and {spring};
                 </li>
-                <li>Reviewed Pull Requests and mentored junior developers;</li>
+                <li>
+                  Integrated front-end and back-end via REST APIs, reviewed PRs
+                  on GitLab and mentored junior developers;
+                </li>
                 <li>
                   Created SQL migrations and maintained relational databases.
                 </li>
@@ -323,14 +364,16 @@ export default function Home() {
             >
               <ul className="ml-6 list-disc">
                 <li>
-                  Built responsive Landing Pages and marketing websites for
-                  clients;
+                  Developed responsive landing pages, hot sites and marketing
+                  websites for clients;
                 </li>
                 <li>
-                  Developed data cleaning and web scraping solutions with{' '}
-                  {python};
+                  Performed data cleaning and spreadsheet manipulation with{' '}
+                  {python}, and built/deployed web scraping solutions;
                 </li>
-                <li>Managed version control using {git}.</li>
+                <li>
+                  Managed version control and deployments using Git and GitLab.
+                </li>
               </ul>
             </ArticleSection>
           </ArticleWindow>
@@ -414,7 +457,6 @@ const microservices = <span className="text-green-400">Microservices</span>
 const microfrontend = <span className="text-yellow-400">Microfrontends</span>
 
 const copilot = <span className="text-sky-400">Copilot</span> // GitHub Copilot (blue/cyan)
-const chatgpt = <span className="text-green-300">ChatGPT</span> // OpenAI ChatGPT (green)
 const cody = <span className="text-violet-400">Cody</span> // Cody (Approx purple)
 const claude = <span className="text-amber-300">Claude</span> // Anthropic Claude (warm/amber)
 const cursor = <span className="text-indigo-400">Cursor</span> // Cursor (indigo-ish)
