@@ -127,6 +127,7 @@ export default function Home() {
                 web applications, APIs, cloud infrastructure, and distributed
                 systems.
               </p>
+              <br />
               <p>
                 While I enjoy solving technical problems, my primary focus is
                 building the right{' '}
@@ -147,9 +148,12 @@ export default function Home() {
                 tools daily to accelerate development, but I treat them as force
                 multipliers rather than decision makers.
               </p>
-              Technically, I build with {react}, {next}, {typescript}, {node},
-              {java}, {sql}, {graphql}, and {gcp}, with experience across
-              frontend, backend, cloud infrastructure, and developer tooling.
+              <br />
+              <p>
+                Technically, I build with {react}, {next}, {typescript}, {node},
+                {java}, {sql}, {graphql}, and {gcp}, with experience across
+                frontend, backend, cloud infrastructure, and developer tooling.
+              </p>
               <br />
               <p>
                 I care about product thinking, clean architecture, transparent
