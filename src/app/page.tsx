@@ -116,43 +116,45 @@ export default function Home() {
             <ArticleSection className="flex flex-col gap-4">
               <p>
                 I’m a Full Stack Software Engineer with 5+ years of experience
-                building scalable SaaS systems.
+                building SaaS products used by thousands of users.
               </p>
               <br />
               <p>
-                I’ve worked with companies like Azul Brazilian Airlines, HP, and
-                OrderMyGear, contributing to core platforms used daily by
-                thousands of users. My work spans modern web applications, API
-                design, data integration, and cloud-based production
-                environments.
+                I’ve worked with companies such as HP, Azul Brazilian Airlines,
+                and OrderMyGear, contributing across the entire product
+                lifecycle, from discovery and implementation to production
+                operations and long-term maintenance. My experience spans modern
+                web applications, APIs, cloud infrastructure, and distributed
+                systems.
+              </p>
+              <p>
+                While I enjoy solving technical problems, my primary focus is
+                building the right{' '}
+                <span className="text-yellow-400">product</span>. I believe the
+                most valuable engineering work happens before code is written:
+                understanding user needs, refining requirements, questioning
+                assumptions, and choosing pragmatic solutions that balance
+                business goals, engineering effort, and long-term
+                maintainability.
               </p>
               <br />
               <p>
-                I regularly use AI-assisted development tools to accelerate
-                coding, explore unfamiliar codebases, and speed up iteration
-                cycles. I use them to support day-to-day software development,
-                helping with implementation and navigating large codebases,
-                while curating, reviewing, and validating the outputs they
-                produce. I&apos;m an early adopter of AI tools such as {copilot}
-                , {cody}, {claude}, and {cursor}. I&apos;ve been integrating
-                these into my workflows for over 4 years as part of my daily
-                development workflow.
+                The rise of AI-assisted development has only reinforced this
+                perspective. As implementation becomes faster and more
+                automated, the ability to define problems clearly, translate
+                product requirements into technical solutions, and exercise
+                engineering judgment becomes increasingly important. I use AI
+                tools daily to accelerate development, but I treat them as force
+                multipliers rather than decision makers.
               </p>
-              <p>
-                I build with {react} and {next} on the front end, design REST
-                and {graphql} APIs, and focus on performance, reliability, and
-                maintainable architecture. Comfortable in both legacy systems
-                and new product builds.
-              </p>
+              Technically, I build with {react}, {next}, {typescript}, {node},
+              {java}, {sql}, {graphql}, and {gcp}, with experience across
+              frontend, backend, cloud infrastructure, and developer tooling.
               <br />
               <p>
-                Tech focus: {typescript}, {next}, {react}, {node}, {java}, {sql}
-                , and {gcp}.
-              </p>
-              <br />
-              <p>
-                I care about pragmatic engineering decisions, transparent
-                communication, and clean systems that scale.
+                I care about product thinking, clean architecture, transparent
+                communication, and building software that delivers measurable
+                value to users.
               </p>
             </ArticleSection>
           </ArticleWindow>
